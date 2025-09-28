@@ -21,7 +21,7 @@
         <input class="form-control me-2" name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
         <button type="submit" class="btn btn-primary" type="button">Search</button>
 	</form>
-    <h1 style="color: yellow;">Genshin Characters</h1>
+    <h1 style="color: yellow;">Welcome Traveler <?=html_escape(get_username(get_user_id()));?>!</h1>
     <table>
         <thead>
             <tr>
@@ -42,7 +42,6 @@
                     <td>
                         <a href="<?= site_url('update/'.$char['id']); ?>" class="btn btn-update">Update</a>
                         <a href="<?= site_url('soft-delete/'.$char['id']); ?>" class="btn btn-trash">Trash</a>
-                        <a href="<?= site_url('delete-home/'.$char['id']); ?>" class="btn btn-delete">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

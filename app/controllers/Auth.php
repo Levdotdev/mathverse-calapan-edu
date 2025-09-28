@@ -45,6 +45,7 @@ class Auth extends Controller {
             $username = $this->io->post('username');
             $email = $this->io->post('email');
 			$email_token = bin2hex(random_bytes(50));
+            $otp = substr(str_shuffle("0123456789"), 0, 6);
             $this->form_validation
                 ->name('username')
                     ->required()
@@ -63,7 +64,7 @@ class Auth extends Controller {
                     ->required()
                     ->is_unique('users', 'email', $email, 'Email was already taken.');
                 if($this->form_validation->run()) {
-                    if($this->lauth->register($username, $email, $this->io->post('password'), $email_token)) {
+                    if($this->lauth->register($username, $email, $this->io->post('password'), $email_token, $otp)) {
                         $data = $this->lauth->login($email, $this->io->post('password'));
                         $this->lauth->set_logged_in($data);
                         redirect('home');

@@ -106,12 +106,7 @@ class CrudController extends Controller {
         }
     }
 
-    function delete_home($id){
-        $this->CrudModel->delete($id);
-        redirect();
-    }
-
-    function delete_trash($id){
+    function delete($id){
         $this->CrudModel->delete($id);
         redirect('trash');
     }
