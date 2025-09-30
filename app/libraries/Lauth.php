@@ -73,12 +73,12 @@ class Lauth {
 	 */
 	public function register($username, $email, $password, $email_token)
 	{
+		$this->LAVA->db->transaction();
 		$res = $this->LAVA->db->table('users')
 						->where('email', $email)
-						->where('email_verified_at', NULL)
+						->where('email_verified_at', null)
 						->delete();
 
-		$this->LAVA->db->transaction();
 		$data = array(
 			'username' => $username,
 			'password' => $this->passwordhash($password),
