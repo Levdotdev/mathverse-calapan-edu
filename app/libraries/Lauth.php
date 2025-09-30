@@ -209,7 +209,7 @@ class Lauth {
     					->limit(1)
     					->get();
     	if($row) {
-    		return html_escape($row['role']);
+    		return $row['role'];
     	}
 	}
 
