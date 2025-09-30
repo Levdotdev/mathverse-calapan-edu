@@ -131,7 +131,7 @@ class Auth extends Controller {
 
     public function verify_email() {
         if($this->form_validation->submitted()) {
-            $token = $this->io->post('token');
+            $token = $_GET['token'] ?? '';
 			if(isset($token) && !empty($token)) {
 						if($this->form_validation->run()) {
 							if($this->lauth->verify_account_now($token)) {
@@ -147,7 +147,8 @@ class Auth extends Controller {
                             redirect('auth/login');
 						}
 			} else {
-				set_flash_alert('danger', 'Reset token is missing.');
+				set_flash_alert('danger', 'Verification token is missing.');
+                redirect('auth/login');
 			}
         } else {
              $token = $_GET['token'] ?? '';
