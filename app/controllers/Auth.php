@@ -166,6 +166,7 @@ class Auth extends Controller {
 							if($this->lauth->reset_password_now($token, $password)) {
 								set_flash_alert('success', 'Password was successfully updated.');
                                 $token = "";
+                                redirect('auth/login');
 							} else {
 								set_flash_alert('danger', config_item('SQLError'));
 							}
