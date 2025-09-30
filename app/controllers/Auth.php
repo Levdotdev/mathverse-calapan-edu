@@ -11,10 +11,11 @@ class Auth extends Controller {
     {
         parent::__construct();
         if(segment(2) != 'logout') {
-            if(logged_in() && get_role() == "admin") {
+            $id = get_user_id();
+            if(logged_in() && get_role($id) == "admin") {
                 redirect('home');
             }
-            else if(logged_in() && get_role() == "user") {
+            else if(logged_in() && get_role($id) == "user") {
                 redirect('home-user');
             }
         }
