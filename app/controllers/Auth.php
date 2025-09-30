@@ -174,7 +174,7 @@ class Auth extends Controller {
 			} else {
 				set_flash_alert('danger', 'Reset token is missing.');
 			}
-    	redirect('auth/set-new-password/?token='.$token);
+    	redirect('auth/set-new-password/?token=0');
         } else {
              $token = $_GET['token'] ?? '';
             if(! $this->lauth->get_reset_password_token($token) && (! empty($token) || ! isset($token))) {
