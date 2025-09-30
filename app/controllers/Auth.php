@@ -67,7 +67,7 @@ class Auth extends Controller {
                     if($this->lauth->register($username, $email, $this->io->post('password'), $email_token, $otp)) {
                         $data = $this->lauth->login($email, $this->io->post('password'));
                         $this->lauth->set_logged_in($data);
-                        redirect('home');
+                        redirect('home-user');
                     } else {
                         set_flash_alert('danger', config_item('SQLError'));
                     }
