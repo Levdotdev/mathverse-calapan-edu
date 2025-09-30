@@ -130,34 +130,27 @@ class Auth extends Controller {
 	}
 
     public function verify_email() {
-        if($this->form_validation->submitted()) {
-            $token = $_GET['token'] ?? '';
-			if(isset($token) && !empty($token)) {
-						if($this->form_validation->run()) {
-							if($this->lauth->verify_account_now($token)) {
-								set_flash_alert('success', 'Account successfully verified.');
-                                $token = "";
-                                redirect('auth/login');
-							} else {
-								set_flash_alert('danger', config_item('SQLError'));
-                                redirect('auth/login');
-							}
-						} else {
-							set_flash_alert('danger', $this->form_validation->errors());
-                            redirect('auth/login');
-						}
-			} else {
-				set_flash_alert('danger', 'Verification token is missing.');
-                redirect('auth/login');
-			}
-        } else {
-             $token = $_GET['token'] ?? '';
-            if(! $this->lauth->get_verify_account_token($token) && (! empty($token) || ! isset($token))) {
-                set_flash_alert('danger', 'Invalid password reset token.');
-            }
-            $this->call->view('auth/login');
+        $token = $_GET['token'] ?? '';
+
+        if (empty($token)) {
+            set_flash_alert('danger', 'Missing verification token.');
+            redirect('auth/login');
+            return;
         }
-		
+
+        if (! $this->lauth->get_verify_account_token($token)) {
+            set_flash_alert('danger', 'Invalid verification token.');
+            redirect('auth/login');
+            return;
+        }
+
+        if ($this->lauth->verify_account_now($token)) {
+            set_flash_alert('success', 'Account successfully verified.');
+        } else {
+            set_flash_alert('danger', 'Unable to verify account. Please try again.');
+        }
+
+        redirect('auth/login');
 	}
 
     private function send_password_token_to_email($email, $token) {
