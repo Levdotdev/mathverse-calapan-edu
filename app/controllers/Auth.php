@@ -1,6 +1,11 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 /**
  * Controller: Auth
  * 
@@ -90,12 +95,39 @@ class Auth extends Controller {
 		$search = array('{token}', '{base_url}');
 		$replace = array($token, base_url());
 		$template = str_replace($search, $replace, $template);
-		$this->email->recipient($email);
-		$this->email->subject('LavaLust Reset Password'); //change based on subject
-		$this->email->sender('genshinpromise@gmail.com'); //change based on sender email
-		$this->email->reply_to('genshinpromise@gmail.com.com'); // change based on sender email
-		$this->email->email_content($template, 'html');
-		$this->email->send();
+
+        //required files
+        require ROOT_DIR.'vendor/phpmailer/src/Exception.php';
+        require ROOT_DIR.'vendor/phpmailer/src/PHPMailer.php';
+        require ROOT_DIR.'vendor/phpmailer/src/SMTP.php';
+
+        $email = $_POST['email'];
+
+        //Create an instance; passing true enables exceptions
+
+        $mail = new PHPMailer(true);
+
+        //Server settings
+        $mail->isSMTP();                              //Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';       //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;             //Enable SMTP authentication
+        $mail->Username   = 'genshinpromise@gmail.com';   //SMTP write your email
+        $mail->Password   = 'dvvigwjodyetiijm';      //SMTP password
+        $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
+        $mail->Port       = 465;                                    
+
+        //Recipients
+        $mail->setFrom("genshinpromise@gmail.com", "GENSHIN CRUD"); // Sender Email and name
+        $mail->addAddress($email);     //Add a recipient email  
+        $mail->addReplyTo("genshinpromise@gmail.com", "GENSHIN CRUD"); // reply to sender email
+
+        //Content
+        $mail->isHTML(true);               //Set email format to HTML
+        $mail->Subject = "Reset Password";   // email subject headings
+        $mail->Body    = $template; //email message
+
+        // Success sent message alert
+        $mail->send();
 	}
 
 	public function password_reset() {
