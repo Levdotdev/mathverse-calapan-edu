@@ -54,6 +54,7 @@ class Auth extends Controller {
             $username = $this->io->post('username');
             $email = $this->io->post('email');
 			$email_token = bin2hex(random_bytes(50));
+            $this->lauth->delete_unverified($email);
             $this->form_validation
                 ->name('username')
                     ->required()

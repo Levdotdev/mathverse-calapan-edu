@@ -74,11 +74,6 @@ class Lauth {
 	public function register($username, $email, $password, $email_token)
 	{
 		$this->LAVA->db->transaction();
-		$this->LAVA->db->table('users')
-						->where('email', $email)
-						->where('email_verified_at', null)
-						->delete();
-
 		$data = array(
 			'username' => $username,
 			'password' => $this->passwordhash($password),
@@ -340,6 +335,13 @@ class Lauth {
 						->where_null('email_verified_at')
 						->get();	
 	}*/
+
+	public function delete_unverified($email){
+		$res = $this->LAVA->db->table('users')
+						->where('email', $email)
+						->where_null('email_verified_at')
+						->delete();
+	}
 }
 
 ?>
