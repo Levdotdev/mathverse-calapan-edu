@@ -97,9 +97,9 @@ class Auth extends Controller {
 		$template = str_replace($search, $replace, $template);
 
         //required files
-        require ROOT_DIR.'vendor/phpmailer/src/Exception.php';
-        require ROOT_DIR.'vendor/phpmailer/src/PHPMailer.php';
-        require ROOT_DIR.'vendor/phpmailer/src/SMTP.php';
+        require ROOT_DIR.'vendor/phpmailer/phpmailer/src/Exception.php';
+        require ROOT_DIR.'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+        require ROOT_DIR.'vendor/phpmailer/phpmailer/src/SMTP.php';
 
         $email = $_POST['email'];
 
