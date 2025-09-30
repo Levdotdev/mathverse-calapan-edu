@@ -75,9 +75,9 @@ class Lauth {
 	{
 		$res = $this->LAVA->db->table('users')
 						->where('email', $email)
-						->where_null('email_verified_at')
+						->where('email_verified_at', NULL)
 						->delete();
-						
+
 		$this->LAVA->db->transaction();
 		$data = array(
 			'username' => $username,
