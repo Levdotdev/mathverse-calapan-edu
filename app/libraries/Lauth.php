@@ -231,32 +231,6 @@ class Lauth {
 		}
 		
 	}
-
-	public function verify($token) {
-		return $this->LAVA->db
-						->table('users')
-						->select('id')
-						->where('email_token', $token)
-						->where_null('email_verified_at')
-						->get();	
-	}
-
-	public function verify_now($token) {
-		return $this->LAVA->db
-						->table('users')
-						->where('email_token' ,$token)
-						->update(array('email_verified_at' => date("Y-m-d h:i:s", time())));	
-
-	}
-	
-	public function send_verification_email($email) {
-		return $this->LAVA->db
-						->table('users')
-						->select('username, email_token')
-						->where('email', $email)
-						->where_null('email_verified_at')
-						->get();	
-	}
 	
 	public function reset_password($email) {
 		$row = $this->LAVA->db
@@ -309,6 +283,53 @@ class Lauth {
 				->update($data);
 	}
 
+	public function get_verify_account_token($token)
+	{
+		return $this->LAVA->db
+				->table('users')	
+				->select('email')			
+				->where('email_token', $token)
+				->where_null('email_verified_at')
+				->get();
+	}
+
+	public function verify_account_now($token)
+	{
+		$email = $this->get_verify_account_token($token)['email'];
+		$data = array(
+			'email_verified_at' => date("Y-m-d H:i:s", time())
+		);
+		return $this->LAVA->db
+				->table('users')
+				->where('email', $email)
+				->update($data);
+	}
+
+	public function verify($token) {
+		return $this->LAVA->db
+						->table('users')
+						->select('id')
+						->where('email_token', $token)
+						->where_null('email_verified_at')
+						->get();	
+	}
+
+	public function verify_now($token) {
+		return $this->LAVA->db
+						->table('users')
+						->where('email_token' ,$token)
+						->update(array('email_verified_at' => date("Y-m-d h:i:s", time())));	
+
+	}
+	
+	public function send_verification_email($email) {
+		return $this->LAVA->db
+						->table('users')
+						->select('username, email_token')
+						->where('email', $email)
+						->where_null('email_verified_at')
+						->get();	
+	}
 }
 
 ?>

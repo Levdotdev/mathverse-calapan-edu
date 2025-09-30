@@ -73,9 +73,9 @@ class Auth extends Controller {
                     ->is_unique('users', 'email', $email, 'Email was already taken.');
                 if($this->form_validation->run()) {
                     if($this->lauth->register($username, $email, $this->io->post('password'), $email_token)) {
-                        $data = $this->lauth->login($email, $this->io->post('password'));
-                        $this->lauth->set_logged_in($data);
-                        redirect('home-user');
+                        $this->send_token_to_email($email, $token);
+                        set_flash_alert('success', 'Account created! Please check your email to verify your account.');
+                        redirect('auth/login');
                     } else {
                         set_flash_alert('danger', config_item('SQLError'));
                     }
@@ -89,8 +89,78 @@ class Auth extends Controller {
         
     }
 
+    private function send_token_to_email($email, $token) {
+		$template = file_get_contents(ROOT_DIR.PUBLIC_DIR.'/templates/email_verify.html');
+		$search = array('{token}', '{base_url}');
+		$replace = array($token, base_url());
+		$template = str_replace($search, $replace, $template);
+
+        //required files
+        require ROOT_DIR.'vendor/phpmailer/phpmailer/src/Exception.php';
+        require ROOT_DIR.'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+        require ROOT_DIR.'vendor/phpmailer/phpmailer/src/SMTP.php';
+
+        $email = $_POST['email'];
+
+        //Create an instance; passing true enables exceptions
+
+        $mail = new PHPMailer(true);
+
+        //Server settings
+        $mail->isSMTP();                              //Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';       //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;             //Enable SMTP authentication
+        $mail->Username   = 'genshinpromise@gmail.com';   //SMTP write your email
+        $mail->Password   = 'dvvigwjodyetiijm';      //SMTP password
+        $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
+        $mail->Port       = 465;                                    
+
+        //Recipients
+        $mail->setFrom("genshinpromise@gmail.com", "GENSHIN CRUD"); // Sender Email and name
+        $mail->addAddress($email);     //Add a recipient email  
+        $mail->addReplyTo("genshinpromise@gmail.com", "GENSHIN CRUD"); // reply to sender email
+
+        //Content
+        $mail->isHTML(true);               //Set email format to HTML
+        $mail->Subject = "Account Creation";   // email subject headings
+        $mail->Body    = $template; //email message
+
+        // Success sent message alert
+        $mail->send();
+	}
+
+    public function verify_email() {
+        if($this->form_validation->submitted()) {
+            $token = $this->io->post('token');
+			if(isset($token) && !empty($token)) {
+						if($this->form_validation->run()) {
+							if($this->lauth->verify_account_now($token)) {
+								set_flash_alert('success', 'Account successfully verified.');
+                                $token = "";
+                                redirect('auth/login');
+							} else {
+								set_flash_alert('danger', config_item('SQLError'));
+                                redirect('auth/login');
+							}
+						} else {
+							set_flash_alert('danger', $this->form_validation->errors());
+                            redirect('auth/login');
+						}
+			} else {
+				set_flash_alert('danger', 'Reset token is missing.');
+			}
+        } else {
+             $token = $_GET['token'] ?? '';
+            if(! $this->lauth->get_verify_account_token($token) && (! empty($token) || ! isset($token))) {
+                set_flash_alert('danger', 'Invalid password reset token.');
+            }
+            $this->call->view('auth/login');
+        }
+		
+	}
+
     private function send_password_token_to_email($email, $token) {
-		$template = file_get_contents(ROOT_DIR.PUBLIC_DIR.'/templates/reset_password_email.php');
+		$template = file_get_contents(ROOT_DIR.PUBLIC_DIR.'/templates/reset_password_email.html');
 		$search = array('{token}', '{base_url}');
 		$replace = array($token, base_url());
 		$template = str_replace($search, $replace, $template);

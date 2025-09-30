@@ -57,6 +57,7 @@ $router->match('/soft-delete/{id}', 'CrudController::soft_delete', ['GET', 'POST
 
 $router->group('/auth', function() use ($router){
     $router->match('/register', 'Auth::register', ['POST', 'GET']);
+    $router->match('/verify-email', 'Auth::verify_email', ['POST', 'GET']);
     $router->match('/login', 'Auth::login', ['POST', 'GET']);
     $router->get('/logout', 'Auth::logout');
     $router->match('/password-reset', 'Auth::password_reset', ['POST', 'GET']);
