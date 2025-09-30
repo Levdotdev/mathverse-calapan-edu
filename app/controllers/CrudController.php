@@ -15,7 +15,7 @@ class CrudController extends Controller {
         check_verification();
     }
 
-    private function check_verification() {
+    public function check_verification() {
     $id = $this->lauth->get_user_id();
     if ($this->lauth->is_user_verified($id) == 0) {
         $this->lauth->set_logged_out();
