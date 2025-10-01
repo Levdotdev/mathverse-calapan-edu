@@ -11,7 +11,7 @@
     <h1>Update Character</h1>
     <div class="login-box">
     <form action="<?=site_url('update/'.$char['id']);?>" method="post" enctype="multipart/form-data">
-        <input type="file" name="fileToUpload" id="fileToUpload" size="20" value="<?=html_escape($char['pic']);?>" />
+        <input type="file" name="fileToUpload" id="fileToUpload" size="20" />
         <input type="text" name="name" id="name" placeholder="Character Name" value="<?=html_escape($char['name']);?>" required><br><br>
         <label for="class" style="color:white;">Class</label>
         <select name="class" id="class" required>
