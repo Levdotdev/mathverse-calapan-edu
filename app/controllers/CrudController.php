@@ -170,7 +170,7 @@ class CrudController extends Controller {
         }
     }
 
-    function show(){
+    function show($id){
         echo $this->lauth->get_role($id) == "admin";
     }
 }
