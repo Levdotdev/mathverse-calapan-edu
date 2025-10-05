@@ -28,10 +28,6 @@
     </form>
 </div><br>
 
-    <div class="btn-links">
-        <a href="<?= site_url(''); ?>" class="btn btn-create"><- Back</a>
-    </div>
-
     <script>
         window.addEventListener('load', function () {
         document.getElementById('name').focus();
