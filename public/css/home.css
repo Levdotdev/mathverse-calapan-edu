@@ -4,9 +4,7 @@ h1 {
 }
 
 table {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
+    margin: 20px auto;
     border-collapse: collapse;
     width: 85%;
     background: #fff;
@@ -18,7 +16,6 @@ table {
 thead {
     background: darkcyan;
     color: #fff;
-    text-align: center;
 }
 
 th, td {
@@ -64,7 +61,22 @@ tbody tr:hover {
 .btn-delete:hover  { background: #dc3545; color: white}
 .btn-trash:hover   { background: #ff9800; color: white}
 
-
+body {
+font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+}
 
 h1 {
   margin-bottom: 20px;
@@ -106,37 +118,4 @@ h1 {
 
 .login-box input[type="submit"]:hover {
   background: #e68900;
-}
-
-.characters-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.characters-header h1 {
-    color: yellow;
-    font-size: 32px;
-    font-weight: bold;
-    text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
-    margin: 0;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.search-form {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.search-form .form-control {
-    width: 200px;
 }
