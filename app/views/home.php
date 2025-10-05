@@ -1,10 +1,10 @@
 <?php
-require APP_DIR.'views/templates/header.php';
+include APP_DIR.'views/templates/header.php';
 ?>
 <body style="background-image: url('<?= base_url();?>public/resources/jenshin.gif'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
     <div id="app">
     <?php
-    require APP_DIR.'views/templates/nav.php';
+    include APP_DIR.'views/templates/nav.php';
     ?>  
     <main class="mt-3 pt-3">
         <div class="container">
