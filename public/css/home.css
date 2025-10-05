@@ -1,24 +1,18 @@
-/* BASE STYLES */
-h1 {
-    margin-bottom: 20px;
-    color: #222;
-}
-
-/* WRAPPER for scroll + margin fix */
+/* TABLE WRAPPER */
 .table-container {
-    margin: 0 auto 20px auto;     /* centers table, adds bottom margin */
-    padding: 0 10px;              /* inner space without breaking layout */
-    overflow-x: auto;             /* enables scroll */
+    margin: 0 auto 20px auto;
+    padding: 0 10px;
+    overflow-x: auto;
     overflow-y: hidden;
-    -webkit-overflow-scrolling: touch; /* smooth scroll for iOS */
-    width: 100%;                  /* prevent body overflow */
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
     box-sizing: border-box;
 }
 
 /* TABLE DESIGN */
 table {
     width: 100%;
-    min-width: 700px;             /* allows scroll on smaller screens */
+    min-width: 700px;
     border-collapse: collapse;
     background: #fff;
     border-radius: 12px;
@@ -49,12 +43,12 @@ tbody tr:hover {
     background: #eef6ff;
 }
 
-/* IMAGE FIX */
+/* IMAGE — responsive fix */
 td img {
     display: block;
     margin: 0 auto;
-    height: 60px;
-    width: 60px;
+    height: clamp(40px, 5vw, 55px); /* scales with screen size */
+    width: clamp(40px, 5vw, 55px);
     object-fit: cover;
     border-radius: 8px;
 }
@@ -123,12 +117,8 @@ td img {
     width: 200px;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE TUNING */
 @media (max-width: 768px) {
-    .table-container {
-        padding: 0 5px;           /* tighter padding */
-    }
-
     table {
         font-size: 14px;
         min-width: 600px;
@@ -139,7 +129,7 @@ td img {
     }
 
     td img {
-        height: 50px;
-        width: 50px;
+        height: 45px;
+        width: 45px;
     }
 }
