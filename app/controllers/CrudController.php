@@ -174,4 +174,28 @@ class CrudController extends Controller {
             redirect('trash');
         }
     }
+
+    public function product()
+    {
+        if($this->io->method() == 'post'){
+            $id = $this->io->post('product_id');
+            $name = $this->io->post('product_name');
+            $category = $this->io->post('category');
+            $price = $this->io->post('unit_price');
+
+            
+                $data = [
+                'id' => $id,
+                'name' => $name,
+                'category' => $category,
+                'price' => $price
+                ];
+
+                $this->CrudModel->insert($data);
+                redirect();
+        }
+        else{
+            $this->call->view('create');
+        }
+    }
 }

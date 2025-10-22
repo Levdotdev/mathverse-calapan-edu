@@ -48,7 +48,7 @@ $router->get('/home', 'CrudController::index');
 $router->get('/trash', 'CrudController::trash');
 $router->get('/home-user', 'UserController::index');
 $router->get('/trash-user', 'UserController::trash');
-$router->match('/create', 'CrudController::create', ['GET', 'POST']);
+$router->match('/create', 'CrudController::product', ['GET', 'POST']);
 $router->match('/upload', 'CrudController::upload', ['GET', 'POST']);
 $router->match('/update/{id}', 'CrudController::update', ['GET', 'POST']);
 $router->match('/delete/{id}', 'CrudController::delete', ['GET', 'POST']);

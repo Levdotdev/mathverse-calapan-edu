@@ -1,51 +1,55 @@
-<div class="modal fade" id="productScanModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="addProductModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
+
       <div class="modal-header">
-        <h5 class="modal-title font-bold text-2xl">SCAN PRODUCT BARCODE</h5>
+        <h5 class="modal-title font-bold text-2xl">ADD NEW PRODUCT</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
-        <form method="post" action="process_barcode.php" enctype="multipart/form-data" style="background-color:transparent; border:0;">
-          
-          <!-- Hidden ID Field -->
-          <input type="hidden" name="product_id" id="product_id">
+        <form method="post" action="<?=site_url('create'); ?>" enctype="multipart/form-data" style="background-color:transparent; border:0;">
 
-          <!-- Barcode Scan Input -->
-          <div class="form-group mb-3">
-            <label for="barcodeInput" class="form-label">Scan Product Barcode:</label>
+          <!-- Product Name -->
+          <div class="mb-3">
+            <label class="form-label">Product Name</label>
             <div class="input-group">
-              <input type="text" name="barcodeInput" id="barcodeInput" 
-                     class="form-control" 
-                     placeholder="Scan barcode here..." 
-                     autofocus autocomplete="off"
-                     oninput="handleBarcodeScan(this)">
-              <span class="input-group-text">
-                <i class="fas fa-barcode"></i>
-              </span>
+              <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Enter product name" required>
+              <span class="input-group-text"><i class="fas fa-tag"></i></span>
             </div>
           </div>
 
-          <!-- Optional: Display scanned product name -->
+          <!-- Category -->
           <div class="mb-3">
-            <label class="form-label">Product Name</label>
-            <input type="text" id="productName" class="form-control" readonly placeholder="Product will appear here">
+            <label class="form-label">Category</label>
+            <div class="input-group">
+              <select name="category" id="category" class="form-select" required>
+                <option value="" disabled selected>Select category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Beverage">Beverage</option>
+                <option value="Food">Food</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Others">Others</option>
+              </select>
+              <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
+            </div>
           </div>
 
+          <!-- Unit Price -->
+          <div class="mb-3">
+            <label class="form-label">Unit Price (₱)</label>
+            <div class="input-group">
+              <input type="number" name="unit_price" id="unit_price" class="form-control" step="0.01" placeholder="Enter unit price" required>
+              <span class="input-group-text"><i class="fas fa-peso-sign"></i></span>
+            </div>
+          </div>
+
+        <div class="form-group">
+            <label for="product_id">Barcode</label>
+            <input type="text" name="product_id" id="product_id" autofocus autocomplete="off" class="form-control" oninput="this.form.submit()">
+        </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-
-<script>
-  // Example function to auto-submit when barcode is detected
-  function handleBarcodeScan(input) {
-    const barcode = input.value.trim();
-    if (barcode.length > 0) {
-      document.getElementById('product_id').value = barcode;
-      input.form.submit(); // Automatically submits form
-    }
-  }
-</script>
