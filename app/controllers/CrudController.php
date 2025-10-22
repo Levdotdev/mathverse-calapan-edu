@@ -191,7 +191,7 @@ class CrudController extends Controller {
                 'price' => $price
                 ];
 
-                $this->CrudModel->insert($data);
+                $this->ProductModel->insert($data);
                 redirect();
         }
         else{
