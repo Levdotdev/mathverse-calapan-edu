@@ -18,21 +18,20 @@ class ProductModel extends Model {
         parent::__construct();
     }
 
-    public function page_home($q, $records_per_page = null, $page = null) {
+    public function products($q, $records_per_page = null, $page = null) {
         if (is_null($page)) {
-            return $this->db->table('genshin')->get_all();
+            return $this->db->table('products')->get_all();
         } else {
-            $query = $this->db->table('genshin');
+            $query = $this->db->table('products');
                 
             // Build LIKE conditions
 
 	    $query->grouped(function($x) use ($q) {
-		    $x->like('id', '%'.$q.'%')
-                ->or_like('name', '%'.$q.'%')
-                ->or_like('class', '%'.$q.'%');
+		    $x->like('name', '%'.$q.'%')
+                ->or_like('category', '%'.$q.'%');
 	    })
 	    ->where_null('deleted_at')
-        ->order_by('id', 'DESC');
+        ->order_by('category', 'DESC');
 
 
             // Clone before pagination

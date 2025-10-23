@@ -134,41 +134,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>TS-001</td>
-                                <td>Smartwatch X30</td>
-                                <td>Electronics</td>
-                                <td>8,999.00</td>
-                                <td>
-                                    <button class="action-icon edit-btn" title="Edit" onclick="handleCrudAction('UPDATE/Edit')"><i class="fas fa-pen"></i></button>
-                                    <button class="action-icon view-btn" title="View" onclick="handleCrudAction('READ/View Detail')"><i class="fas fa-eye"></i></button>
-                                    <button class="action-icon delete-btn" title="Delete" onclick="confirmDelete()"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>TS-002</td>
-                                <td>Organic Coffee Beans</td>
-                                <td>Beverage</td>
-                                <td>150</td>
-                                <td>599.50</td>
-                                <td>
-                                    <button class="action-icon edit-btn" title="Edit" onclick="handleCrudAction('UPDATE/Edit')"><i class="fas fa-pen"></i></button>
-                                    <button class="action-icon view-btn" title="View" onclick="handleCrudAction('READ/View Detail')"><i class="fas fa-eye"></i></button>
-                                    <button class="action-icon delete-btn" title="Delete" onclick="confirmDelete()"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr class="low-stock">
-                                <td>TS-003</td>
-                                <td>Power Adapter 65W</td>
-                                <td>Electronics</td>
-                                <td>7</td>
-                                <td>1,495.00</td>
-                                <td>
-                                    <button class="action-icon edit-btn" title="Edit" onclick="handleCrudAction('UPDATE/Edit')"><i class="fas fa-pen"></i></button>
-                                    <button class="action-icon view-btn" title="View" onclick="handleCrudAction('READ/View Detail')"><i class="fas fa-eye"></i></button>
-                                    <button class="action-icon delete-btn" title="Delete" onclick="confirmDelete()"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
+                            <?php foreach(html_escape($all) as $char): ?>
+                                <tr>
+                                    <td><?= $char['id']; ?></td>
+                                    <td>
+                                    <img src="<?= base_url().'uploads/'.$char['pic']; ?>" alt="<?= $char['name']; ?>">
+                                    </td>
+                                    <td><?= $char['name']; ?></td>
+                                    <td><?= $char['class']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

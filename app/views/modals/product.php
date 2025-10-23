@@ -1,4 +1,5 @@
-<div class="modal fade" id="addProduct" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="addProduct4806503874034
+" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
@@ -25,11 +26,12 @@
             <div class="input-group">
               <select name="category" id="category" class="form-select" required>
                 <option value="" disabled selected>Select category</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Beverage">Beverage</option>
-                <option value="Food">Food</option>
-                <option value="Accessories">Accessories</option>
-                <option value="Others">Others</option>
+                <option value="Keyboard">Keyboard</option>
+                <option value="Mouse">Mouse</option>
+                <option value="Controller">Controller</option>
+                <option value="Speaker">Speaker</option>
+                <option value="Mousepad"></option>
+                <option value="Headphone"></option>
               </select>
               <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
             </div>
