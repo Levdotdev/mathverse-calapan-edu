@@ -91,7 +91,7 @@ class CrudController extends Controller {
 
     public function update($id)
     {
-        $char = $this->CrudModel->find($id);
+        $char = $this->ProductModel->find($id);
         if($this->io->method() == 'post'){
             $name = $this->io->post('name');
             $class = $this->io->post('class');
@@ -135,7 +135,7 @@ class CrudController extends Controller {
 
     function soft_delete($id){
         if($this->lauth->get_role(get_user_id()) == "admin") {
-            $this->CrudModel->soft_delete($id);
+            $this->ProductModel->soft_delete($id);
             redirect();
         }
     }

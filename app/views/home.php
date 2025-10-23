@@ -137,13 +137,15 @@
                             <?php foreach(html_escape($all) as $char): ?>
                                 <tr>
                                     <td><?= $char['id']; ?></td>
-                                    <td>
-                                    <img src="<?= base_url().'uploads/'.$char['pic']; ?>" alt="<?= $char['name']; ?>">
-                                    </td>
                                     <td><?= $char['name']; ?></td>
-                                    <td><?= $char['class']; ?></td>
+                                    <td><?= $char['category']; ?></td>
+                                    <td>₱<?= $char['price']; ?></td>
+                                    <td>
+                                        <a href="<?= site_url('update/'.$char['id']); ?>" class="action-icon edit-btn"><i class="fas fa-pen"></i></a>
+                                        <a href="<?= site_url('soft-delete/'.$char['id']); ?>" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
+                                    </td>
                                 </tr>
-                                <?php endforeach; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
