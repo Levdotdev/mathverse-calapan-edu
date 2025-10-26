@@ -1,171 +1,73 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const sidebar = document.getElementById("sidebar");
-    const sidebarToggle = document.getElementById("sidebar-toggle");
-    const themeToggle = document.getElementById("theme-toggle");
-    const logoutBtn = document.getElementById("logout-btn");
-    const body = document.body;
-    const navItems = document.querySelectorAll("#sidebar li[data-section]");
-    const contentSections = document.querySelectorAll(".content-section");
-    const pageTitleElement = document.querySelector(".page-title");
-    const themeIcon = themeToggle.querySelector("i");
+const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const form = document.getElementById('addProductForm');
+    const modalAlertContainer = document.getElementById('modal-alert-container');
+    const toastContainer = document.getElementById('toast-container');
+    const notifSound = document.getElementById('notifSound');
 
-    sidebarToggle.addEventListener("click", () => {
-        if (window.innerWidth > 768) {
-            sidebar.classList.toggle("collapsed");
-        } else {
-            sidebar.classList.toggle("visible");
-        }
-    });
-
-    function applyTheme(isDark) {
-        if (isDark) {
-            body.classList.add("dark-mode");
-            body.classList.remove("light-mode");
-            themeIcon.classList.remove("fa-moon");
-            themeIcon.classList.add("fa-sun");
-            localStorage.setItem("theme", "dark-mode");
-        } else {
-            body.classList.remove("dark-mode");
-            body.classList.add("light-mode");
-            themeIcon.classList.remove("fa-sun");
-            themeIcon.classList.add("fa-moon");
-            localStorage.setItem("theme", "light-mode");
-        }
+    function playSound() {
+      notifSound.currentTime = 0;
+      notifSound.play().catch(() => {});
     }
 
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark-mode") {
-        applyTheme(true);
-    } else {
-        body.classList.add("light-mode");
+    function showModalAlert(message, type) {
+      playSound();
+      const colors = {
+        success: 'background:#dcfce7;color:#166534;border:1px solid #86efac;',
+        error: 'background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;',
+        info: 'background:#dbeafe;color:#1e3a8a;border:1px solid #93c5fd;'
+      }[type] || 'background:#dbeafe;color:#1e3a8a;border:1px solid #93c5fd;';
+
+      modalAlertContainer.innerHTML = `
+        <div class="modal-alert" style="${colors}">
+          <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle'}"></i>
+          <span>${message}</span>
+        </div>`;
     }
 
-    themeToggle.addEventListener("click", () => {
-        const isCurrentlyDark = body.classList.contains("dark-mode");
-        applyTheme(!isCurrentlyDark);
-    });
+    function showToast(message, type) {
+      playSound();
+      const bg = {
+        success: '#16a34a',
+        error: '#dc2626',
+        info: '#2563eb'
+      }[type] || '#2563eb';
 
-    navItems.forEach((item) => {
-        item.addEventListener("click", () => {
-            const targetSectionId = item.getAttribute("data-section");
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.style.background = bg;
+      toast.innerHTML = `
+        <div class="flex items-center gap-2">
+          <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle'}"></i>
+          <span>${message}</span>
+        </div>
+        <button class="close-toast">&times;</button>
+      `;
+      toastContainer.appendChild(toast);
 
-            navItems.forEach((i) => i.classList.remove("active"));
-            item.classList.add("active");
+      toast.querySelector('.close-toast').addEventListener('click', () => {
+        toast.style.animation = 'fadeOut 0.4s forwards';
+        setTimeout(() => toast.remove(), 400);
+      });
 
-            contentSections.forEach((section) => section.classList.remove("active"));
-            
-            const targetSection = document.getElementById(targetSectionId);
-            if (targetSection) {
-                targetSection.classList.add("active");
-
-                const newTitle = targetSection.querySelector("h2") ? 
-                                 targetSection.querySelector("h2").textContent.trim() : 
-                                 'Dashboard';
-                pageTitleElement.textContent = newTitle;
-            }
-
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove("visible");
-            }
-        });
-    });
-
-    const activeSection = document.querySelector(".content-section.active");
-    if (activeSection && activeSection.querySelector("h2")) {
-        pageTitleElement.textContent = activeSection.querySelector("h2").textContent.trim();
+      setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.4s forwards';
+        setTimeout(() => toast.remove(), 400);
+      }, 4000);
     }
 
-    logoutBtn.addEventListener("click", () => {
-        alert("Logging out of TechStore Admin System. Thank you for your service!");
+    closeModal.onclick = () => modal.style.display = 'none';
+    cancelBtn.onclick = () => modal.style.display = 'none';
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      showModalAlert('Product saved successfully!', 'success');
+      showToast('Product added successfully!', 'success');
+      form.reset();
     });
-});
 
-function handleCrudAction(action) {
-    alert(`[${action}]: Action triggered! A modal form for input/editing would typically open here.`);
-}
-
-function confirmDelete() {
-    if (confirm("CONFIRM: Are you sure you want to DELETE this record? This action cannot be undone.")) {
-        handleCrudAction("DELETE");
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-      const addProductForm = document.getElementById('addProductForm');
-      const modalAlertContainer = document.getElementById('modal-alert-container');
-      const toastContainer = document.getElementById('toast-container');
-      const notifSound = document.getElementById('notifSound');
-
-      function playSound() {
-        notifSound.currentTime = 0;
-        notifSound.play().catch(() => {});
-      }
-
-      function showModalAlert(message, type) {
-        playSound();
-        const iconClass = {
-          success: 'fas fa-check-circle',
-          error: 'fas fa-times-circle',
-          info: 'fas fa-info-circle'
-        }[type] || 'fas fa-info-circle';
-
-        const alertClasses = {
-          success: 'bg-accent-green/10 text-accent-green border border-accent-green/30',
-          error: 'bg-danger-red/10 text-danger-red border border-danger-red/30',
-          info: 'bg-blue-100 text-blue-600 border border-blue-200'
-        }[type] || 'bg-blue-100 text-blue-600 border border-blue-200';
-
-        modalAlertContainer.innerHTML = `
-          <div class="modal-alert ${alertClasses}" role="alert">
-            <div class="flex items-center gap-2">
-              <i class="${iconClass} text-xl flex-shrink-0"></i>
-              <span class="text-sm font-medium leading-snug">${message}</span>
-            </div>
-          </div>
-        `;
-      }
-
-      function showToast(message, type) {
-        playSound(); 
-        const toast = document.createElement('div');
-        const icon = {
-          success: 'fa-check-circle text-white',
-          error: 'fa-times-circle text-white',
-          info: 'fa-info-circle text-white'
-        }[type] || 'fa-info-circle text-white';
-
-        const bg = {
-          success: 'bg-green-600',
-          error: 'bg-red-600',
-          info: 'bg-blue-600'
-        }[type] || 'bg-blue-600';
-
-        const borderColor = {
-          success: 'border-green-700',
-          error: 'border-red-700',
-          info: 'border-blue-700'
-        }[type] || 'border-blue-700';
-
-        toast.className = `toast ${bg} ${borderColor} border-l-4 text-white rounded-md shadow-md flex justify-between items-center p-3 mb-2 animate-fadeIn`;
-        toast.innerHTML = `
-          <div class="flex items-center gap-2">
-            <i class="fas ${icon} text-xl"></i>
-            <div class="font-medium">${message}</div>
-          </div>
-          <button class="close-toast font-bold text-white hover:opacity-70 transition" aria-label="Close">&times;</button>
-        `;
-
-        toastContainer.appendChild(toast);
-
-        toast.querySelector('.close-toast').addEventListener('click', () => {
-          toast.style.animation = "fadeOut 0.4s forwards";
-          setTimeout(() => toast.remove(), 400);
-        });
-
-        const duration = 4000;
-        setTimeout(() => {
-          toast.style.animation = "fadeOut 0.4s forwards";
-          setTimeout(() => toast.remove(), 400);
-        }, duration);
-      }
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
     });

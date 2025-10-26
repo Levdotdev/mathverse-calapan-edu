@@ -748,6 +748,16 @@ h2 {
 
   /* login modal */
 
+  .modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+  }
+  
   .input-wrapper {
       position: relative;
     }
