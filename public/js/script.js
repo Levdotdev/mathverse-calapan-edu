@@ -89,3 +89,33 @@ function confirmDelete() {
         handleCrudAction("DELETE");
     }
 }
+
+function openAddProductModal() {
+    document.getElementById('addProductModal').classList.remove('hidden');
+  }
+  function closeAddProductModal() {
+    document.getElementById('addProductModal').classList.add('hidden');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('addProductForm');
+    const toastContainer = document.getElementById('toast-container');
+    const notifSound = document.getElementById('notifSound');
+
+    function playSound() { notifSound.currentTime = 0; notifSound.play().catch(() => {}); }
+    function showToast(message, type) {
+      playSound();
+      const toast = document.createElement('div');
+      toast.className = `toast ${type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white`;
+      toast.innerHTML = `<div class="flex items-center gap-2"><i class="fas ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i><span>${message}</span></div><button class="close-toast">&times;</button>`;
+      toastContainer.appendChild(toast);
+      toast.querySelector('.close-toast').addEventListener('click', () => toast.remove());
+      setTimeout(() => { toast.style.animation = "fadeOut 0.4s forwards"; setTimeout(() => toast.remove(), 400); }, 4000);
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      closeAddProductModal();
+      showToast('Product successfully added!', 'success');
+    });
+  });
