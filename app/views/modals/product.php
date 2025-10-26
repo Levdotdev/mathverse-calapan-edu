@@ -1,4 +1,6 @@
-<div id="toast-container"></div>
+<div class="modal fade" id="addProduct" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div id="toast-container"></div>
   <audio id="notifSound" src="<?= base_url();?>public/resources/notif.mp3" preload="auto"></audio>
 
   <!-- Add Product Card -->
@@ -87,3 +89,5 @@
       </button>
     </div>
   </div>
+  </div>
+</div>
