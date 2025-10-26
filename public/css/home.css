@@ -749,7 +749,7 @@ h2 {
   /* login modal */
 
   #modal{
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position: fixed;
