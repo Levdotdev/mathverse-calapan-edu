@@ -53,38 +53,9 @@ class CrudController extends Controller {
             'page_delimiter' => '&page='
         ]);
         $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'admin/products/?q='.$q);
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
         $data['page'] = $this->pagination->paginate();
         $this->call->view('home', $data);
-    }
-
-    public function products(){
-        $page = 1;
-        if(isset($_GET['page']) && ! empty($_GET['page'])) {
-            $page = $this->io->get('page');
-        }
-
-        $q = '';
-        if(isset($_GET['q']) && ! empty($_GET['q'])) {
-            $q = trim($this->io->get('q'));
-        }
-
-        $records_per_page = 5;
-
-        $all = $this->ProductModel->products($q, $records_per_page, $page);
-        $data['all'] = $all['records'];
-        $total_rows = $all['total_rows'];
-        $this->pagination->set_options([
-            'first_link'     => 'First',
-            'last_link'      => 'Last',
-            'next_link'      => '→',
-            'prev_link'      => '←',
-            'page_delimiter' => '&page='
-        ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'admin/products/?q='.$q);
-        $data['page'] = $this->pagination->paginate();
-        $this->call->view('admin/products', $data);
     }
 
     public function create()
@@ -222,10 +193,10 @@ class CrudController extends Controller {
                 ];
 
                 $this->ProductModel->insert($data);
-                redirect('admin/products');
+                redirect();
         }
         else{
-            $this->call->view('admin/products');
+            $this->call->view('create');
         }
     }
 }

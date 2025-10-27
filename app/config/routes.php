@@ -63,7 +63,3 @@ $router->group('/auth', function() use ($router){
     $router->match('/password-reset', 'Auth::password_reset', ['POST', 'GET']);
     $router->match('/set-new-password', 'Auth::set_new_password', ['POST', 'GET']);
 });
-
-$router->group('/admin', function() use ($router){
-    $router->get('/products', 'CrudController::products');
-});
