@@ -90,117 +90,118 @@ function confirmDelete() {
     }
 }
 
-function openAddProductModal() {
-  const overlay = document.getElementById('addProductOverlay');
-  if (!overlay) return;
-  overlay.classList.add('open');
-  overlay.setAttribute('aria-hidden','false');
-  // trap focus (simple)
-  setTimeout(() => {
-    const first = overlay.querySelector('input,select,button,textarea');
-    if (first) first.focus();
-  }, 50);
-}
-function closeAddProductModal() {
-  const overlay = document.getElementById('addProductOverlay');
-  if (!overlay) return;
-  overlay.classList.remove('open');
-  overlay.setAttribute('aria-hidden','true');
-}
+document.addEventListener('DOMContentLoaded', () => {
+      const addProductForm = document.getElementById('addProductForm');
+      const modalAlertContainer = document.getElementById('modal-alert-container');
+      const saveBtn = document.getElementById('saveProductBtn');
+      const toastContainer = document.getElementById('toast-container');
+      const notifSound = document.getElementById('notifSound');
 
-/* Toast & modal alert system */
-(function(){
-  const form = document.getElementById('addProductForm');
-  const modalAlertContainer = document.getElementById('modal-alert-container');
-  const toastContainer = document.getElementById('toast-container');
-  const notifSound = document.getElementById('notifSound');
-
-  function playSound(){
-    if(!notifSound) return;
-    try{ notifSound.currentTime = 0; notifSound.play(); }catch(e){}
-  }
-
-  function showModalAlert(message, type='info') {
-    const div = document.createElement('div');
-    div.className = 'modal-alert ' + (type === 'success' ? 'alert-success' : (type==='error' ? 'alert-error' : 'alert-info'));
-    const icon = type==='success' ? 'fa-check-circle' : (type==='error' ? 'fa-times-circle' : 'fa-info-circle');
-    div.innerHTML = `<i class="fas ${icon}" style="font-size:18px"></i><div>${message}</div>`;
-    modalAlertContainer.innerHTML = '';
-    modalAlertContainer.appendChild(div);
-    playSound();
-    setTimeout(()=>{ if(modalAlertContainer.contains(div)) modalAlertContainer.removeChild(div); }, 4500);
-  }
-
-  function createToast(message, type='info') {
-    playSound();
-    const toast = document.createElement('div');
-    toast.className = 'toast ' + (type==='success' ? 'toast-success' : (type==='error' ? 'toast-error' : 'toast-info'));
-    toast.innerHTML = `
-      <div class="left"><i class="fas ${type==='success' ? 'fa-check-circle' : (type==='error' ? 'fa-times-circle' : 'fa-info-circle')}" style="font-size:18px"></i><div>${message}</div></div>
-      <button class="close-toast" aria-label="Close">&times;</button>
-    `;
-    toastContainer.appendChild(toast);
-    const remove = ()=>{
-      if(!toast.parentElement) return;
-      toast.style.transition = 'opacity .2s, transform .2s';
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateY(-8px)';
-      setTimeout(()=> toast.remove(), 220);
-    };
-    toast.querySelector('.close-toast').addEventListener('click', remove);
-    // auto remove
-    setTimeout(()=> {
-      toast.style.animation = 'none';
-      remove();
-    }, 4200);
-  }
-
-  // Form submission (demo: shows toast + closes modal)
-  if(form){
-    form.addEventListener('submit', function(e){
-      // Basic validation (already required attributes will help)
-      const name = (form.product_name?.value || '').trim();
-      if(!name){
-        showModalAlert('Please provide a product name.', 'error');
-        return;
+      function playSound() {
+        notifSound.currentTime = 0;
+        notifSound.play().catch(() => {});
       }
-      // Simulate save success
-      closeAddProductModal();
-      createToast('Product successfully added!', 'success');
-      // reset form
-      form.reset();
+
+      function showModalAlert(message, type) {
+        playSound();
+        const iconClass = {
+          success: 'fas fa-check-circle',
+          error: 'fas fa-times-circle',
+          info: 'fas fa-info-circle'
+        }[type] || 'fas fa-info-circle';
+
+        const alertClasses = {
+          success: 'bg-accent-green/10 text-accent-green border border-accent-green/30',
+          error: 'bg-danger-red/10 text-danger-red border border-danger-red/30',
+          info: 'bg-blue-100 text-blue-600 border border-blue-200'
+        }[type] || 'bg-blue-100 text-blue-600 border border-blue-200';
+
+        modalAlertContainer.innerHTML = `
+          <div class="modal-alert ${alertClasses}" role="alert">
+            <div class="flex items-center gap-2">
+              <i class="${iconClass} text-xl flex-shrink-0"></i>
+              <span class="text-sm font-medium leading-snug">${message}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      function showToast(message, type) {
+        playSound(); 
+        const toast = document.createElement('div');
+        const icon = {
+          success: 'fa-check-circle text-white',
+          error: 'fa-times-circle text-white',
+          info: 'fa-info-circle text-white'
+        }[type] || 'fa-info-circle text-white';
+
+        const bg = {
+          success: 'bg-green-600',
+          error: 'bg-red-600',
+          info: 'bg-blue-600'
+        }[type] || 'bg-blue-600';
+
+        const borderColor = {
+          success: 'border-green-700',
+          error: 'border-red-700',
+          info: 'border-blue-700'
+        }[type] || 'border-blue-700';
+
+        toast.className = `toast ${bg} ${borderColor} border-l-4 text-white rounded-md shadow-md flex justify-between items-center p-3 mb-2 animate-fadeIn`;
+        toast.innerHTML = `
+          <div class="flex items-center gap-2">
+            <i class="fas ${icon} text-xl"></i>
+            <div class="font-medium">${message}</div>
+          </div>
+          <button class="close-toast font-bold text-white hover:opacity-70 transition" aria-label="Close">&times;</button>
+        `;
+
+        toastContainer.appendChild(toast);
+
+        toast.querySelector('.close-toast').addEventListener('click', () => {
+          toast.style.animation = "fadeOut 0.4s forwards";
+          setTimeout(() => toast.remove(), 400);
+        });
+
+        const duration = 4000;
+        setTimeout(() => {
+          toast.style.animation = "fadeOut 0.4s forwards";
+          setTimeout(() => toast.remove(), 400);
+        }, duration);
+      }
+
+      addProductForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const productName = document.getElementById('product_name').value.trim();
+        const category = document.getElementById('category').value.trim();
+        const unitPrice = parseFloat(document.getElementById('unit_price').value.trim());
+        const productId = document.getElementById('product_id').value.trim();
+
+        if (!productName || !category || isNaN(unitPrice) || unitPrice <= 0) {
+          showModalAlert('Please ensure all required fields are filled correctly.', 'error');
+          showToast('Fill all required fields correctly.', 'error');
+          return;
+        }
+
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Saving...';
+        saveBtn.classList.add('opacity-75');
+
+        setTimeout(() => {
+          const success = Math.random() > 0.1;
+          if (success) {
+            showModalAlert(`Product ${productName} has been successfully registered.`, 'success');
+            showToast(`Product "${productName}" saved successfully!`, 'success');
+            addProductForm.reset();
+          } else {
+            showModalAlert('Save Failed: Please try again.', 'error');
+            showToast('Failed to save product. Try again.', 'error');
+          }
+
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '<i class="fas fa-save mr-2"></i> Save Product';
+          saveBtn.classList.remove('opacity-75');
+        }, 1500);
+      });
     });
-  }
-
-  // close on overlay click (but not when clicking card)
-  const overlay = document.getElementById('addProductOverlay');
-  if(overlay){
-    overlay.addEventListener('click', function(e){
-      if(e.target === overlay) closeAddProductModal();
-    });
-  }
-
-  // keyboard ESC to close
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){
-      const overlay = document.getElementById('addProductOverlay');
-      if(overlay && overlay.classList.contains('open')) closeAddProductModal();
-    }
-  });
-
-  // expose utilities (optional)
-  window.showToast = createToast;
-  window.showModalAlert = showModalAlert;
-})();
-
-document.getElementById("product_id").addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    e.preventDefault();
-  }
-});
-
-document.getElementById("unit_price").addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    e.preventDefault();
-  }
-});
