@@ -19,17 +19,17 @@
     <div class="ap-body">
       <div id="modal-alert-container" aria-live="polite"></div>
 
-      <form id="addProductForm" autocomplete="off">
+      <form id="addProductForm" action="<?=site_url('create'); ?>" autocomplete="off">
         <div class="form-row">
-          <label for="product_name">Product Name <span style="color:var(--danger-red);font-weight:800">*</span></label>
+          <label for="product_name">Product Name</label>
           <div class="input-wrapper">
-            <input id="product_name" name="product_name" class="form-input-field" placeholder="e.g., Ergonomic Wireless Mouse" required>
+            <input id="product_name" name="product_name" class="form-input-field" placeholder="Enter product name" required>
             <i class="fas fa-tag input-icon" aria-hidden="true"></i>
           </div>
         </div>
 
         <div class="form-row">
-          <label for="category">Category <span style="color:var(--danger-red);font-weight:800">*</span></label>
+          <label for="category">Category</label>
           <div class="input-wrapper">
             <select id="category" name="category" class="form-select-field" required>
               <option value="" disabled selected>Select a product category</option>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="form-row">
-          <label for="unit_price">Unit Price (PHP) <span style="color:var(--danger-red);font-weight:800">*</span></label>
+          <label for="unit_price">Unit Price (PHP)</label>
           <div class="input-wrapper">
             <input id="unit_price" name="unit_price" type="number" step="0.01" min="0.01" class="form-input-field" placeholder="0.00" required>
             <i class="fas fa-peso-sign input-icon" aria-hidden="true"></i>
@@ -54,12 +54,11 @@
         </div>
 
         <div class="form-row">
-          <label for="product_id">Barcode / SKU (Optional)</label>
+          <label for="product_id">Barcode</label>
           <div class="input-wrapper">
-            <input id="product_id" name="product_id" class="form-input-field" placeholder="Scan or enter unique product code">
+            <input id="product_id" name="product_id" class="form-input-field" placeholder="Scan unique product code" oninput="this.form.submit()">
             <i class="fas fa-barcode input-icon" aria-hidden="true"></i>
           </div>
-          <div style="margin-top:8px;font-size:12px;color:var(--clr-text-secondary)">If left blank, a system-generated ID will be assigned.</div>
         </div>
       </form>
     </div>
