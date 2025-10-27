@@ -222,10 +222,10 @@ class CrudController extends Controller {
                 ];
 
                 $this->ProductModel->insert($data);
-                redirect();
+                redirect('admin/products');
         }
         else{
-            $this->call->view('create');
+            $this->call->view('admin/products');
         }
     }
 }
