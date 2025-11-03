@@ -184,7 +184,6 @@ class CrudController extends Controller {
             $category = $this->io->post('category');
             $price = $this->io->post('unit_price');
 
-            
                 $data = [
                 'id' => $id,
                 'name' => $name,
