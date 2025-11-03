@@ -193,3 +193,9 @@ function closeAddProductModal() {
   window.showToast = createToast;
   window.showModalAlert = showModalAlert;
 })();
+
+document.getElementById("product_id").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
