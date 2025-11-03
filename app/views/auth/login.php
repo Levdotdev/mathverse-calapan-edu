@@ -13,7 +13,7 @@
     
     <link rel="stylesheet" href="<?= base_url();?>public/css/login.css">
 </head>
-<body>
+<body style="background-image: url('<?= base_url();?>public/resources/bg.jpg');>
 
     <div class="welcome-container" id="welcome-container">
         <div class="welcome-content">
