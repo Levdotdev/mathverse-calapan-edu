@@ -2,16 +2,15 @@
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /**
- * Controller: CrudController
+ * Controller: ProductController
  * 
  * Automatically generated via CLI.
  */
-class CrudController extends Controller {
+class ProductController extends Controller {
     public function __construct()
     {
         parent::__construct();
         $this->call->database();
-        $this->call->model('CrudModel');
         $this->call->model('ProductModel');
         if(segment(2) != 'logout') {
             $id = $this->lauth->get_user_id();
@@ -58,34 +57,24 @@ class CrudController extends Controller {
         $this->call->view('home', $data);
     }
 
-    public function create()
+    public function product()
     {
         if($this->io->method() == 'post'){
-            $name = $this->io->post('name');
-            $class = $this->io->post('class');
+            $id = $this->io->post('product_id');
+            $name = $this->io->post('product_name');
+            $category = $this->io->post('category');
+            $price = $this->io->post('unit_price');
 
-            $this->call->library('upload', $_FILES["fileToUpload"]);
-		    $this->upload
-			->max_size(5)
-			//->min_size(1)
-			->set_dir('uploads')
-			->allowed_extensions(array('png', 'jpg', 'gif'))
-			->allowed_mimes(array('image/png', 'image/jpeg', 'image/gif'))
-			->is_image()
-			->encrypt_name();
-
-            if($this->upload->do_upload()){
+            
                 $data = [
+                'id' => $id,
                 'name' => $name,
-                'class' => $class,
-                'pic' => $this->upload->get_filename()
-            ];
-                $this->CrudModel->insert($data);
+                'category' => $category,
+                'price' => $price
+                ];
+
+                $this->ProductModel->insert($data);
                 redirect();
-            }
-        }
-        else{
-            $this->call->view('create');
         }
     }
 
@@ -112,7 +101,7 @@ class CrudController extends Controller {
 
     function delete($id){
         if($this->lauth->get_role(get_user_id()) == "admin") {
-            $this->CrudModel->delete($id);
+            $this->ProductModel->delete($id);
             redirect('trash');
         }
     }
@@ -137,7 +126,7 @@ class CrudController extends Controller {
 
         $records_per_page = 5;
 
-        $all = $this->CrudModel->page_trash($q, $records_per_page, $page);
+        $all = $this->ProductModel->page_trash($q, $records_per_page, $page);
         $data['all'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
@@ -155,29 +144,8 @@ class CrudController extends Controller {
 
     function restore($id){
         if($this->lauth->get_role(get_user_id()) == "admin") {
-            $this->CrudModel->restore($id);
+            $this->ProductModel->restore($id);
             redirect('trash');
-        }
-    }
-
-    public function product()
-    {
-        if($this->io->method() == 'post'){
-            $id = $this->io->post('product_id');
-            $name = $this->io->post('product_name');
-            $category = $this->io->post('category');
-            $price = $this->io->post('unit_price');
-
-            
-                $data = [
-                'id' => $id,
-                'name' => $name,
-                'category' => $category,
-                'price' => $price
-                ];
-
-                $this->ProductModel->insert($data);
-                redirect();
         }
     }
 }

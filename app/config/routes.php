@@ -43,23 +43,30 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 |
 */
 
-$router->get('/', 'Auth::index');
-$router->get('/home', 'CrudController::index');
-$router->get('/trash', 'CrudController::trash');
-$router->get('/home-user', 'UserController::index');
-$router->get('/trash-user', 'UserController::trash');
-$router->match('/create', 'CrudController::product', ['GET', 'POST']);
-$router->match('/upload', 'CrudController::upload', ['GET', 'POST']);
-$router->match('/update/{id}', 'CrudController::update', ['GET', 'POST']);
-$router->match('/delete/{id}', 'CrudController::delete', ['GET', 'POST']);
-$router->match('/restore/{id}', 'CrudController::restore', ['GET', 'POST']);
-$router->match('/soft-delete/{id}', 'CrudController::soft_delete', ['GET', 'POST']);
+$router->group('', function() use ($router){
+    $router->get('/', 'Admin/ProductController::index');
+});
+
+$router->group('/product', function() use ($router){
+    $router->get('/home', 'Admin/ProductController::index');
+    $router->get('/trash', 'Admin/ProductController::trash');
+    $router->match('/create', 'Admin/ProductController::product', ['GET', 'POST']);
+    $router->match('/upload', 'Admin/ProductController::upload', ['GET', 'POST']);
+    $router->match('/update/{id}', 'Admin/ProductController::update', ['GET', 'POST']);
+    $router->match('/delete/{id}', 'Admin/ProductController::delete', ['GET', 'POST']);
+    $router->match('/restore/{id}', 'Admin/ProductController::restore', ['GET', 'POST']);
+    $router->match('/soft-delete/{id}', 'Admin/ProductController::soft_delete', ['GET', 'POST']);
+});
 
 $router->group('/auth', function() use ($router){
-    $router->match('/register', 'Auth::register', ['POST', 'GET']);
     $router->match('/verify-email', 'Auth::verify_email', ['POST', 'GET']);
     $router->match('/login', 'Auth::login', ['POST', 'GET']);
     $router->get('/logout', 'Auth::logout');
     $router->match('/password-reset', 'Auth::password_reset', ['POST', 'GET']);
     $router->match('/set-new-password', 'Auth::set_new_password', ['POST', 'GET']);
+});
+
+$router->group('/staff', function() use ($router){
+    $router->get('/home', 'UserController::index');
+    $router->get('/trash', 'UserController::trash');
 });

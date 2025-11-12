@@ -26,10 +26,6 @@ class Auth extends Controller {
         }
     }
 
-    public function index() {
-        $this->call->view('auth/login');
-    }  
-
     public function login() {
         if($this->form_validation->submitted()) {
             $email = $this->io->post('email');
