@@ -91,6 +91,17 @@
         </div>
     </div>
 
+    <iframe
+  width="600"
+  height="450"
+  style="border:0"
+  loading="lazy"
+  allowfullscreen
+  referrerpolicy="no-referrer-when-downgrade"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDUCNzWOZjLvRMRRFCIKgUzC-pfMBHuxUE
+    &q=C53H+Q7R">
+</iframe>
+
     <script src="<?= base_url();?>public/js/login.js"></script>
 </body>
 </html>
