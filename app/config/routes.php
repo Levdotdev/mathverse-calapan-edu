@@ -45,7 +45,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 $router->get('/', 'Auth::login');
 
-$router->group('', function() use ($router){
+$router->group('/', function() use ($router){
     $router->get('admin', 'Admin/ProductController::index');
 });
 
