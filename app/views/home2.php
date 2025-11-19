@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechStore Admin - POS System</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url();?>public/css/home.css">
@@ -12,10 +13,10 @@
     <aside id="sidebar">
     <div class="logo-section">
         <div class="logo-left">
-        <i class="fas fa-microchip"></i>
+        <i class="fas fa-laptop-code"></i>
         <span>TechStore</span>
         </div>
-        </div>
+    </div>
 
     <nav class="main-menu">
         <ul>
@@ -24,9 +25,19 @@
         <li data-section="inventory"><i class="fas fa-boxes"></i> <span>Inventory</span></li>
         <li data-section="users"><i class="fas fa-users"></i> <span>Users</span></li>
         <li data-section="transactions"><i class="fas fa-receipt"></i> <span>Transactions</span></li>
+        <li data-section="reports"><i class="fas fa-file-alt"></i> <span>Reports</span></li>
+        <li data-section="settings"><i class="fas fa-cog"></i> <span>Settings</span></li>
         </ul>
     </nav>
 
+    <div class="settings-menu">
+        <ul>
+        <li data-section="settings"><i class="fas fa-cog"></i> <span>Settings</span></li>
+        <li>
+            <button href="<?=site_url('auth/logout');?>" id="logout-btn"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></button>
+        </li>
+        </ul>
+    </div>
     </aside>
 
 
@@ -37,36 +48,14 @@
                 <span class="page-title">Dashboard Overview</span>
             </div>
             <div class="nav-right nav-icons">
-                <button id="notification-btn" title="Notifications">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">4</span>
-                </button>
-                
                 <button id="theme-toggle" title="Toggle Theme">
                     <i class="fas fa-moon"></i>
                 </button>
-                
-                <div class="profile-menu" id="profile-menu"> 
-                    <div class="user-profile" id="profile-toggle">
-                        <span class="user-name">Admin</span>
-                        <i class="fas fa-user-circle"></i>
-                        <i class="fas fa-chevron-down profile-chevron"></i>
-                    </div>
-                    
-                    <div class="settings-menu profile-dropdown">
-                        <div class="profile-dropdown-header">
-                            <h4>Admin</h4>
-                            <small>admin@techstore.com</small>
-                        </div>
-                        <ul>
-                            <li id="account-settings-btn">
-                                <i class="fas fa-cog"></i> <span>Account Settings</span>
-                            </li>
-                            <li id="logout-btn-trigger">
-                                <i class="fas fa-sign-out-alt"></i><span>Logout</span>
-                            </li>
-                        </ul>
-                    </div>
+        
+                <div class="user-profile">
+                    <span class="user-name">Admin</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
             </div>
         </header>
 
@@ -127,10 +116,7 @@
             <div id="products" class="content-section">
                 <h2>Product Management</h2>
                 <div class="toolbar">
-                <button class="action-btn primary-btn" id="addProductBtn">
-                <i class="fas fa-plus-circle"></i> Add Product
-                </button>
-                    <button class="action-btn"><i class="fas fa-barcode"></i> Print Barcode</button>
+                    <button class="action-btn primary-btn" onclick="openAddProductModal()"><i class="fas fa-plus-circle"></i> Add Product</button>
                     <div class="search-box">
                         <i class="fas fa-search search-icon"></i>
                         <input type="text" placeholder="Search Products...">
@@ -428,7 +414,6 @@
       include APP_DIR.'views/modals/account.php';
       include APP_DIR.'views/modals/logout.php';
     ?>
-
     <script src="<?= base_url();?>public/js/script.js"></script>
 </body>
 </html>
