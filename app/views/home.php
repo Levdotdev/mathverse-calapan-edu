@@ -393,9 +393,18 @@
     </main>
 
     <?php
-      include APP_DIR.'views/modals/product.php';
-      include APP_DIR.'views/modals/account.php';
-      include APP_DIR.'views/modals/logout.php';
+      include APP_DIR.'views/modals/_account.php';
+      include APP_DIR.'views/modals/_logout.php';
+      include APP_DIR.'views/modals/applicant_Delete.php';
+      include APP_DIR.'views/modals/applicant_Verify.php';
+      include APP_DIR.'views/modals/inventory_Export.php';
+      include APP_DIR.'views/modals/inventory_Import.php';
+      include APP_DIR.'views/modals/inventory_Update.php';
+      include APP_DIR.'views/modals/product_Add.php';
+      include APP_DIR.'views/modals/product_Delete.php';
+      include APP_DIR.'views/modals/product_Update.php';
+      include APP_DIR.'views/modals/staff_Barcode.php';
+      include APP_DIR.'views/modals/staff_Delete.php';
     ?>
 
     <script src="<?= base_url();?>public/js/script.js"></script>
