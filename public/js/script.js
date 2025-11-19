@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- 6. SIMULATED FORM SUBMISSIONS ---
-    window.handleFormSubmit = function(modalId, successMessage, type = 'success') {
+    window.handleFormSubmit = function(modalId) {
         const btn = document.querySelector(`#${modalId} .primary-btn`) || document.querySelector(`#${modalId} .delete-btn`);
         const originalText = btn.innerHTML;
         
@@ -163,9 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             btn.innerHTML = originalText;
             btn.disabled = false;
-            
+            form.submit();
             closeModal(modalId);
-            showToast(successMessage, type);
             
             // Optional: Reset form inputs if exists
             const form = document.querySelector(`#${modalId} form`);
