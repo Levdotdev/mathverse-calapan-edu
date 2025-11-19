@@ -12,6 +12,7 @@ class _AdminController extends Controller {
         parent::__construct();
         $this->call->database();
         $this->call->model('ProductModel');
+        $this->call->model('StaffModel');
         if(segment(2) != 'logout') {
             $id = $this->lauth->get_user_id();
             if(!logged_in()){
