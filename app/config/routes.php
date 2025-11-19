@@ -57,6 +57,8 @@ $router->match('/soft-delete/{id}', '_ProductController::soft_delete', ['GET', '
 
 $router->match('/update-stock', '_InventoryController::update', ['GET', 'POST']);
 
+$router->match('/user-delete/{id}', '_StaffController::soft_delete', ['GET', 'POST']);
+
 $router->group('/auth', function() use ($router){
     $router->match('/register', 'Auth::register', ['POST', 'GET']);
     $router->match('/verify-email', 'Auth::verify_email', ['POST', 'GET']);

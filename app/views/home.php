@@ -63,7 +63,7 @@
                             <li id="account-settings-btn">
                                 <i class="fas fa-cog"></i> <span>Account Settings</span>
                             </li>
-                            <li id="logout-btn-trigger">
+                            <li onclick="window.location.href='<?= site_url('auth/logout'); ?>'">
                                 <i class="fas fa-sign-out-alt"></i><span>Logout</span>
                             </li>
                         </ul>
@@ -241,7 +241,7 @@
                                     <td><?= $user['updated_at']; ?></td>
                                     <td>
                                         <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
-                                        <a href="<?= site_url('soft-delete/'.$user['id']); ?>" title="Delete User" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
+                                        <a href="<?= site_url('user-delete/'.$user['id']); ?>" title="Delete User" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

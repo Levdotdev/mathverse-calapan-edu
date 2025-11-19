@@ -65,12 +65,7 @@ class _InventoryController extends Controller {
             $id = $this->io->post('product_id');
             $stock = $this->io->post('stock');
 
-                $data = [
-                    'id' => $id,
-                    'stock' => $stock
-                ];
-
-                $this->ProductModel->update($data);
+                $this->ProductModel->update($id, $stock);
                 redirect();
         }
     }

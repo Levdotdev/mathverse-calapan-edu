@@ -30,6 +30,7 @@ class StaffModel extends Model {
 		    $x->like('username', '%'.$q.'%')
                 ->or_like('email', '%'.$q.'%');
 	    })
+        ->where('role', 'user')
 	    ->where_null('deleted_at')
         ->where_not_null('updated_at')
         ->order_by('updated_at', 'DESC');
