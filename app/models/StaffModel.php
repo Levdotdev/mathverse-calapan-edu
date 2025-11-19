@@ -31,6 +31,7 @@ class StaffModel extends Model {
                 ->or_like('email', '%'.$q.'%');
 	    })
 	    ->where_null('deleted_at')
+        ->where_not_null('updated_at')
         ->order_by('updated_at', 'DESC');
 
 

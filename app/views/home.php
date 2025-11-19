@@ -157,7 +157,7 @@
                                     <td>₱<?= $product['price']; ?></td>
                                     <td>
                                         <a href="<?= site_url('update/'.$product['id']); ?>" class="action-icon edit-btn" title="Update Stock" id="update-inventory-btn"><i class="fas fa-pen"></i></a>
-                                        <a href="<?= site_url('soft-delete/'.$product['id']); ?>" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
+                                        <a href="<?= site_url('soft-delete/'.$product['id']); ?>" title="Delete Product" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -195,7 +195,7 @@
                                     <td><?= $inventory['id']; ?></td>
                                     <td><?= $inventory['name']; ?></td>
                                     <td><?= $inventory['stock']; ?></td>
-                                    <td>₱<?= $inventory['last_restock']; ?></td>
+                                    <td><?= $inventory['last_restock']; ?></td>
                                     <?php if ($inventory['stock'] == 0): ?>
                                         <td><span class="status-badge error">Out of Stock</span></td>
 
@@ -238,10 +238,10 @@
                                     <td><?= $user['id']; ?></td>
                                     <td><?= $user['username']; ?></td>
                                     <td><?= $user['email']; ?></td>
-                                    <td>₱<?= $user['updated_at']; ?></td>
+                                    <td><?= $user['updated_at']; ?></td>
                                     <td>
                                         <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
-                                        <button class="action-icon delete-btn" title="Delete User" onclick="openModal('modal-delete-confirm')"><i class="fas fa-trash"></i></button>
+                                        <a href="<?= site_url('soft-delete/'.$user['id']); ?>" title="Delete User" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
