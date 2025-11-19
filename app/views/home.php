@@ -31,7 +31,7 @@
                 <li data-section="inventory"><i class="fas fa-boxes"></i> <span>Inventory</span></li>
                 <li data-section="users"><i class="fas fa-users"></i> <span>Users</span></li>
                 <li data-section="transactions"><i class="fas fa-receipt"></i> <span>Transactions</span></li>
-                <li data-section="applicants"><i class="fas fa-id-card"></i> <span>Applicants</span></li>
+                <!--<li data-section="applicants"><i class="fas fa-id-card"></i> <span>Applicants</span></li>-->
             </ul>
         </nav>
     </aside>
@@ -181,31 +181,33 @@
                     <table class="data-table">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Product Name</th>
                                 <th>Current Stock</th>
                                 <th>Last Restock</th>
-                                <th>Threshold</th>
                                 <th>Status</th>
                                 <th>History</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Smartwatch X30</td>
-                                <td>45</td>
-                                <td>2025-10-15</td>
-                                <td>20</td>
-                                <td><span class="status-badge success">In Stock</span></td>
-                                <td><button class="action-icon view-btn" title="View History"><i class="fas fa-history"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td>Gaming Mouse G9</td>
-                                <td>15</td>
-                                <td>2025-10-20</td>
-                                <td>10</td>
-                                <td><span class="status-badge warning">Low Stock</span></td>
-                                <td><button class="action-icon view-btn" title="View History"><i class="fas fa-history"></i></button></td>
-                            </tr>
+                            <?php foreach(html_escape($all) as $inventory): ?>
+                                <tr data-id="<?= $inventory['id']; ?>">
+                                    <td><?= $inventory['id']; ?></td>
+                                    <td><?= $inventory['name']; ?></td>
+                                    <td><?= $inventory['stock']; ?></td>
+                                    <td>₱<?= $inventory['last_restock']; ?></td>
+                                    <?php if ($qty == 0): ?>
+                                        <td><span class="status-badge error">Out of Stock</span></td>
+
+                                    <?php elseif ($qty >= 1 && $qty <= 4): ?>
+                                        <td><span class="status-badge warning">Low Stock</span></td>
+
+                                    <?php else: ?>
+                                        <td><span class="status-badge success">In Stock</span></td>
+                                    <?php endif; ?>
+                                    <td><button class="action-icon view-btn" title="View History"><i class="fas fa-history"></i></button></td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -223,34 +225,27 @@
                     <table class="data-table">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Name</th>
-                                <th>Username</th>
-                                <th>Role</th>
-                                <th>Status</th>
+                                <th>Email</th>
+                                <th>Verified At</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Lance Kianne Brito</td>
-                                <td>lance.ad</td>
-                                <td>Admin</td>
-                                <td><span class="status-badge success">Active</span></td>
-                                <td>
-                                    <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
-                                    <button class="action-icon delete-btn" title="Delete User" onclick="openModal('modal-delete-confirm')"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Fyra Nika Dudas</td>
-                                <td>fyra.cs</td>
-                                <td>Cashier</td>
-                                <td><span class="status-badge success">Active</span></td>
-                                <td>
-                                    <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
-                                    <button class="action-icon delete-btn" title="Delete User" onclick="openModal('modal-delete-confirm')"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
+                            <?php foreach(html_escape($users) as $user): ?>
+                                <tr data-id="<?= $user['id']; ?>">
+                                    <td><?= $user['id']; ?></td>
+                                    <td><?= $user['username']; ?></td>
+                                    <td><?= $user['email']; ?></td>
+                                    <td>₱<?= $user['updated_at']; ?></td>
+                                    <td>
+                                        <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
+                                        <button class="action-icon delete-btn" title="Delete User" onclick="openModal('modal-delete-confirm')"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
                         </tbody>
                     </table>
                 </div>

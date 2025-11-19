@@ -13,6 +13,7 @@
                             <div class="input-group"><i class="fas fa-layer-group"></i>
                                 <select id="category" name="category" class="form-select-field" required>
                                     <option value="" disabled selected>Select a product category</option>
+                                    <option value="Electronics">Electronics</option>
                                     <option value="Keyboard">Keyboard</option>
                                     <option value="Mouse">Mouse</option>
                                     <option value="Mousepad">Mousepad</option>
@@ -32,7 +33,7 @@
                     </div>
                     <div class="form-group">
                         <label for="product_id">Barcode</label>
-                        <div class="input-group"><i class="fas fa-barcode"></i><input type="text" id="product_id" name="product_id" placeholder="Scan unique product code"></div>
+                        <div class="input-group"><i class="fas fa-barcode"></i><input type="text" id="product_id" name="product_id" placeholder="Scan unique product code" required></div>
                     </div>
                 </form>
             </div>

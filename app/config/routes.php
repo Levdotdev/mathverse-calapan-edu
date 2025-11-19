@@ -44,16 +44,18 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 */
 
 $router->get('/', 'Auth::index');
-$router->get('/home', 'CrudController::index');
+$router->get('/home', '_AdminController::index');
 $router->get('/trash', 'CrudController::trash');
 $router->get('/home-user', 'UserController::index');
 $router->get('/trash-user', 'UserController::trash');
-$router->match('/create', 'CrudController::product', ['GET', 'POST']);
-$router->match('/upload', 'CrudController::upload', ['GET', 'POST']);
-$router->match('/update/{id}', 'CrudController::update', ['GET', 'POST']);
-$router->match('/delete/{id}', 'CrudController::delete', ['GET', 'POST']);
-$router->match('/restore/{id}', 'CrudController::restore', ['GET', 'POST']);
-$router->match('/soft-delete/{id}', 'CrudController::soft_delete', ['GET', 'POST']);
+$router->match('/create', '_ProductController::product', ['GET', 'POST']);
+$router->match('/upload', '_ProductController::upload', ['GET', 'POST']);
+$router->match('/update/{id}', '_ProductController::update', ['GET', 'POST']);
+$router->match('/delete/{id}', '_ProductController::delete', ['GET', 'POST']);
+$router->match('/restore/{id}', '_ProductController::restore', ['GET', 'POST']);
+$router->match('/soft-delete/{id}', '_ProductController::soft_delete', ['GET', 'POST']);
+
+$router->match('/update-stock', '_InventoryController::update', ['GET', 'POST']);
 
 $router->group('/auth', function() use ($router){
     $router->match('/register', 'Auth::register', ['POST', 'GET']);

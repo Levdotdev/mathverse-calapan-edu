@@ -2,8 +2,10 @@
         <div class="modal-content">
             <div class="modal-header"><h2>Record Stock Entry</h2><button class="modal-close-btn" onclick="closeModal('modal-record-stock')">&times;</button></div>
             <div class="modal-body">
-                <div class="form-group"><label>Product</label><div class="input-group"><i class="fas fa-box"></i><input type="text" placeholder="Scan Barcode or Search"></div></div>
-                <div class="form-group"><label>Quantity Added</label><div class="input-group"><input type="number" placeholder="0"></div></div>
+                <form id="form-record-stock" method="post" action="<?=site_url('update-stock'); ?>" autocomplete="off">
+                    <div class="form-group"><label for="product_id">Product</label><div class="input-group"><i class="fas fa-box"></i><input type="text" id="product_id" name="product_id" placeholder="Scan unique product code" required></div></div>
+                    <div class="form-group"><label for="stock">Quantity Added</label><div class="input-group"><input type="number" id="stock" name="stock" placeholder="1" step="1" min="1" required></div></div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button class="action-btn modal-cancel-btn" onclick="closeModal('modal-record-stock')">Cancel</button>
