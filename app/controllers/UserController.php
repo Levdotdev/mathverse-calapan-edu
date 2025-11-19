@@ -28,7 +28,7 @@ class UserController extends Controller {
     }
 
     public function index(){
-        $this->call->view('home_user', $data);
+        $this->call->view('home_user');
     }
 
     function trash(){
