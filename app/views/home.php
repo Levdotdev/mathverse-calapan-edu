@@ -72,7 +72,6 @@
 
         <section id="content-area">
             <div id="dashboard" class="content-section active">
-                <h2>Dashboard Overview</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-header">
@@ -125,7 +124,6 @@
             </div>
 
             <div id="products" class="content-section">
-                <h2>Product Management</h2>
                 <div class="toolbar">
                 <button class="action-btn primary-btn" id="addProductBtn">
                 <i class="fas fa-plus-circle"></i> Add Product
@@ -149,15 +147,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach(html_escape($all) as $char): ?>
-                                <tr>
-                                    <td><?= $char['id']; ?></td>
-                                    <td><?= $char['name']; ?></td>
-                                    <td><?= $char['category']; ?></td>
-                                    <td>₱<?= $char['price']; ?></td>
+                            <?php foreach(html_escape($all) as $product): ?>
+                                <tr data-id="<?= $product['id']; ?>">
+                                    <td><?= $product['id']; ?></td>
+                                    <td><?= $product['name']; ?></td>
+                                    <td><?= $product['category']; ?></td>
+                                    <td>₱<?= $product['price']; ?></td>
                                     <td>
-                                        <a href="<?= site_url('update/'.$char['id']); ?>" class="action-icon edit-btn"><i class="fas fa-pen"></i></a>
-                                        <a href="<?= site_url('soft-delete/'.$char['id']); ?>" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
+                                        <a href="<?= site_url('update/'.$product['id']); ?>" class="action-icon edit-btn"><i class="fas fa-pen"></i></a>
+                                        <a href="<?= site_url('soft-delete/'.$product['id']); ?>" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -167,7 +165,6 @@
             </div>
 
             <div id="inventory" class="content-section">
-                <h2>Inventory Management</h2>
                 <div class="toolbar">
                     <button class="action-btn primary-btn"><i class="fas fa-truck-loading"></i> Record New Stock</button>
                     <button class="action-btn"><i class="fas fa-upload"></i> Import (CSV)</button>
@@ -220,7 +217,6 @@
             </div>
 
             <div id="users" class="content-section">
-                <h2>User Management</h2>
                 <div class="toolbar">
                     <button class="action-btn primary-btn" onclick="handleCrudAction('CREATE/Add New User')"><i class="fas fa-user-plus"></i> Add New User</button>
                     <div class="search-box">
@@ -280,7 +276,6 @@
             </div>
 
             <div id="transactions" class="content-section">
-                <h2>Transaction Log</h2>
                 <div class="toolbar">
                     <input type="date" value="2025-10-22">
                     <select><option>All Cashiers</option><option>Fyra Nika Dudas</option><option>Lance Kianne Brito</option></select>
@@ -391,32 +386,6 @@
                                 <tr><td>5</td><td>Bluetooth Earbuds</td><td>120</td><td>47,880.00</td></tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-
-            <div id="settings" class="content-section">
-                <h2>System Settings</h2>
-                <div class="settings-grid">
-                    <div class="setting-card">
-                        <h3><i class="fas fa-store"></i> Store Information</h3>
-                        <p>Name: <strong>TechStore PH</strong></p>
-                        <p>Address: <strong>Mindoro, PH</strong></p>
-                        <p>Currency: <strong>PHP (₱)</strong></p>
-                        <button class="action-btn edit-btn"><i class="fas fa-pen"></i> Edit Info</button>
-                    </div>
-                    <div class="setting-card">
-                        <h3><i class="fas fa-tags"></i> Tax & Discounts</h3>
-                        <p>Tax Rate (VAT): <strong>12.00%</strong></p>
-                        <p>Senior/PWD Discount: <strong>20.00%</strong></p>
-                        <p>Loyalty Program: <strong>Active</strong></p>
-                        <button class="action-btn edit-btn"><i class="fas fa-sliders-h"></i> Adjust Rules</button>
-                    </div>
-                    <div class="setting-card">
-                        <h3><i class="fas fa-database"></i> Database Management</h3>
-                        <p>Last Backup: <strong>2025-10-22 01:00 AM</strong></p>
-                        <button class="action-btn primary-btn"><i class="fas fa-cloud-download-alt"></i> Backup Now</button>
-                        <button class="action-btn delete-btn"><i class="fas fa-cloud-upload-alt"></i> Restore</button>
                     </div>
                 </div>
             </div>

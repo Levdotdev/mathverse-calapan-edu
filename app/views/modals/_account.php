@@ -10,7 +10,7 @@
                         <label for="username">Username</label>
                         <div class="input-group">
                             <i class="fas fa-user"></i>
-                            <input type="text" id="username" value="Admin" readonly>
+                            <input type="text" id="username" value="Admin">
                         </div>
                     </div>
                     <div class="form-group">
