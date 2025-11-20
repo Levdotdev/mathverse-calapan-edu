@@ -63,16 +63,10 @@ class _InventoryController extends Controller {
     {
         if($this->io->method() == 'post'){
             $id = $this->io->post('product_id');
-            $stock = $this->io->post('stock');
             $char = $this->ProductModel->find($id);
-
-                $data = [
-                'id' => $id,
-                'stock' => $char['stock'] + $stock
-                ];
-
-                $this->ProductModel->update($data);
-                redirect();
+            $stock = $this->io->post('stock') + $char['stock'];
+            $this->ProductModel->update($id, $stock);
+            redirect();
         }
     }
 
