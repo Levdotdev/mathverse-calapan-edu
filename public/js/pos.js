@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
             showToast("Time In Successful. Terminal Unlocked.", "success");
             scanInput.focus();
         } else {
-            showToast("Time Out Successful. Redirecting to Login Page", "info");
             btnTimeIn.onclick = function () {
+                showToast("Time Out Successful. Redirecting to Login Page", "info");
                 window.location.href = "https://l-and-d-tech-store.gamer.gd/auth/logout";
             };
         }
