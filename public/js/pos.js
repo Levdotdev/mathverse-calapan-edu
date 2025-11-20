@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnTimeIn = document.getElementById('btn-time-in');
     const statusIndicator = document.getElementById('status-indicator');
 
-    // Auto-add icons
+    // --- CATEGORY ICONS ---
     const categoryIcons = {
         "Electronics": "fa-plug",
         "Keyboard": "fa-keyboard",
@@ -20,36 +20,45 @@ document.addEventListener("DOMContentLoaded", () => {
         "Accessories": "fa-box"
     };
 
-    // Assign icons
     products = products.map(p => ({ ...p, icon: categoryIcons[p.category] || "fa-box" }));
-
     renderProducts("all");
 
     let cart = [];
-    let isClockedIn = false;
     let itemToDeleteId = null;
 
+    // --- Clock / Attendance ---
+    let isClockedIn = localStorage.getItem('isClockedIn') === 'true';
+    updateLockUI();
+
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
     updateClock();
     setInterval(updateClock, 1000);
-    scanInput.focus();
 
-    // --- ATTENDANCE SYSTEM ---
     window.toggleAttendance = function() {
         isClockedIn = !isClockedIn;
+        localStorage.setItem('isClockedIn', isClockedIn);
+        updateLockUI();
+        if (isClockedIn) showToast("Time In Successful. Terminal Unlocked.", "success");
+        else showToast("Time Out Successful. Redirecting to Login Page", "info");
+        if (!isClockedIn) setTimeout(() => { window.location.href = "<?= site_url('auth/logout'); ?>"; }, 1000);
+    }
 
-        if (isClockedIn) {
+    function updateLockUI() {
+        if(isClockedIn){
             posContainer.classList.remove('locked');
             btnTimeIn.textContent = "Time Out";
             btnTimeIn.classList.replace('primary-btn', 'delete-btn');
-            statusIndicator.classList.replace('offline', 'online');
+            statusIndicator.classList.replace('offline','online');
             statusIndicator.title = "Clocked In";
-            showToast("Time In Successful. Terminal Unlocked.", "success");
-            scanInput.focus();
         } else {
-            btnTimeIn.onclick = function () {
-                showToast("Time Out Successful. Redirecting to Login Page", "info");
-                window.location.href = "https://l-and-d-tech-store.gamer.gd/auth/logout";
-            };
+            posContainer.classList.add('locked');
+            btnTimeIn.textContent = "Time In";
+            btnTimeIn.classList.replace('delete-btn','primary-btn');
+            statusIndicator.classList.replace('online','offline');
+            statusIndicator.title = "Clocked Out";
         }
     }
 
@@ -88,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!prod) return showToast("Product not found!", "error");
 
         const existing = cart.find(item => item.id === id);
-
         if (existing) {
             if (existing.qty < prod.stock) existing.qty++;
             else return showToast(`Cannot exceed stock (${prod.stock})`, "error");
@@ -99,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         beepSound.currentTime = 0;
         beepSound.play().catch(()=>{});
-
         updateCartUI();
         scanInput.value = '';
         scanInput.focus();
@@ -122,11 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let subtotal = 0;
 
         if (cart.length === 0) {
-            cartContainer.innerHTML = `
-                <div class="empty-cart-msg">
-                    <i class="fas fa-shopping-basket"></i>
-                    <p>Cart is empty</p>
-                </div>`;
+            cartContainer.innerHTML = `<div class="empty-cart-msg"><i class="fas fa-shopping-basket"></i><p>Cart is empty</p></div>`;
         } else {
             cart.forEach(item => {
                 const total = item.price * item.qty;
@@ -171,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('modal-delete-item').classList.remove('hidden');
         }
     }
-
     window.executeDeleteItem = function() {
         if(itemToDeleteId) {
             cart = cart.filter(x => x.id !== itemToDeleteId);
@@ -181,12 +183,10 @@ document.addEventListener("DOMContentLoaded", () => {
             itemToDeleteId = null;
         }
     }
-
     window.confirmClearCart = function() {
         if(cart.length === 0) return showToast("Cart is already empty", "error");
         document.getElementById('modal-clear-cart').classList.remove('hidden');
     }
-
     window.executeClearCart = function() {
         cart = [];
         updateCartUI();
@@ -209,7 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- PAYMENT & RECEIPT ---
     window.openPaymentModal = function() {
         if (cart.length === 0) return showToast("Cart is empty!", "error");
-
         document.getElementById('cash-received').value = '';
         document.getElementById('change-amount').innerText = '₱ 0.00';
         document.getElementById('btn-confirm-pay').disabled = true;
@@ -219,9 +218,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.calculateChange = function() {
         const cash = parseFloat(document.getElementById('cash-received').value) || 0;
-        const sub = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-        const total = sub * 1.12;
-        const change = cash - total;
+        const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+        const total = parseFloat((subtotal * 1.12).toFixed(2));
+        const change = parseFloat((cash - total).toFixed(2));
 
         const changeEl = document.getElementById('change-amount');
         const btn = document.getElementById('btn-confirm-pay');
@@ -242,68 +241,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.setExact = function() {
-        const sub = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-        setCash(parseFloat((sub * 1.12).toFixed(2)));
+        const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+        setCash(parseFloat((subtotal * 1.12).toFixed(2)));
     }
-
 
     window.processTransaction = function() {
-    // Close the payment modal
-    closeModal('modal-payment');
+        closeModal('modal-payment');
 
-    // Get current date and time for receipt
-    const recDate = new Date().toLocaleString();
-    document.getElementById('rec-date').innerText = recDate;
+        // Receipt
+        const recDate = new Date().toLocaleString();
+        document.getElementById('rec-date').innerText = recDate;
 
-    // Build receipt items HTML and calculate subtotal
-    let itemsHtml = '';
-    let subtotal = 0;
-    cart.forEach(item => {
-        const totalItem = item.price * item.qty;
-        subtotal += totalItem;
-        itemsHtml += `<div class="flex-between"><span>${item.name} x${item.qty}</span><span>${totalItem.toLocaleString()}</span></div>`;
-    });
+        let itemsHtml = '';
+        let subtotal = 0;
+        cart.forEach(item => {
+            const totalItem = item.price * item.qty;
+            subtotal += totalItem;
+            itemsHtml += `<div class="flex-between"><span>${item.name} x${item.qty}</span><span>${totalItem.toLocaleString()}</span></div>`;
+        });
 
-    // Calculate total with VAT
-    const total = subtotal * 1.12;
+        const total = parseFloat((subtotal * 1.12).toFixed(2));
+        const cash = parseFloat(document.getElementById('cash-received').value) || 0;
+        const change = parseFloat((cash - total).toFixed(2));
 
-    // Get cash received from input
-    const cash = parseFloat(document.getElementById('cash-received').value) || 0;
-    const change = cash - total;
+        document.getElementById('receipt-items').innerHTML = itemsHtml;
+        document.getElementById('rec-total').innerText = total.toLocaleString(undefined, {minimumFractionDigits: 2});
+        document.getElementById('rec-cash').innerText = cash.toLocaleString(undefined, {minimumFractionDigits: 2});
+        document.getElementById('rec-change').innerText = change.toLocaleString(undefined, {minimumFractionDigits: 2});
 
-    // Update receipt UI
-    document.getElementById('receipt-items').innerHTML = itemsHtml;
-    document.getElementById('rec-total').innerText = total.toLocaleString(undefined, { minimumFractionDigits: 2 });
-    document.getElementById('rec-cash').innerText = cash.toLocaleString(undefined, { minimumFractionDigits: 2 });
-    document.getElementById('rec-change').innerText = change.toLocaleString(undefined, { minimumFractionDigits: 2 });
+        document.getElementById('modal-receipt').classList.remove('hidden');
 
-    // Show receipt modal
-    document.getElementById('modal-receipt').classList.remove('hidden');
+        // Submit hidden form
+        document.getElementById('total').value = total.toFixed(2);
+        document.getElementById('cashier').value = 'cindy';
+        document.getElementById('items').value = JSON.stringify(cart.map(item => ({
+            product_id: item.id,
+            qty: item.qty,
+            price: item.price.toFixed(2)
+        })));
 
-    // --- Populate hidden form for backend ---
-    document.getElementById('total').value = total.toFixed(2);
-    document.getElementById('cashier').value = 'cindy'; // replace with dynamic cashier if needed
-    document.getElementById('items').value = JSON.stringify(cart.map(item => ({
-        product_id: item.id,
-        qty: item.qty,
-        price: item.price.toFixed(2)
-    })));
+        document.getElementById('transaction-form').submit();
 
-    // Submit hidden form to controller
-    document.getElementById('transaction-form').submit();
-
-    // Clear cart after transaction
-    cart = [];
-    updateCartUI();
-}
-
-
-    // --- UTILITIES ---
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        // Clear cart
+        cart = [];
+        updateCartUI();
     }
 
+    // --- UTILITIES ---
     window.showToast = function(msg, type) {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -322,7 +306,8 @@ document.addEventListener("DOMContentLoaded", () => {
     themeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
         document.body.classList.toggle("light-mode");
-        const isDark = document.body.classList.contains("dark-mode");
-        themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        themeToggle.innerHTML = document.body.classList.contains("dark-mode")
+            ? '<i class="fas fa-sun"></i>'
+            : '<i class="fas fa-moon"></i>';
     });
 });
