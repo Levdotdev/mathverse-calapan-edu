@@ -44,10 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             posContainer.classList.add('locked');
             btnTimeIn.textContent = "Time In";
+            btnTimeIn.onclick = "window.location.href='https://l-and-d-tech-store.gamer.gd/auth/logout'"
             btnTimeIn.classList.replace('delete-btn', 'primary-btn');
-            statusIndicator.classList.replace('online', 'offline');
-            statusIndicator.title = "Clocked Out";
-            showToast("Time Out Successful. Terminal Locked.", "info");
+            showToast("Time Out Successful. Redirecting to Login Page", "info");
         }
     }
 
