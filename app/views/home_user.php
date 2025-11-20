@@ -32,7 +32,7 @@
                 <span class="status-dot offline" id="status-indicator" title="Clocked Out"></span>
             </div>
             <button id="theme-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
-            <button id="btn-time-in" class="action-btn primary-btn">Time In</button>
+            <button id="btn-time-in" class="action-btn primary-btn" onclick="toggleAttendance()">Time In</button>
             </div>
     </header>
 
