@@ -76,4 +76,9 @@ class ProductModel extends Model {
             return $data;
         }
     }
+
+    public function stock() {
+            return $this->db->table('products')->where_null('deleted_at')
+                ->order_by('category', 'DESC')->get_all();
+    }
 }
