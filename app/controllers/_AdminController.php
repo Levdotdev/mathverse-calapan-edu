@@ -24,7 +24,7 @@ class _AdminController extends Controller {
                 }
             }
             else if(logged_in() && $this->lauth->get_role($id) == "user") {
-                redirect('home-user');
+                redirect('pos');
             }
         }
     }

@@ -8,25 +8,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusIndicator = document.getElementById('status-indicator');
     
     // --- 1. MOCK DATA ---
-    const products = [
-        { id: '728725969005', name: 'Origami Mouse', price: 8999.00, category: 'Mouse', icon: 'fa-mouse' },
-        { id: '649275804502', name: 'Redragon Gloria Pro', price: 1299.00, category: 'Keyboard', icon: 'fa-keyboard' },
-        { id: 'KFF1T2358', name: 'VR Shinecon', price: 3450.00, category: 'Electronics', icon: 'fa-tv' },
-        { id: 'RDHA300-W22022500515', name: 'Redragon Scepter Pro', price: 1850.00, category: 'Accessories', icon: 'fa-cog' },
-        { id: '438360C260A0554', name: 'Rapoo C260', price: 1135.00, category: 'Webcam', icon: 'fa-video' },
-        { id: '6931407602891', name: 'Flydigi Vader 4 Pro', price: 3265.00, category: 'Controller', icon: 'fa-gamepad' },
-        { id: '6922621507086', name: '8bitdo Ultimate 2 Bluetooth Controller', price: 2192.00, category: 'Controller', icon: 'fa-gamepad' },
-        { id: '12503224001426', name: 'Gamesir Cyclone 2 Charging Dock', price: 559.00, category: 'Accessories', icon: 'fa-cog' },
-        { id: '6922621505068', name: '8bitdo Case', price: 405.00, category: 'Accessories', icon: 'fa-cog' },
-        { id: '6931407602426', name: 'Flydigi Vader 4 Pro Dock', price: 500.00, category: 'Accessories', icon: 'fa-cog' }
-    ];
+    let products = []; // initially empty
+
+async function loadProductsFromDB() {
+    try {
+        const res = await fetch("<?= base_url('pos'); ?>");
+        products = await res.json();
+
+        // If your DB doesn't store 'icon', assign default icons:
+        products = products.map(p => ({
+            ...p,
+            icon: p.icon ? p.icon : "fa-box"
+        }));
+
+        renderProducts('all');
+    } catch (error) {
+        console.error("Failed to load products", error);
+        showToast("Cannot load products from server!", "error");
+    }
+}
+
 
     let cart = [];
     let isClockedIn = false;
     let itemToDeleteId = null; // Store ID for delete confirmation
 
     // --- 2. INITIALIZATION ---
-    renderProducts('all');
+    loadProductsFromDB();
     updateClock();
     setInterval(updateClock, 1000);
     scanInput.focus(); // Auto focus on load

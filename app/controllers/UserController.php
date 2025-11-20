@@ -22,7 +22,7 @@ class UserController extends Controller {
                 }
             }
             else if(logged_in() && $this->lauth->get_role($id) == "admin") {
-                redirect('home');
+                redirect('');
             }
         }
     }
@@ -31,32 +31,9 @@ class UserController extends Controller {
         $this->call->view('home_user');
     }
 
-    function trash(){
-        $page = 1;
-        if(isset($_GET['page']) && ! empty($_GET['page'])) {
-            $page = $this->io->get('page');
-        }
-
-        $q = '';
-        if(isset($_GET['q']) && ! empty($_GET['q'])) {
-            $q = trim($this->io->get('q'));
-        }
-
-        $records_per_page = 5;
-
-        $all = $this->CrudModel->page_trash($q, $records_per_page, $page);
-        $data['all'] = $all['records'];
-        $total_rows = $all['total_rows'];
-        $this->pagination->set_options([
-            'first_link'     => 'First',
-            'last_link'      => 'Last',
-            'next_link'      => '→',
-            'prev_link'      => '←',
-            'page_delimiter' => '&page='
-        ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'trash-user/?q='.$q);
-        $data['page'] = $this->pagination->paginate();
-        $this->call->view('trash_user', $data);
+    public function getProducts()
+    {
+        $products = $this->ProductModel->all();
+        return $this->response->setJSON($products);
     }
 }

@@ -46,8 +46,6 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 $router->get('/', 'Auth::index');
 $router->get('/home', '_AdminController::index');
 $router->get('/trash', 'CrudController::trash');
-$router->get('/home-user', 'UserController::index');
-$router->get('/trash-user', 'UserController::trash');
 $router->match('/create', '_ProductController::product', ['GET', 'POST']);
 $router->match('/upload', '_ProductController::upload', ['GET', 'POST']);
 $router->match('/update/{id}', '_ProductController::update', ['GET', 'POST']);
@@ -58,6 +56,10 @@ $router->match('/soft-delete/{id}', '_ProductController::soft_delete', ['GET', '
 $router->match('/update-stock', '_InventoryController::update', ['GET', 'POST']);
 
 $router->match('/user-delete/{id}', '_StaffController::soft_delete', ['GET', 'POST']);
+
+$router->get('/pos', 'UserController::index');
+$routes->get('/pos/products', 'UserController::getProducts');
+
 
 $router->group('/auth', function() use ($router){
     $router->match('/register', 'Auth::register', ['POST', 'GET']);
