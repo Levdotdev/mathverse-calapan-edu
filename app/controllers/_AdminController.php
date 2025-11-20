@@ -72,7 +72,7 @@ class _AdminController extends Controller {
         $data['page'] = $this->pagination->paginate();
 
         $all = $this->TransactionModel->transactions($q, $records_per_page, $page);
-        $data['all'] = $all['records'];
+        $data['transactions'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
             'first_link'     => 'First',

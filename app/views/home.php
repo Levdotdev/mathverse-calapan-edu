@@ -262,25 +262,24 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Date/Time</th>
+                                <th>Timestamp</th>
                                 <th>Cashier</th>
                                 <th>Total (₱)</th>
-                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>TRX-00101</td>
-                                <td>2025-10-22 11:45 AM</td>
-                                <td>Fyra Nika Dudas</td>
-                                <td>3,500.00</td>
-                                <td><span class="status-badge success">Completed</span></td>
-                                <td>
-                                    <button class="action-icon view-btn" title="Print Receipt" onclick="openModal('modal-print-receipt')"><i class="fas fa-eye"></i></button>
-                                    <button class="action-icon refund-btn" title="Revert/Void" onclick="openModal('modal-revert-confirm')"><i class="fas fa-undo-alt"></i></button>
-                                </td>
-                            </tr>
+                            <?php foreach(html_escape($transactions) as $transaction): ?>
+                                <tr data-id="<?= $transaction['id']; ?>">
+                                    <td><?= $transaction['id']; ?></td>
+                                    <td><?= $transaction['date']; ?></td>
+                                    <td><?= $transaction['cashier']; ?></td>
+                                    <td><?= $transaction['total']; ?></td>
+                                    <td>
+                                        <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

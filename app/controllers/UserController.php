@@ -52,8 +52,7 @@ class UserController extends Controller {
                 } else {
                     $this->session->set_flashdata('error', 'Something went wrong.');
                 }*/
-
-                redirect();
+            redirect('pos');
         }
     }
 }
