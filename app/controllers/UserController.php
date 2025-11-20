@@ -30,12 +30,6 @@ class UserController extends Controller {
     }
 
     public function index(){
-        $data['products'] = $this->ProductModel->stock();
-        $this->call->view('home_user', $data);
-    }
-
-    public function transaction()
-    {
         if($this->io->method() == 'post'){
             $total = $this->io->post('total');
             $name = $this->io->post('cashier');
@@ -54,5 +48,12 @@ class UserController extends Controller {
                 }*/
             redirect('pos');
         }
+        $data['products'] = $this->ProductModel->stock();
+        $this->call->view('home_user', $data);
+    }
+
+    public function transaction()
+    {
+        
     }
 }
