@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const posContainer = document.getElementById('pos-container');
     const btnTimeIn = document.getElementById('btn-time-in');
     const statusIndicator = document.getElementById('status-indicator');
-    
+
     // Auto-add icons
     const categoryIcons = {
         "Electronics": "fa-plug",
@@ -20,29 +20,23 @@ document.addEventListener("DOMContentLoaded", () => {
         "Accessories": "fa-box"
     };
 
-    // Apply icons to PHP database products
-    products = products.map(p => ({
-        ...p,
-        icon: categoryIcons[p.category] || "fa-box"
-    }));
+    // Assign icons
+    products = products.map(p => ({ ...p, icon: categoryIcons[p.category] || "fa-box" }));
 
     renderProducts("all");
 
-
-
     let cart = [];
     let isClockedIn = false;
-    let itemToDeleteId = null; // Store ID for delete confirmation
+    let itemToDeleteId = null;
 
-    // --- 2. INITIALIZATION ---
     updateClock();
     setInterval(updateClock, 1000);
-    scanInput.focus(); // Auto focus on load
+    scanInput.focus();
 
-    // --- 3. ATTENDANCE SYSTEM ---
+    // --- ATTENDANCE SYSTEM ---
     window.toggleAttendance = function() {
         isClockedIn = !isClockedIn;
-        
+
         if (isClockedIn) {
             posContainer.classList.remove('locked');
             btnTimeIn.textContent = "Time Out";
@@ -59,9 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- 4. PRODUCT RENDERER ---
+    // --- PRODUCT RENDERER ---
     window.filterCategory = function(category) {
-        // Update Tabs
         document.querySelectorAll('.cat-btn').forEach(btn => {
             btn.classList.remove('active');
             if(btn.innerText === (category === 'all' ? 'All' : category)) btn.classList.add('active');
@@ -72,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderProducts(category) {
         productGrid.innerHTML = '';
         const filtered = category === 'all' ? products : products.filter(p => p.category === category);
-        
+
         filtered.forEach(prod => {
             const card = document.createElement('div');
             card.className = 'product-card';
@@ -81,36 +74,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 <i class="fas ${prod.icon} prod-icon"></i>
                 <div class="prod-name">${prod.name}</div>
                 <div class="prod-price">₱${prod.price.toLocaleString()}</div>
-                <div class="prod-stock">ID: ${prod.id}</div>
+                <div class="prod-stock">Stock: ${prod.stock}</div>
             `;
             productGrid.appendChild(card);
         });
     }
 
-    // --- 5. CART LOGIC ---
+    // --- CART LOGIC ---
     window.addToCart = function(id) {
         if (!isClockedIn) return;
 
         const prod = products.find(p => p.id === id);
-        if (!prod) {
-            showToast("Product not found!", "error");
-            return;
+        if (!prod) return showToast("Product not found!", "error");
+
+        const existing = cart.find(item => item.id === id);
+
+        if (existing) {
+            if (existing.qty < prod.stock) existing.qty++;
+            else return showToast(`Cannot exceed stock (${prod.stock})`, "error");
+        } else {
+            if (prod.stock > 0) cart.unshift({ ...prod, qty: 1 });
+            else return showToast("Out of stock", "error");
         }
 
-        // Play Beep
         beepSound.currentTime = 0;
         beepSound.play().catch(()=>{});
 
-        const existing = cart.find(item => item.id === id);
-        if (existing) {
-            existing.qty++;
-        } else {
-            cart.push({ ...prod, qty: 1 });
-        }
-        
         updateCartUI();
         scanInput.value = '';
         scanInput.focus();
+    }
+
+    window.adjustQty = function(id, change) {
+        const item = cart.find(x => x.id === id);
+        if (item) {
+            const prod = products.find(p => p.id === id);
+            const newQty = item.qty + change;
+            if (newQty > prod.stock) return showToast(`Cannot exceed stock (${prod.stock})`, "error");
+            item.qty = newQty;
+            if (item.qty <= 0) initiateDeleteItem(id);
+            else updateCartUI();
+        }
     }
 
     function updateCartUI() {
@@ -127,13 +131,14 @@ document.addEventListener("DOMContentLoaded", () => {
             cart.forEach(item => {
                 const total = item.price * item.qty;
                 subtotal += total;
-                
+
                 const el = document.createElement('div');
                 el.className = 'cart-item';
                 el.innerHTML = `
                     <div class="item-info">
                         <h4>${item.name}</h4>
                         <small>@ ₱${item.price.toLocaleString()}</small>
+                        <small>Stock: ${item.stock}</small>
                     </div>
                     <div class="item-controls">
                         <div class="qty-control">
@@ -149,37 +154,21 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // Math
         const vat = subtotal * 0.12;
         const total = subtotal + vat;
-
         document.getElementById('summary-subtotal').innerText = `₱ ${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
         document.getElementById('summary-vat').innerText = `₱ ${vat.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
         document.getElementById('summary-total').innerText = `₱ ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        
-        // Update Payment Modal Total
         document.getElementById('pay-modal-total').innerText = `₱ ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
     }
 
-    window.adjustQty = function(id, change) {
-        const item = cart.find(x => x.id === id);
-        if (item) {
-            item.qty += change;
-            if (item.qty <= 0) initiateDeleteItem(id); // If qty drops to 0, ask to delete
-            else updateCartUI();
-        }
-    }
-
-    // --- NEW: CONFIRMATION MODALS ---
-
-    // 1. Delete Single Item
+    // --- DELETE ITEM / CLEAR CART ---
     window.initiateDeleteItem = function(id) {
         itemToDeleteId = id;
         const item = cart.find(x => x.id === id);
         if(item) {
             document.getElementById('del-item-name').innerText = item.name;
-            const modal = document.getElementById('modal-delete-item');
-            modal.classList.remove('hidden');
+            document.getElementById('modal-delete-item').classList.remove('hidden');
         }
     }
 
@@ -193,14 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 2. Clear Entire Cart
     window.confirmClearCart = function() {
-        if(cart.length === 0) {
-            showToast("Cart is already empty", "error");
-            return;
-        }
-        const modal = document.getElementById('modal-clear-cart');
-        modal.classList.remove('hidden');
+        if(cart.length === 0) return showToast("Cart is already empty", "error");
+        document.getElementById('modal-clear-cart').classList.remove('hidden');
     }
 
     window.executeClearCart = function() {
@@ -210,54 +194,39 @@ document.addEventListener("DOMContentLoaded", () => {
         showToast("Cart cleared", "info");
     }
 
-    // --- 6. SCANNER SIMULATION ---
+    // --- SCANNER ---
     scanInput.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             const query = this.value.trim();
             if (query) {
-                // Check if it matches an ID exactly (Barcode scan behavior)
                 const directMatch = products.find(p => p.id === query);
-                if (directMatch) {
-                    addToCart(directMatch.id);
-                } else {
-                    // FIXED: Use Toast instead of standard alert
-                    showToast("Simulation: In real app, this searches db.", "info");
-                }
+                if (directMatch) addToCart(directMatch.id);
+                else showToast("Simulation: In real app, this searches db.", "info");
             }
         }
     });
 
-    // --- 7. PAYMENT & RECEIPT ---
+    // --- PAYMENT & RECEIPT ---
     window.openPaymentModal = function() {
-        if (cart.length === 0) {
-            showToast("Cart is empty!", "error");
-            return;
-        }
+        if (cart.length === 0) return showToast("Cart is empty!", "error");
+
         document.getElementById('cash-received').value = '';
         document.getElementById('change-amount').innerText = '₱ 0.00';
         document.getElementById('btn-confirm-pay').disabled = true;
-        
-        // Explicitly show modal
-        const modal = document.getElementById('modal-payment');
-        modal.classList.remove('hidden');
-        
-        // Focus input
+        document.getElementById('modal-payment').classList.remove('hidden');
         setTimeout(() => document.getElementById('cash-received').focus(), 100);
     }
 
     window.calculateChange = function() {
         const cash = parseFloat(document.getElementById('cash-received').value) || 0;
-        
-        // Calculate total from cart again to be safe
         const sub = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-        const total = sub + (sub * 0.12);
-
+        const total = sub * 1.12;
         const change = cash - total;
+
         const changeEl = document.getElementById('change-amount');
         const btn = document.getElementById('btn-confirm-pay');
-
         changeEl.innerText = `₱ ${change.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        
+
         if (change >= 0) {
             changeEl.style.color = "var(--clr-success)";
             btn.disabled = false;
@@ -274,40 +243,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.setExact = function() {
         const sub = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-        const total = sub + (sub * 0.12);
-        setCash(total.toFixed(2));
+        setCash((sub * 1.12).toFixed(2));
     }
 
     window.processTransaction = function() {
         closeModal('modal-payment');
-        
-        // Generate Receipt
+
         const recDate = new Date().toLocaleString();
         document.getElementById('rec-date').innerText = recDate;
-        
+
         let itemsHtml = '';
         let sub = 0;
         cart.forEach(item => {
             const t = item.price * item.qty;
             sub += t;
-            itemsHtml += `
-                <div class="flex-between">
-                    <span>${item.name} x${item.qty}</span>
-                    <span>${t.toLocaleString()}</span>
-                </div>`;
+            itemsHtml += `<div class="flex-between"><span>${item.name} x${item.qty}</span><span>${t.toLocaleString()}</span></div>`;
         });
         const total = sub * 1.12;
         const cash = parseFloat(document.getElementById('cash-received').value);
-        
+
         document.getElementById('receipt-items').innerHTML = itemsHtml;
         document.getElementById('rec-total').innerText = total.toLocaleString(undefined, {minimumFractionDigits:2});
         document.getElementById('rec-cash').innerText = cash.toLocaleString(undefined, {minimumFractionDigits:2});
         document.getElementById('rec-change').innerText = (cash - total).toLocaleString(undefined, {minimumFractionDigits:2});
 
-        const modal = document.getElementById('modal-receipt');
-        modal.classList.remove('hidden');
+        document.getElementById('modal-receipt').classList.remove('hidden');
 
-        // Reset Cart
         cart = [];
         updateCartUI();
     }
@@ -330,8 +291,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.closeModal = function(id) {
         document.getElementById(id).classList.add('hidden');
     }
-    
-    // Theme Toggle (Reusing logic)
+
+    // Theme toggle
     const themeToggle = document.getElementById("theme-toggle");
     themeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
