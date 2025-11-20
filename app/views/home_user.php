@@ -49,6 +49,12 @@
                     <button class="cat-btn" onclick="filterCategory('Electronics')">Electronics</button>
                     <button class="cat-btn" onclick="filterCategory('Accessories')">Accessories</button>
                     <button class="cat-btn" onclick="filterCategory('Peripherals')">Peripherals</button>
+                    <button class="cat-btn" onclick="filterCategory('Electronics')">Electronics</button>
+                    <button class="cat-btn" onclick="filterCategory('Accessories')">Accessories</button>
+                    <button class="cat-btn" onclick="filterCategory('Peripherals')">Peripherals</button>
+                    <button class="cat-btn" onclick="filterCategory('Electronics')">Electronics</button>
+                    <button class="cat-btn" onclick="filterCategory('Accessories')">Accessories</button>
+                    <button class="cat-btn" onclick="filterCategory('Peripherals')">Peripherals</button>
                 </div>
             </div>
 
@@ -197,6 +203,6 @@
         </div>
     </div>
 
-    <script src="<?= base_url();?>public/js/pos.js">
+    <script src="<?= base_url();?>public/js/pos.js"></script>
 </body>
 </html>
