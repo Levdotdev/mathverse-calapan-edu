@@ -203,6 +203,10 @@
         </div>
     </div>
 
+    <script>
+        const products = <?= json_encode($products); ?>;
+    </script>
+
     <script src="<?= base_url();?>public/js/pos.js"></script>
 </body>
 </html>

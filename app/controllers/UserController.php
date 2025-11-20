@@ -28,12 +28,7 @@ class UserController extends Controller {
     }
 
     public function index(){
-        $this->call->view('home_user');
-    }
-
-    public function getProducts()
-    {
         $products = $this->ProductModel->all();
-        return $this->response->setJSON($products);
+        $this->call->view('home_user', $products);
     }
 }
