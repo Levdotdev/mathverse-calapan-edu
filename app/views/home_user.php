@@ -162,11 +162,7 @@
                 </div>
                 <div class="receipt-footer">
                     <p>Thank you for your purchase!</p>
-                    <i class="fas fa-barcode"></i>
                 </div>
-            </div>
-            <div class="modal-footer center-footer">
-                <button class="action-btn primary-btn" onclick="closeModal('modal-receipt')">New Transaction</button>
             </div>
         </div>
     </div>

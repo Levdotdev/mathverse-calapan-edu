@@ -280,7 +280,9 @@ document.addEventListener("DOMContentLoaded", () => {
             price: item.price.toFixed(2)
         })));
 
-        document.getElementById('transaction-form').submit();
+        setTimeout(() => {
+            document.getElementById('transaction-form').submit();
+        }, 3000);
 
         // Clear cart
         cart = [];
