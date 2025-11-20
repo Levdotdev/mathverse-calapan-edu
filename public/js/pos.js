@@ -10,23 +10,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- 1. MOCK DATA ---
     let products = []; // initially empty
 
-async function loadProductsFromDB() {
-    try {
-        const res = await fetch("<?= base_url('pos/products'); ?>");
-        products = await res.json();
+    // Auto icons based on category
+    const categoryIcons = {
+        "Electronics": "fa-plug",
+        "Keyboard": "fa-keyboard",
+        "Mouse": "fa-computer-mouse",
+        "Controller": "fa-gamepad",
+        "Speaker": "fa-volume-high",
+        "Headset": "fa-headphones",
+        "Microphone": "fa-microphone",
+        "Webcam": "fa-video",
+        "Accessories": "fa-box"
+    };
 
-        // If your DB doesn't store 'icon', assign default icons:
-        products = products.map(p => ({
-            ...p,
-            icon: p.icon ? p.icon : "fa-box"
-        }));
+    // Assign default icon automatically
+    products = products.map(p => ({
+        ...p,
+        icon: categoryIcons[p.category] || "fa-box"
+    }));
 
-        renderProducts('all');
-    } catch (error) {
-        console.error("Failed to load products", error);
-        showToast("Cannot load products from server!", "error");
-    }
-}
+
+    renderProducts('all');
 
 
     let cart = [];
@@ -34,7 +38,6 @@ async function loadProductsFromDB() {
     let itemToDeleteId = null; // Store ID for delete confirmation
 
     // --- 2. INITIALIZATION ---
-    loadProductsFromDB();
     updateClock();
     setInterval(updateClock, 1000);
     scanInput.focus(); // Auto focus on load
