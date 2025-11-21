@@ -85,9 +85,9 @@ class _AdminController extends Controller {
         $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
         $data['page'] = $this->pagination->paginate();
 
-        $data['sales'] = $this->db->table('transactions')->select_sum('total')->get();
-        $data['sold'] = $this->db->table('products')->select_sum('sold')->get();
-        $data['low_stock'] = $this->db->table('products')->count();
+        $data['sales'] = $this->db->table('transactions')->select_sum('total', 'total')->get();
+        $data['sold'] = $this->db->table('products')->select_sum('sold', 'total')->get();
+        $data['low_stock'] = $this->db->table('products', 'products')->count();
 
         $this->call->view('home', $data);
     }
