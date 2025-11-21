@@ -17,7 +17,7 @@
                         <label for="email">Email</label>
                         <div class="input-group">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" value="britolancekianne@gmail.com">
+                            <input type="email" id="email" value="<?= get_email(get_user_id()) ?>">
                         </div>
                     </div>
                     

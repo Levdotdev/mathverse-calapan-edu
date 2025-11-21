@@ -57,7 +57,7 @@
                     <div class="settings-menu profile-dropdown">
                         <div class="profile-dropdown-header">
                             <h4>Admin</h4>
-                            <small>britolancekianne@gmail.com</small>
+                            <small><?= get_email(get_user_id()) ?></small>
                         </div>
                         <ul>
                             <li id="account-settings-btn">

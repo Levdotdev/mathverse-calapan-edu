@@ -213,6 +213,23 @@ class Lauth {
     	}
 	}
 
+	/**
+	 * Get Email
+	 * @return string Role from Session
+	 */
+	public function get_email($user_id)
+	{
+		$row = $this->LAVA->db
+						->table('users')
+						->select('email')					
+    					->where('id', $user_id)
+    					->limit(1)
+    					->get();
+    	if($row) {
+    		return html_escape($row['email']);
+    	}
+	}
+
 	public function set_logged_out() {
 		$data = array(
 			'user_id' => $this->get_user_id(),

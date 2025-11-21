@@ -82,6 +82,15 @@ if ( ! function_exists('get_role'))
 	}
 }
 
+if ( ! function_exists('get_email'))
+{
+	function get_email($user_id) {
+		$LAVA =& lava_instance();
+		$LAVA->call->library('lauth');
+		return $LAVA->lauth->get_role($user_id);
+	}
+}
+
 if ( ! function_exists('email_exist'))
 {
 	function email_exist($email) {
