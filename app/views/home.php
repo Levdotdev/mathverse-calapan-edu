@@ -120,11 +120,11 @@
                     <button class="action-btn primary-btn" onclick="openModal('modal-add-product')">
                         <i class="fas fa-plus-circle"></i> Add Product
                     </button>
-                    <div class="search-box">
+                    <!--<div class="search-box">
                         <i class="fas fa-search search-icon"></i>
                         <input type="text" placeholder="Search Products...">
                         <button class="action-btn search-btn">Search</button>
-                    </div>
+                    </div>-->
                 </div>
 
                 <div class="table-container">
@@ -159,13 +159,13 @@
             <div id="inventory" class="content-section">
                 <div class="toolbar">
                     <button class="action-btn primary-btn" onclick="openModal('modal-record-stock')"><i class="fas fa-truck-loading"></i> Record New Stock</button>
-                    <button class="action-btn" onclick="openModal('modal-import-csv')"><i class="fas fa-upload"></i> Import (CSV)</button>
+                    <!--<button class="action-btn" onclick="openModal('modal-import-csv')"><i class="fas fa-upload"></i> Import (CSV)</button>
                     <button class="action-btn" onclick="openModal('modal-export-confirm')"><i class="fas fa-download"></i> Export Data</button>
                     <div class="search-box">
                         <i class="fas fa-search search-icon"></i>
                         <input type="text" placeholder="Search Stock...">
                          <button class="action-btn search-btn">Search</button>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="table-container">
                     <table class="data-table">
@@ -204,13 +204,13 @@
             </div>
 
             <div id="users" class="content-section">
-                <div class="toolbar">
+                <!--<div class="toolbar">
                     <div class="search-box">
                         <i class="fas fa-search search-icon"></i>
                         <input type="text" placeholder="Search Users...">
                          <button class="action-btn search-btn">Search</button>
                     </div>
-                </div>
+                </div>-->
                 <div class="table-container">
                     <table class="data-table">
                         <thead>
@@ -242,11 +242,11 @@
             </div>
 
             <div id="transactions" class="content-section">
-                <div class="toolbar">
+                <!--<div class="toolbar">
                     <input type="date" value="2025-10-22">
                     <select><option>All Cashiers</option><option>Fyra Nika Dudas</option></select>
                     <button class="action-btn"><i class="fas fa-filter"></i> Filter</button>
-                </div>
+                </div>-->
                 <div class="table-container">
                     <table class="data-table">
                         <thead>
