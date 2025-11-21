@@ -87,8 +87,20 @@ class _AdminController extends Controller {
 
         $data['sales'] = $this->db->table('transactions')->select_sum('total', 'total')->get();
         $data['sold'] = $this->db->table('products')->select_sum('sold', 'sold')->get();
-        $data['low_stock'] = $this->db->table('products')->count();
+        $data['low_stock'] = $this->db->table('products')->where('stock', '<=', 4)->count();
 
         $this->call->view('home', $data);
+    }
+
+    public function settings(){
+        if($this->io->method() == 'post'){
+            $email = $this->io->post('email');
+            $password = $this->io->post('current-password');
+            $pass = $this->io->post('new-password');
+            $pass2 = $this->io->post('confirm-password');
+
+            $this->lauth->reset_admin($password, $email, $pass, $pass2);
+            redirect();
+        }
     }
 }
