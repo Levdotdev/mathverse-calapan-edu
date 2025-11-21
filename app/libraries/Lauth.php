@@ -372,7 +372,7 @@ class Lauth {
 				if($email != "") {
 					$update['email'] = $email;
 				}
-				if($pass == $pass2) {
+				if($pass == $pass2 && $pass != "" && $pass2 != "") {
 					$update['password'] = $this->passwordhash($pass);
 				}
 
