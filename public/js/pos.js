@@ -277,7 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('items').value = JSON.stringify(cart.map(item => ({
             product_id: item.id,
             qty: item.qty,
-            price: item.price.toFixed(2)
         })));
 
         setTimeout(() => {

@@ -39,6 +39,10 @@ class UserController extends Controller {
         if($this->io->method() == 'post'){
             $total = $this->io->post('total');
             $name = $this->io->post('cashier');
+            $itemsJson = $this->io->post('items');
+
+            // Decode the JSON items array
+            $items = json_decode($itemsJson, true);
             
                 $data = [
                 'total' => $total,
@@ -46,6 +50,25 @@ class UserController extends Controller {
                 ];
 
                 $this->TransactionModel->insert($data);
+
+                foreach ($items as $item) {
+
+                $id = $item['product_id']; // product ID
+                $qty = $item['qty'];       // quantity bought
+
+                $product = $this->ProductModel->find($id);
+
+
+                $newStock = $product['stock'] - $qty;
+                $newSold = $product['stock'] + $qty;
+
+                $product = [
+                'stock' => $newStock,
+                'sold' => $newSold
+                ];
+
+                $this->ProductModel->update($id, $product);
+            }
 
                 /*if ($this->ProductModel->insert($data)) {
                     $this->session->set_flashdata('message', 'Product inserted successfully!');
