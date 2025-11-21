@@ -87,7 +87,7 @@ class _AdminController extends Controller {
 
         $data['sales'] = $this->db->table('transactions')->select_sum('total')->get();
         $data['sold'] = $this->db->table('products')->select_sum('sold')->get();
-        $data['low_stock'] = $this->db->table('products')->where('stock', '<', 5)->count();
+        $data['low_stock'] = $this->db->table('products')->where('stock', '<=', 4)->count();
 
         $this->call->view('home', $data);
     }
