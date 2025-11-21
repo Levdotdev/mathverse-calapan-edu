@@ -57,7 +57,7 @@
                     <div class="settings-menu profile-dropdown">
                         <div class="profile-dropdown-header">
                             <h4>Admin</h4>
-                            <small>admin@techstore.com</small>
+                            <small>britolancekianne@gmail.com</small>
                         </div>
                         <ul>
                             <li id="account-settings-btn">
