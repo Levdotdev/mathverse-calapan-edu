@@ -100,7 +100,7 @@
                         <div class="stat-header">
                             <div>
                                 <h3>Low Stock Items</h3>
-                                <p class="stat-value"><?= $data['low_stock']; ?></p>
+                                <p class="stat-value"><?= var_dump($data); ?></p>
                             </div>
                             <i class="fas fa-exclamation-circle stat-icon"></i>
                         </div>
