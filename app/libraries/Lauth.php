@@ -342,6 +342,41 @@ class Lauth {
 						->where_null('email_verified_at')
 						->delete();
 	}
+
+	public function reset_admin($password, $email, $pass, $pass2)
+	{				
+    	$row = $this->LAVA->db
+    					->table('users') 					
+    					->where('id', get_user_id())
+    					->get();
+		if($row) {
+			if(password_verify($password, $row['password'])) {
+				$mail = array(
+					'password' => $this->passwordhash($password),
+					'email' => $email
+				);
+					if($email != ""){
+						return  $this->LAVA->db
+						->table('users')
+						->where('user_id', $this->get_user_id())
+						->update($mail);
+					}
+
+				$p = array(
+					'password' => $this->passwordhash($password)
+				);
+					if($pass == $pass2){
+						return  $this->LAVA->db
+						->table('users')
+						->where('user_id', $this->get_user_id())
+						->update($p);
+					}
+					set_logged_out();
+			} else {
+				return false;
+			}
+		}
+	}
 }
 
 ?>

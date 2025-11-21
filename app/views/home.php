@@ -78,38 +78,28 @@
                     <div class="stat-card">
                         <div class="stat-header">
                             <div>
-                                <h3>Total Sales (Today)</h3>
-                                <p class="stat-value">₱ 78,540.50</p>
+                                <h3>Total Sales</h3>
+                                <p class="stat-value">₱ <?= $sales; ?></p>
                             </div>
                             <i class="fas fa-chart-line stat-icon"></i>
                         </div>
-                        <span class="trend up"><i class="fas fa-arrow-up"></i> 12% vs yesterday</span>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div>
-                                <h3>Net Profit</h3>
-                                <p class="stat-value">₱ 25,480.25</p>
-                            </div>
-                            <i class="fas fa-coins stat-icon"></i>
-                        </div>
-                        <span class="trend up"><i class="fas fa-arrow-up"></i> 8% vs yesterday</span>
+                        <!--<span class="trend up"><i class="fas fa-arrow-up"></i> 12% vs yesterday</span>-->
                     </div>
                     <div class="stat-card">
                         <div class="stat-header">
                             <div>
                                 <h3>Products Sold</h3>
-                                <p class="stat-value">215</p>
+                                <p class="stat-value"><?= $sold; ?></p>
                             </div>
                             <i class="fas fa-shopping-bag stat-icon"></i>
                         </div>
-                        <span class="trend down"><i class="fas fa-arrow-down"></i> 3% vs yesterday</span>
+                        <!--<span class="trend down"><i class="fas fa-arrow-down"></i> 3% vs yesterday</span>-->
                     </div>
                     <div class="stat-card inventory-alert">
                         <div class="stat-header">
                             <div>
                                 <h3>Low Stock Items</h3>
-                                <p class="stat-value">12</p>
+                                <p class="stat-value"><?= $low_stock; ?></p>
                             </div>
                             <i class="fas fa-exclamation-circle stat-icon"></i>
                         </div>

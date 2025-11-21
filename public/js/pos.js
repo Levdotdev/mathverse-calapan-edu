@@ -55,8 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
             statusIndicator.title = "Clocked In";
         } else {
             posContainer.classList.add('locked');
-            btnTimeIn.textContent = "Time In";
-            btnTimeIn.classList.replace('delete-btn','primary-btn');
             statusIndicator.classList.replace('online','offline');
             statusIndicator.title = "Clocked Out";
         }
