@@ -5,7 +5,7 @@
                 <button class="modal-close-btn" onclick="closeModal('settings-modal')">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="account-settings-form">
+                <form id="account-settings-form" method="post" action="<?=site_url('settings'); ?>" autocomplete="off">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <div class="input-group">

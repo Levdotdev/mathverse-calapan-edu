@@ -369,7 +369,6 @@ class Lauth {
 		if($row) {
 			if(password_verify($password, $row['password'])) {
 				$mail = array(
-					'password' => $this->passwordhash($password),
 					'email' => $email
 				);
 					if($email != ""){
