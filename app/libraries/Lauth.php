@@ -374,7 +374,7 @@ class Lauth {
 					if($email != ""){
 						return  $this->LAVA->db
 						->table('users')
-						->where('user_id', $this->get_user_id())
+						->where('id', $this->get_user_id())
 						->update($mail);
 					}
 
