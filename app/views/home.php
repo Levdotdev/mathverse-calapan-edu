@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="<?= base_url();?>public/css/home.css">
 </head>
 <body class="light-mode">
-    <? var_dump($data); ?>
     <div id="toast-container"></div>
     <audio id="notifSound" src="<?= base_url();?>public/resources/notif.mp3" preload="auto"></audio>
 
@@ -80,9 +79,7 @@
                         <div class="stat-header">
                             <div>
                                 <h3>Total Sales</h3>
-                                    <?php foreach(html_escape($sales) as $sale): ?>
-                                        <p class="stat-value"><? var_dump($data); ?></p>
-                                    <?php endforeach; ?>
+                                <p class="stat-value">₱ <? var_dump($data); ?></p>
                             </div>
                             <i class="fas fa-chart-line stat-icon"></i>
                         </div>
@@ -92,9 +89,7 @@
                         <div class="stat-header">
                             <div>
                                 <h3>Products Sold</h3>
-                                    <?php foreach(html_escape($sold) as $so): ?>
-                                        <p class="stat-value"><? var_dump($data); ?></p>
-                                    <?php endforeach; ?>
+                                <p class="stat-value"><? var_dump($data); ?></p>
                             </div>
                             <i class="fas fa-shopping-bag stat-icon"></i>
                         </div>
@@ -104,9 +99,6 @@
                         <div class="stat-header">
                             <div>
                                 <h3>Low Stock Items</h3>
-                                    <?php foreach(html_escape($low_stock) as $stock): ?>
-                                        <p class="stat-value"><?= $low_stock['products']; ?></p>
-                                    <?php endforeach; ?>
                                 <p class="stat-value"><? var_dump($data); ?></p>
                             </div>
                             <i class="fas fa-exclamation-circle stat-icon"></i>
