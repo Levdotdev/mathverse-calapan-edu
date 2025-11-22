@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="<?=base_url();?>public/css/main.css" rel="stylesheet">
-    <link href="<?=base_url();?>public/css/login.css" rel="stylesheet">
     <link href="<?=base_url();?>public/css/reset.css" rel="stylesheet">
     <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
