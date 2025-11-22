@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+    <link href="<?=base_url();?>public/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url();?>public/css/login.css">
 </head>
 <body style="background-image: url('<?= base_url();?>public/resources/bg.jpg');">
@@ -66,14 +66,11 @@
                     <div class="input-group">
                         <i class="fas fa-user-shield"></i>
                         <?php $LAVA =& lava_instance(); ?>
-                        <input id="email" type="email" class="form-control <?=$LAVA->session->flashdata('is_invalid');?>" name="email" value="" required autocomplete="email" autofocus>
-                        <span class="invalid-feedback" role="alert">
-                            <strong> <?php echo $LAVA->session->flashdata('err_message'); ?></strong>
-                        </span>
+                        <input type="text" name="email" placeholder="Email" required autofocus/>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Password" />
+                        <input type="password" name="password" placeholder="Password" required/>
                     </div>
                     <a href="<?=site_url('auth/password-reset');?>">Forgot your password?</a>
                     <button class="btn">Login</button>

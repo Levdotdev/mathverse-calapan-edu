@@ -3,19 +3,42 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reset Password - GENSHIN CRUD</title>
-    <link rel="icon" type="image/x-icon" href="<?= base_url();?>public/resources/logo.jpg">
+    <title>TechStore Reset Password</title>
+    <link rel="icon" type="image/x-icon" href="<?= base_url();?>public/resources/logolight.jpg">
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="<?=base_url();?>public/css/main.css" rel="stylesheet">
+    <link href="<?=base_url();?>public/css/login.css" rel="stylesheet">
+    <link href="<?=base_url();?>public/css/reset.css" rel="stylesheet">
     <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
-<body style="background-image: url('<?= base_url();?>public/resources/bg.jpg'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
-    <?php
-    include APP_DIR.'views/templates/nav_auth.php';
-    ?>
+<body style="background-image: url('<?= base_url();?>public/resources/bg.jpg');">
+    <div class="forgot-container">
+        <form id="forgot-form" method="POST" action="<?=site_url('auth/password-reset');?>">
+            <?php csrf_field(); ?>
+            <h1>Forgot Password</h1>
+            <p class="instructions">Enter your email address and we'll send you a link to reset your password.</p>
+            
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <?php $LAVA =& lava_instance(); ?>
+                <input id="email" type="email" class="form-control <?=$LAVA->session->flashdata('alert');?>" name="email" placeholder="Email Address" required />
+                <span class="invalid-feedback" role="alert">
+                                            <strong>We can&#039;t find a user with that email address.</strong>
+                                        </span>
+                                        <span class="valid-feedback" role="alert">
+                                            <strong>Reset password link was sent to your email.</strong>
+                                        </span>
+            </div>
+
+            <p class="message hidden" id="message"></p>
+            
+            <button type="submit" class="btn">Send Password Reset Link</button>
+        </form>
+    </div>
     <main class="py-4">
         <div class="container">
             <div class="row justify-content-center">
