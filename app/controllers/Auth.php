@@ -117,9 +117,9 @@ class Auth extends Controller {
         $mail->Port       = 465;                                    
 
         //Recipients
-        $mail->setFrom("genshinpromise@gmail.com", "GENSHIN CRUD"); // Sender Email and name
+        $mail->setFrom("genshinpromise@gmail.com", "TechStore"); // Sender Email and name
         $mail->addAddress($email);     //Add a recipient email  
-        $mail->addReplyTo("genshinpromise@gmail.com", "GENSHIN CRUD"); // reply to sender email
+        $mail->addReplyTo("genshinpromise@gmail.com", "TechStore"); // reply to sender email
 
         //Content
         $mail->isHTML(true);               //Set email format to HTML
@@ -181,9 +181,9 @@ class Auth extends Controller {
         $mail->Port       = 465;                                    
 
         //Recipients
-        $mail->setFrom("genshinpromise@gmail.com", "GENSHIN CRUD"); // Sender Email and name
+        $mail->setFrom("genshinpromise@gmail.com", "TechStore"); // Sender Email and name
         $mail->addAddress($email);     //Add a recipient email  
-        $mail->addReplyTo("genshinpromise@gmail.com", "GENSHIN CRUD"); // reply to sender email
+        $mail->addReplyTo("genshinpromise@gmail.com", "TechStore"); // reply to sender email
 
         //Content
         $mail->isHTML(true);               //Set email format to HTML

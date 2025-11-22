@@ -21,8 +21,6 @@
             <h1>Forgot Password</h1>
             <p class="instructions">Enter your email address and we'll send you a link to reset your password.</p>
             
-            <div class="input-group">
-                <i class="fas fa-envelope"></i>
                 <?php $LAVA =& lava_instance(); ?>
                 <input id="email" type="email" class="form-control <?=$LAVA->session->flashdata('alert');?>" name="email" placeholder="Email Address" required />
                 <span class="invalid-feedback" role="alert">
@@ -31,7 +29,6 @@
                 <span class="valid-feedback" role="alert">
                     <strong>Reset password link was sent to your email.</strong>
                 </span>
-            </div>
 
             <p class="message hidden" id="message"></p>
             
