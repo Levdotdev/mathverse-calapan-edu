@@ -167,8 +167,8 @@
             <div id="inventory" class="content-section">
                 <div class="toolbar">
                     <button class="action-btn primary-btn" onclick="openModal('modal-record-stock')"><i class="fas fa-truck-loading"></i> Record New Stock</button>
-                    <button class="action-btn" onclick="openModal('modal-import-csv')"><i class="fas fa-upload"></i> Import (CSV)</button>
-                    <button class="action-btn" onclick="openModal('modal-export-confirm')"><i class="fas fa-download"></i> Export Data</button>
+                    <button class="action-btn" onclick="openModal('modal-import-csv')"><i class="fas fa-upload"></i> CSV Entry</button>
+                    <button class="action-btn" onclick="openModal('modal-export-confirm')"><i class="fas fa-download"></i> Download Data</button>
                     <div class="search-box">
                         <i class="fas fa-search search-icon"></i>
                         <input type="text" placeholder="Search Stock...">

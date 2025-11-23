@@ -373,23 +373,23 @@ function downloadReceiptAsPDF(button) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Open modal for export confirmation
-    document.querySelector('.action-btn[onclick*="modal-export-confirm"]').addEventListener('click', () => {
+
+    function exportInventoryCSV() {
         const table = document.querySelector('#inventory .data-table');
         if (!table) return;
 
         let csvContent = '';
-        // Add headers
+        // Headers
         const headers = Array.from(table.querySelectorAll('thead th')).map(th => `"${th.innerText}"`);
         csvContent += headers.join(',') + '\n';
 
-        // Add rows
+        // Rows
         table.querySelectorAll('tbody tr').forEach(row => {
             const rowData = Array.from(row.querySelectorAll('td')).map(td => `"${td.innerText.trim()}"`);
             csvContent += rowData.join(',') + '\n';
         });
 
-        // Trigger CSV download
+        // Download CSV
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -398,6 +398,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    // Replace handleFormSubmit for this modal
+    const exportBtn = document.querySelector('#modal-export-confirm .primary-btn');
+    exportBtn.addEventListener('click', function() {
+        const originalText = this.innerText;
+        this.innerText = 'Download started...'; // Show feedback
+        this.disabled = true;
+
+        exportInventoryCSV(); // Trigger CSV download
+
+        // Restore button after 2 seconds
+        setTimeout(() => {
+            this.innerText = originalText;
+            this.disabled = false;
+            closeModal('modal-export-confirm');
+        }, 2000);
     });
 });
 
