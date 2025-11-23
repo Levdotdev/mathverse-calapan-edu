@@ -75,14 +75,16 @@ class Auth extends Controller {
                 if($this->form_validation->run()) {
                     if($this->lauth->register($username, $email, $this->io->post('password'), $email_token)) {
                         $this->send_token_to_email($email, $email_token);
-                        $this->session->set_flashdata('alert', 'info');
+                        $this->session->set_flashdata('alert', 'success');
                         $this->session->set_flashdata('message', 'Account created! Please check your email to verify your account.');
                         redirect('auth/login');
                     } else {
                         set_flash_alert('danger', config_item('SQLError'));
+                        redirect('auth/register');
                     }
                 }  else {
                     set_flash_alert('danger', $this->form_validation->errors()); 
+                    redirect('auth/register');
                 }
         } else {
             $this->call->view('auth/register');
@@ -134,21 +136,21 @@ class Auth extends Controller {
         $token = $_GET['token'] ?? '';
 
         if (empty($token)) {
-            set_flash_alert('danger', 'Missing verification token.');
+            set_flash_alert('error', 'Missing verification token.');
             redirect('auth/login');
             return;
         }
 
         if (! $this->lauth->get_verify_account_token($token)) {
-            set_flash_alert('danger', 'Invalid verification token.');
+            set_flash_alert('error', 'Invalid verification token.');
             redirect('auth/login');
             return;
         }
 
         if ($this->lauth->verify_account_now($token)) {
-            set_flash_alert('success', 'Account successfully verified.');
+            set_flash_alert('success', 'Email verified. Please wait for admin approval to proceed.');
         } else {
-            set_flash_alert('danger', 'Unable to verify account. Please try again.');
+            set_flash_alert('error', 'Unable to verify email. Please try again.');
         }
 
         redirect('auth/login');
