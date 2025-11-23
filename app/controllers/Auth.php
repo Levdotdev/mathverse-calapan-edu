@@ -41,7 +41,7 @@ class Auth extends Controller {
 			} else {
                 $row = $this->db
 						->table('users')				
-    					->where('id', $user_id)
+    					->where('id', $data['user_id'])
     					->limit(1)
     					->get();
                 if($row['email_verified_at'] === NULL){
