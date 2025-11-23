@@ -284,10 +284,6 @@ document.querySelectorAll('.open-edit-modal').forEach(btn => {
         const productId = btn.dataset.id;
         const form = document.getElementById('form-edit-product');
 
-        // Set action: product/update/{id}
-        const baseAction = "product/update";
-        form.action = `${baseAction}/${productId}`;
-
         // Auto-fill fields
         document.getElementById('edit_product_name').value = btn.dataset.name;
         document.getElementById('edit_category').value = btn.dataset.category;
