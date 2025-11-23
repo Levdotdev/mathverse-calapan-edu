@@ -393,6 +393,7 @@
       include APP_DIR.'views/modals/transaction_Receipt.php';
     ?>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="<?= base_url();?>public/js/script.js"></script>
     <?php toast_alert(); ?>
 </body>

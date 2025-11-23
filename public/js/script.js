@@ -343,5 +343,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function downloadReceiptAsPDF() {
+    const imgEl = document.getElementById('receipt-img');
+    if (!imgEl.src) return alert("No receipt loaded.");
+
+    // Extract filename from src
+    const srcParts = imgEl.src.split('/');
+    const imgFilename = srcParts[srcParts.length - 1]; // e.g., "receipt_1763935421.png"
+    const pdfFilename = imgFilename.replace(/\.[^/.]+$/, "") + ".pdf"; // remove extension + add .pdf
+
+    const pdf = new jspdf.jsPDF("p", "mm", "a4");
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    const img = new Image();
+    img.src = imgEl.src;
+
+    img.onload = function() {
+        const ratio = Math.min(pageWidth / img.width, pageHeight / img.height);
+        const imgWidth = img.width * ratio;
+        const imgHeight = img.height * ratio;
+        const x = (pageWidth - imgWidth) / 2;
+        const y = (pageHeight - imgHeight) / 2;
+
+        pdf.addImage(img, "PNG", x, y, imgWidth, imgHeight);
+        pdf.save(pdfFilename);
+    };
+}
+
 
 document.body.classList.add("ready");
