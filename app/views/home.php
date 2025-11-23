@@ -147,7 +147,7 @@
                                     <td>
                                         <a href="<?= site_url('update/'.$product['id']); ?>" class="action-icon edit-btn" title="Update Stock" id="update-inventory-btn"><i class="fas fa-pen"></i></a>
                                         <a href="<?= site_url('soft-delete/'.$product['id']); ?>" title="Delete Product" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
-                                        <button title="Delete Product" class="action-icon delete-btn" onclick="openModal('modal-delete-product')"><i class="fas fa-trash"></i></button>
+                                        <button title="Delete Product" data-id="<?= $product['id']; ?>" class="action-icon delete-btn" onclick="openModal('modal-delete-product')"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -176,7 +176,6 @@
                                 <th>Current Stock</th>
                                 <th>Last Restock</th>
                                 <th>Status</th>
-                                <th>History</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -195,7 +194,6 @@
                                     <?php else: ?>
                                         <td><span class="status-badge success">In Stock</span></td>
                                     <?php endif; ?>
-                                    <td><button class="action-icon view-btn" title="View History"><i class="fas fa-history"></i></button></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

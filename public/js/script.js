@@ -261,3 +261,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+document.querySelectorAll('.open-delete-modal').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const productId = btn.getAttribute('data-id');
+        const form = document.getElementById('delete-form');
+
+        // Replace {id} in the action URL dynamically
+        const baseAction = "<?= site_url('product/soft-delete'); ?>"; // without ID
+        form.action = `${baseAction}/${productId}`;
+
+        // Open modal
+        openModal('modal-delete-confirm');
+    });
+});

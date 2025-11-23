@@ -99,7 +99,7 @@ class _AdminController extends Controller {
         $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
         $data['page'] = $this->pagination->paginate();
 
-        $all = $this->StaffModel->users($q, $records_per_page, $page);
+        $all = $this->StaffModel->applicants($q, $records_per_page, $page);
         $data['applicants'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
