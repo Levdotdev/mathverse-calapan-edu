@@ -247,6 +247,34 @@ h2 {
 .inventory-alert { border-left: 5px solid var(--clr-warning); background-color: rgba(245, 158, 11, 0.05); }
 
 /* Charts */
+.report-box {
+    background-color: var(--clr-card-bg);
+    border-radius: 12px;
+    padding: 32px;
+    border: 1px solid var(--clr-border);
+    margin-bottom: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.report-box-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+}
+.report-box h3 {
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--clr-primary);
+    border-bottom: 1px solid var(--clr-border);
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .placeholder-chart {
     background-color: var(--clr-card-bg); border-radius: 12px; padding: 32px;
     border: 1px solid var(--clr-border); margin-bottom: 24px;
@@ -442,17 +470,4 @@ h2 {
 
 .input-group {
     position: relative;
-}
-
-/* Add custom arrow */
-.input-group::after {
-    content: '\f0d7'; /* FontAwesome chevron-down */
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: var(--clr-text-secondary);
 }

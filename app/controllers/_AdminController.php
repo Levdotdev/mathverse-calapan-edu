@@ -57,6 +57,20 @@ class _AdminController extends Controller {
         $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
         $data['page'] = $this->pagination->paginate();
 
+        $all = $this->ProductModel->products($q, $records_per_page, $page);
+        $data['inventory'] = $all['records'];
+        $total_rows = $all['total_rows'];
+        $this->pagination->set_options([
+            'first_link'     => 'First',
+            'last_link'      => 'Last',
+            'next_link'      => '→',
+            'prev_link'      => '←',
+            'page_delimiter' => '&page='
+        ]);
+        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
+        $data['page'] = $this->pagination->paginate();
+
         $all = $this->StaffModel->users($q, $records_per_page, $page);
         $data['users'] = $all['records'];
         $total_rows = $all['total_rows'];
@@ -73,6 +87,20 @@ class _AdminController extends Controller {
 
         $all = $this->TransactionModel->transactions($q, $records_per_page, $page);
         $data['transactions'] = $all['records'];
+        $total_rows = $all['total_rows'];
+        $this->pagination->set_options([
+            'first_link'     => 'First',
+            'last_link'      => 'Last',
+            'next_link'      => '→',
+            'prev_link'      => '←',
+            'page_delimiter' => '&page='
+        ]);
+        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
+        $data['page'] = $this->pagination->paginate();
+
+        $all = $this->StaffModel->users($q, $records_per_page, $page);
+        $data['applicants'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
             'first_link'     => 'First',

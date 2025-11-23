@@ -130,7 +130,7 @@ class _ProductController extends Controller {
         }
     }
 
-    public function product()
+    public function add()
     {
         if($this->io->method() == 'post'){
             $id = $this->io->post('product_id');

@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if(targetSection.id === 'inventory') newTitle = 'Inventory Management';
             if(targetSection.id === 'users') newTitle = 'User Management';
             if(targetSection.id === 'transactions') newTitle = 'Transactions';
+            if(targetSection.id === 'reports') newTitle = 'Reports';
             if(targetSection.id === 'applicants') newTitle = 'Applicant Verification';
 
             pageTitleElement.textContent = newTitle;

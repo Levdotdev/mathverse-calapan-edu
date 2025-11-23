@@ -41,6 +41,30 @@ if ( ! function_exists('flash_alert'))
 	}
 }
 
+if ( ! function_exists('toast_alert'))
+{
+	function toast_alert()
+	{
+		$LAVA =& lava_instance();
+
+		$alert  = $LAVA->session->flashdata('alert');
+		$msg    = $LAVA->session->flashdata('message');
+
+		if ($alert !== NULL && $msg !== NULL) {
+			echo "
+			<script>
+				document.addEventListener('DOMContentLoaded', function() {
+					if (typeof showToast === 'function') {
+						showToast(" . json_encode($msg) . ", " . json_encode($alert) . ");
+					}
+				});
+			</script>
+			";
+		}
+	}
+
+}
+
 if ( ! function_exists('logged_in'))
 {
 	//check if user is logged in

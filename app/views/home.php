@@ -31,7 +31,7 @@
                 <li data-section="inventory"><i class="fas fa-boxes"></i> <span>Inventory</span></li>
                 <li data-section="users"><i class="fas fa-users"></i> <span>Users</span></li>
                 <li data-section="transactions"><i class="fas fa-receipt"></i> <span>Transactions</span></li>
-                <li data-section="reports"><i class="fas fa-id-card"></i> <span>Reports</span></li>
+                <li data-section="reports"><i class="fas fa-file-alt"></i> <span>Reports</span></li>
                 <li data-section="applicants"><i class="fas fa-id-card"></i> <span>Applicants</span></li>
             </ul>
         </nav>
@@ -147,7 +147,7 @@
                                     <td>
                                         <a href="<?= site_url('update/'.$product['id']); ?>" class="action-icon edit-btn" title="Update Stock" id="update-inventory-btn"><i class="fas fa-pen"></i></a>
                                         <a href="<?= site_url('soft-delete/'.$product['id']); ?>" title="Delete Product" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
-                                        <button title="Delete Product" class="action-icon delete-btn" onclick="openModal('modal-add-product')"><i class="fas fa-trash"></i></button>
+                                        <button title="Delete Product" class="action-icon delete-btn" onclick="openModal('modal-delete-product')"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -180,7 +180,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach(html_escape($all) as $inventory): ?>
+                            <?php foreach(html_escape($inventory) as $inventory): ?>
                                 <tr data-id="<?= $inventory['id']; ?>">
                                     <td><?= $inventory['id']; ?></td>
                                     <td><?= $inventory['name']; ?></td>
@@ -276,7 +276,6 @@
             </div>
 
             <div id="reports" class="content-section">
-                <h2>Reporting & Analytics</h2>
                 <div class="toolbar">
                     <select><option>Sales Summary (Monthly)</option><option>Inventory Movement</option><option>Cashier Performance</option><option>Top Selling Products</option></select>
                     <input type="date" value="2025-10-01">
@@ -345,24 +344,28 @@
                     <table class="data-table">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Applicant Name</th>
-                                <th>Position Applied</th>
+                                <th>Email</th>
                                 <th>Date Applied</th>
-                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>Inventory Clerk</td>
-                                <td>2025-11-18</td>
-                                <td><span class="status-badge warning">Pending</span></td>
-                                <td>
-                                    <button class="action-icon success-btn" title="Verify/Approve" onclick="openModal('modal-verify-applicant')"><i class="fas fa-check"></i></button>
+                            <?php foreach(html_escape($applicants) as $applicant): ?>
+                                <tr data-id="<?= $user['id']; ?>">
+                                    <td><?= $applicant['id']; ?></td>
+                                    <td><?= $applicant['username']; ?></td>
+                                    <td><?= $applicant['email']; ?></td>
+                                    <td><?= $applicant['updated_at']; ?></td>
+                                    <td>
+                                        <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
+                                        <a href="<?= site_url('user-delete/'.$applicant['id']); ?>" title="Delete User" class="action-icon delete-btn"><i class="fas fa-trash"></i></a>
+                                        <button class="action-icon success-btn" title="Verify/Approve" onclick="openModal('modal-verify-applicant')"><i class="fas fa-check"></i></button>
                                     <button class="action-icon delete-btn" title="Reject/Delete" onclick="openModal('modal-delete-confirm')"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -386,5 +389,6 @@
     ?>
 
     <script src="<?= base_url();?>public/js/script.js"></script>
+    <?php toast_alert(); ?>
 </body>
 </html>
