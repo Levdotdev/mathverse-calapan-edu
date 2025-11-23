@@ -5,7 +5,7 @@
             <button class="modal-close-btn" onclick="closeModal('modal-print-receipt')">&times;</button>
         </div>
         <div class="modal-body">
-            <img id="receipt-img" src="" alt="Receipt Image">
+            <img id="receipt-img" src="" alt="Receipt Image" height="800" width="1600">
         </div>
         <div class="modal-footer">
             <button class="action-btn modal-cancel-btn" onclick="closeModal('modal-print-receipt')">Close</button>
