@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             toast.style.animation = "fadeOut 0.4s forwards";
             setTimeout(() => toast.remove(), 400);
-        }, 4000);
+        }, 5000);
     }
 
     // --- 6. SIMULATED FORM SUBMISSIONS ---
