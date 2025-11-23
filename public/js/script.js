@@ -1,3 +1,4 @@
+document.body.classList.remove("ready");
 document.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.getElementById("sidebar");
     const sidebarToggle = document.getElementById("sidebar-toggle");
@@ -276,3 +277,5 @@ document.querySelectorAll('.open-delete-modal').forEach(btn => {
         openModal('modal-delete-confirm');
     });
 });
+
+document.body.classList.add("ready");

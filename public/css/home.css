@@ -51,10 +51,10 @@ body {
     line-height: 1.5;
 }
 
-body.loading * {
-    opacity: 0;
-    pointer-events: none;
+body:not(.ready) {
+    visibility: hidden;
 }
+
 
 /* --- Sidebar --- */
 #sidebar {
