@@ -48,7 +48,7 @@ class UserController extends Controller {
                 $data = [
                 'total' => $total,
                 'cashier' => $name,
-                'timestamp' => $time
+                'date' => $time
                 ];
 
                 $this->TransactionModel->insert($data);
