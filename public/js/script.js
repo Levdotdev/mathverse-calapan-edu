@@ -278,4 +278,26 @@ document.querySelectorAll('.open-delete-modal').forEach(btn => {
     });
 });
 
+document.querySelectorAll('.open-edit-modal').forEach(btn => {
+    btn.addEventListener('click', () => {
+
+        const productId = btn.dataset.id;
+        const form = document.getElementById('form-edit-product');
+
+        // Set action: product/update/{id}
+        const baseAction = "product/update";
+        form.action = `${baseAction}/${productId}`;
+
+        // Auto-fill fields
+        document.getElementById('edit_product_name').value = btn.dataset.name;
+        document.getElementById('edit_category').value = btn.dataset.category;
+        document.getElementById('edit_unit_price').value = btn.dataset.price;
+        document.getElementById('edit_product_id').value = btn.dataset.barcode;
+
+        // Open modal
+        openModal('modal-edit-product');
+    });
+});
+
+
 document.body.classList.add("ready");
