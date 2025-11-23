@@ -149,5 +149,13 @@
                 }
         })
     </script>
+    <link rel="stylesheet" href="<?= base_url('public/css/toast.css'); ?>">
+    <div id="toast-container"></div>
+
+    <audio id="notifSound" src="<?= base_url('public/resources/notif.mp3'); ?>" preload="auto"></audio>
+
+    <script src="<?= base_url('public/js/toast.js'); ?>"></script>
+    <?php toast_alert(); ?>
+
 </body>
 </html>
