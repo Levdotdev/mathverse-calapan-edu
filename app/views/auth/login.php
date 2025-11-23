@@ -95,7 +95,7 @@
                         <h1>Welcome Back!</h1>
                         <p>To keep connected with us please login with your personal info</p><hr>
                         <h5>OR</h5><br>
-                        <button class="btn ghost" id="signUp">Register</button>
+                        <a href="<?= site_url('auth/register'); ?>" class="btn ghost" id="signUp">Register</a>
                     </div>
                 </div>
             </div>

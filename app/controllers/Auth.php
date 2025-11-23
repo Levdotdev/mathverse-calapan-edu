@@ -82,7 +82,6 @@ class Auth extends Controller {
                     }
                 }  else {
                     set_flash_alert('danger', $this->form_validation->errors()); 
-                    redirect('auth/register');
                 }
         } else {
             $this->call->view('auth/login');
