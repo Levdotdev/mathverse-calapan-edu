@@ -422,29 +422,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('csv-file-input');
     const fileNameDisplay = document.getElementById('file-name-display');
+    const form = document.getElementById('import-csv-form');
 
-    // Click to open file selector
+    // Click drop zone to select file
     dropZone.addEventListener('click', () => fileInput.click());
 
-    // Display selected file name
+    // Show selected file name
     fileInput.addEventListener('change', () => {
         if(fileInput.files.length > 0) {
             fileNameDisplay.textContent = fileInput.files[0].name;
         }
     });
 
-    // Drag over
+    // Drag & drop
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropZone.style.backgroundColor = '#f0f0f0';
     });
 
-    // Drag leave
-    dropZone.addEventListener('dragleave', () => {
-        dropZone.style.backgroundColor = 'transparent';
-    });
+    dropZone.addEventListener('dragleave', () => dropZone.style.backgroundColor = 'transparent');
 
-    // Drop
     dropZone.addEventListener('drop', (e) => {
         e.preventDefault();
         dropZone.style.backgroundColor = 'transparent';
@@ -454,6 +451,14 @@ document.addEventListener('DOMContentLoaded', () => {
             fileNameDisplay.textContent = files[0].name;
         } else {
             alert('Please upload a valid CSV file.');
+        }
+    });
+
+    // Prevent form submit if no file
+    form.addEventListener('submit', (e) => {
+        if(!fileInput.files.length) {
+            e.preventDefault();
+            alert('Please select a CSV file to upload.');
         }
     });
 });
