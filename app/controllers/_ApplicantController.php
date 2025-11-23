@@ -113,7 +113,7 @@ class _ApplicantController extends Controller {
                     $data = [
                     'role' => "user"
                     ];
-                    $template = file_get_contents(ROOT_DIR.PUBLIC_DIR.'/templates/account_accepted.html');
+                    $template = file_get_contents(ROOT_DIR.PUBLIC_DIR.'/templates/account_approved.html');
                     $this->StaffModel->update($id, $data);
                     SendMail("TechStore", get_email(get_user_id()), "Application Approval", $template, $char['email']);
                     $this->session->set_flashdata('alert', 'success');
