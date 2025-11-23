@@ -273,6 +273,7 @@
                                     <td><?= $transaction['total']; ?></td>
                                     <td>
                                         <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
+                                        <button class="action-icon edit-btn open-transaction-receipt-modal" title="Receipt" data-id="<?= $transaction['receipt']; ?>"><i class="fas fa-receipt"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

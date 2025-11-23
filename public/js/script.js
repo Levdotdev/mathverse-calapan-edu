@@ -331,5 +331,15 @@ document.querySelectorAll('.open-applicant-verify-modal').forEach(btn => {
     });
 });
 
+document.querySelectorAll('.open-transaction-receipt-modal').forEach(button => {
+    button.addEventListener('click', function() {
+        const receiptFile = this.dataset.receipt; // get the filename from data-receipt
+        const imgEl = document.getElementById('receipt-img');
+        imgEl.src = "<?= base_url(); ?>uploads/" + receiptFile; // set the src
+        imgEl.alt = "Receipt " + receiptFile;
+        document.getElementById('modal-print-receipt').classList.remove('hidden');
+    });
+});
+
 
 document.body.classList.add("ready");
