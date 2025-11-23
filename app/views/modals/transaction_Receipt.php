@@ -9,7 +9,7 @@
         </div>
         <div class="modal-footer">
             <button class="action-btn modal-cancel-btn" onclick="closeModal('modal-print-receipt')">Close</button>
-            <button class="action-btn primary-btn" onclick="downloadReceiptAsPDF()">
+            <button class="action-btn primary-btn" onclick="downloadReceiptAsPDF(this)">
                 <i class="fas fa-print"></i> Print
             </button>
         </div>
