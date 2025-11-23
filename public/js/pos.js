@@ -271,10 +271,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById('modal-receipt').classList.remove('hidden');
 
+    const now = new Date();
+    const timestamp = now.getFullYear() + '-' +
+                      String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                      String(now.getDate()).padStart(2, '0') + ' ' +
+                      String(now.getHours()).padStart(2, '0') + ':' +
+                      String(now.getMinutes()).padStart(2, '0') + ':' +
+                      String(now.getSeconds()).padStart(2, '0');
+
     // --- Fill hidden form fields ---
     document.getElementById('total').value = total.toFixed(2);
     document.getElementById('cashier').value = cashierName || 'Unknown';
-    document.getElementById('transaction-time').value = recDate; // use same as receipt
+    document.getElementById('transaction-time').value = timestamp; // use same as receipt
     document.getElementById('items').value = JSON.stringify(cart.map(item => ({
         product_id: item.id,
         qty: item.qty,

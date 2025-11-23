@@ -72,8 +72,6 @@ class UserController extends Controller {
                 $this->ProductModel->update($id, $product);
             }
 
-                $this->session->set_flashdata('alert', 'success');
-                    $this->session->set_flashdata('message', 'Transaction completed!');
             redirect('pos');
         }
     }
