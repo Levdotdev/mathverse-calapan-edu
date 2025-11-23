@@ -424,26 +424,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileNameDisplay = document.getElementById('file-name-display');
     const form = document.getElementById('import-csv-form');
 
-    dropZone.addEventListener('click', () => fileInput.click());
+    // Only attach one click listener to the drop zone
+    dropZone.addEventListener('click', (e) => {
+        e.stopPropagation(); // prevent bubbling issues
+        fileInput.click();
+    });
 
+    // Show selected file name
     fileInput.addEventListener('change', () => {
-        if(fileInput.files.length > 0) {
+        if(fileInput.files.length > 0){
             fileNameDisplay.textContent = fileInput.files[0].name;
         }
     });
 
+    // Drag & Drop styling
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropZone.style.backgroundColor = '#f0f0f0';
     });
 
-    dropZone.addEventListener('dragleave', () => dropZone.style.backgroundColor = 'transparent');
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.style.backgroundColor = 'transparent';
+    });
 
     dropZone.addEventListener('drop', (e) => {
         e.preventDefault();
         dropZone.style.backgroundColor = 'transparent';
         const files = e.dataTransfer.files;
-        if(files.length > 0 && files[0].type === 'text/csv') {
+        if(files.length && files[0].type === 'text/csv'){
+            // Only set files once, no double click trigger
             fileInput.files = files;
             fileNameDisplay.textContent = files[0].name;
         } else {
@@ -451,8 +460,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Prevent form submit if no file selected
     form.addEventListener('submit', (e) => {
-        if(!fileInput.files.length) {
+        if(!fileInput.files.length){
             e.preventDefault();
         }
     });
