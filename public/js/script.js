@@ -372,6 +372,33 @@ function downloadReceiptAsPDF(button) {
     }, 100); // slight delay to show spinner
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Open modal for export confirmation
+    document.querySelector('.action-btn[onclick*="modal-export-confirm"]').addEventListener('click', () => {
+        const table = document.querySelector('#inventory .data-table');
+        if (!table) return;
 
+        let csvContent = '';
+        // Add headers
+        const headers = Array.from(table.querySelectorAll('thead th')).map(th => `"${th.innerText}"`);
+        csvContent += headers.join(',') + '\n';
+
+        // Add rows
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const rowData = Array.from(row.querySelectorAll('td')).map(td => `"${td.innerText.trim()}"`);
+            csvContent += rowData.join(',') + '\n';
+        });
+
+        // Trigger CSV download
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'inventory_data.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+});
 
 document.body.classList.add("ready");
