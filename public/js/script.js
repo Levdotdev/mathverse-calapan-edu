@@ -424,20 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileNameDisplay = document.getElementById('file-name-display');
     const form = document.getElementById('import-csv-form');
 
-    let selectedFile = null; // store the selected/dropped file
-
-    dropZone.addEventListener('click', (e) => {
-        e.stopPropagation();
-        fileInput.click();
-    });
-
-    fileInput.addEventListener('change', () => {
-        if(fileInput.files.length > 0){
-            selectedFile = fileInput.files[0];
-            fileNameDisplay.textContent = selectedFile.name;
-        }
-    });
-
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropZone.style.backgroundColor = '#f0f0f0';
@@ -451,36 +437,22 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         dropZone.style.backgroundColor = 'transparent';
         const files = e.dataTransfer.files;
-        if(files.length && files[0].type === 'text/csv'){
-            selectedFile = files[0]; // store dropped file
-            fileNameDisplay.textContent = selectedFile.name;
+        if (files.length && files[0].type === 'text/csv') {
+            fileInput.files = files; // okay here since user dropped a file
+            fileNameDisplay.textContent = files[0].name;
+        }
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            fileNameDisplay.textContent = fileInput.files[0].name;
         }
     });
 
     form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if(!selectedFile){
-            return;
+        if (!fileInput.files.length) {
+            e.preventDefault();
         }
-
-        // Use FormData to submit the file
-        const formData = new FormData();
-        formData.append('csv_file', selectedFile);
-
-        fetch(form.action, {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            closeModal('modal-import-csv');
-            selectedFile = null;
-            fileInput.value = '';
-            fileNameDisplay.textContent = '';
-        })
-        .catch(err => {
-            console.error(err);
-        });
     });
 });
 
