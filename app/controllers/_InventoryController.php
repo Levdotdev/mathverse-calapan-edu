@@ -190,10 +190,11 @@ class _InventoryController extends Controller {
             $this->session->set_flashdata('alert', 'success');
             $this->session->set_flashdata('message', 'Inventory updated successfully from CSV!');
         } else {
-            $this->session->set_flashdata('error', 'Failed to open CSV file.');
+            $this->session->set_flashdata('alert', 'error');
+            $this->session->set_flashdata('message', 'Failed to open CSV file.');
         }
     }
-    redirect('inventory');
+    redirect();
 }
 
 }

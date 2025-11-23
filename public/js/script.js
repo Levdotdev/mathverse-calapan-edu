@@ -424,20 +424,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileNameDisplay = document.getElementById('file-name-display');
     const form = document.getElementById('import-csv-form');
 
-    // Only attach one click listener to the drop zone
+    let selectedFile = null; // store the selected/dropped file
+
     dropZone.addEventListener('click', (e) => {
-        e.stopPropagation(); // prevent bubbling issues
+        e.stopPropagation();
         fileInput.click();
     });
 
-    // Show selected file name
     fileInput.addEventListener('change', () => {
         if(fileInput.files.length > 0){
-            fileNameDisplay.textContent = fileInput.files[0].name;
+            selectedFile = fileInput.files[0];
+            fileNameDisplay.textContent = selectedFile.name;
         }
     });
 
-    // Drag & Drop styling
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropZone.style.backgroundColor = '#f0f0f0';
@@ -452,19 +452,35 @@ document.addEventListener('DOMContentLoaded', () => {
         dropZone.style.backgroundColor = 'transparent';
         const files = e.dataTransfer.files;
         if(files.length && files[0].type === 'text/csv'){
-            // Only set files once, no double click trigger
-            fileInput.files = files;
-            fileNameDisplay.textContent = files[0].name;
-        } else {
-            alert('Please upload a valid CSV file.');
+            selectedFile = files[0]; // store dropped file
+            fileNameDisplay.textContent = selectedFile.name;
         }
     });
 
-    // Prevent form submit if no file selected
     form.addEventListener('submit', (e) => {
-        if(!fileInput.files.length){
-            e.preventDefault();
+        e.preventDefault();
+        if(!selectedFile){
+            return;
         }
+
+        // Use FormData to submit the file
+        const formData = new FormData();
+        formData.append('csv_file', selectedFile);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            closeModal('modal-import-csv');
+            selectedFile = null;
+            fileInput.value = '';
+            fileNameDisplay.textContent = '';
+        })
+        .catch(err => {
+            console.error(err);
+        });
     });
 });
 
