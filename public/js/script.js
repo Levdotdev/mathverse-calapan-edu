@@ -424,17 +424,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileNameDisplay = document.getElementById('file-name-display');
     const form = document.getElementById('import-csv-form');
 
-    // Click drop zone to select file
     dropZone.addEventListener('click', () => fileInput.click());
 
-    // Show selected file name
     fileInput.addEventListener('change', () => {
         if(fileInput.files.length > 0) {
             fileNameDisplay.textContent = fileInput.files[0].name;
         }
     });
 
-    // Drag & drop
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropZone.style.backgroundColor = '#f0f0f0';
@@ -447,18 +444,16 @@ document.addEventListener('DOMContentLoaded', () => {
         dropZone.style.backgroundColor = 'transparent';
         const files = e.dataTransfer.files;
         if(files.length > 0 && files[0].type === 'text/csv') {
-            fileInput.files = files; // assign dropped file
+            fileInput.files = files;
             fileNameDisplay.textContent = files[0].name;
         } else {
             alert('Please upload a valid CSV file.');
         }
     });
 
-    // Prevent form submit if no file
     form.addEventListener('submit', (e) => {
         if(!fileInput.files.length) {
             e.preventDefault();
-            alert('Please select a CSV file to upload.');
         }
     });
 });
