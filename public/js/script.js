@@ -289,6 +289,7 @@ document.querySelectorAll('.open-edit-modal').forEach(btn => {
         document.getElementById('edit_category').value = btn.dataset.category;
         document.getElementById('edit_unit_price').value = btn.dataset.price;
         document.getElementById('edit_product_id').value = btn.dataset.id;
+        document.getElementById('edit_id').value = btn.dataset.id;
 
         // Open modal
         openModal('modal-edit-product');

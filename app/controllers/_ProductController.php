@@ -62,6 +62,7 @@ class _ProductController extends Controller {
     public function update()
     {
         if($this->io->method() == 'post'){
+            $key = $this->io->post('id');
             $id = $this->io->post('product_id');
             $name = $this->io->post('product_name');
             $category = $this->io->post('category');
@@ -74,7 +75,7 @@ class _ProductController extends Controller {
                 'price' => $price
                 ];
 
-                $this->ProductModel->update($id, $data);
+                $this->ProductModel->update($key, $data);
                 redirect();
         }
     }

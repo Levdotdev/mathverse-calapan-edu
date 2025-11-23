@@ -7,7 +7,7 @@
 
         <div class="modal-body">
             <form id="form-edit-product" method="post" action="<?=site_url('product/update'); ?>" autocomplete="off">
-
+                <input type="hidden" id="edit_id" name="id" required>
                 <div class="form-group">
                     <label for="edit_product_name">Product Name</label>
                     <div class="input-group">
