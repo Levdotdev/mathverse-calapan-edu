@@ -57,7 +57,7 @@ class UserController extends Controller {
 
             // generate file name
             $filename = 'receipt_' . time() . '.png';
-            $filepath = ROOT_DIR . 'uploads/' . $filename;
+            $filepath = 'uploads/' . $filename;
 
             // save file
             file_put_contents($filepath, $imageData);
