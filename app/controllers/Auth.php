@@ -39,26 +39,30 @@ class Auth extends Controller {
 				$this->session->set_flashdata('alert', 'error');
                 $this->session->set_flashdata('message', 'These credentials do not match our records. ');
 			} else {
-                $this->lauth->set_logged_in($data);
-                $mail = get_email_verified(get_user_id());
-                $role = get_role(get_user_id());
-                if(empty($mail)){
+                $row = $this->LAVA->db
+						->table('users')				
+    					->where('id', $user_id)
+    					->limit(1)
+    					->get();
+                if($row['email_verified_at'] === NULL){
                     $this->session->set_flashdata('alert', 'error');
                     $this->session->set_flashdata('message', 'Please verify your email first. ');
                     $this->lauth->set_logged_out();
                     redirect('auth/login');
                 }
-                else if($role['role'] == "unverified"){
+                else if($row['role'] == "unverified"){
                     $this->session->set_flashdata('alert', 'info');
                     $this->session->set_flashdata('message', 'Account under review. Please wait for approval in your email. ');
                     $this->lauth->set_logged_out();
                     redirect('auth/login');
                 }
-                else if($role['role'] == "declined"){
+                else if($row['role'] == "declined"){
                     $this->session->set_flashdata('alert', 'info');
                     $this->session->set_flashdata('message', 'Your request is declined by the admin. ');
-                    $this->lauth->set_logged_out();
                     redirect('auth/login');
+                }
+                else{
+                    $this->lauth->set_logged_in($data);
                 }
 			}
             redirect('auth/login');
