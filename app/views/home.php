@@ -390,6 +390,7 @@
       include APP_DIR.'views/modals/product_Update.php';
       include APP_DIR.'views/modals/staff_Barcode.php';
       include APP_DIR.'views/modals/staff_Delete.php';
+      include APP_DIR.'views/modals/transaction_Receipt.php';
     ?>
 
     <script src="<?= base_url();?>public/js/script.js"></script>
