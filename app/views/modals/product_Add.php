@@ -36,7 +36,7 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button class="action-btn modal-cancel-btn" onclick="closeModal('modal-add-product')">Cancel</button>
+                <button type="button" class="action-btn modal-cancel-btn" onclick="closeModal('modal-add-product')">Cancel</button>
                 <button type="submit" class="action-btn primary-btn">Save Product</button>
             </div>
             </form>
