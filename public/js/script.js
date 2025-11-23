@@ -264,30 +264,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-document.querySelectorAll('.open-delete-modal').forEach(btn => {
+document.querySelectorAll('.open-product-delete-modal').forEach(btn => {
     btn.addEventListener('click', () => {
-        const productId = btn.getAttribute('data-id');
+        const productId = btn.dataset.id;
         const form = document.getElementById('delete-form');
 
-        // Replace {id} in the action URL dynamically
-        const baseAction = "product/soft-delete"; // without ID
-        form.action = `${baseAction}/${productId}`;
-
-        // Open modal
+        form.action = `product/soft-delete/${productId}`;
         openModal('modal-delete-confirm');
     });
 });
 
-document.querySelectorAll('.open-delete-modal').forEach(btn => {
+document.querySelectorAll('.open-applicant-reject-modal').forEach(btn => {
     btn.addEventListener('click', () => {
-        const userId = btn.dataset.id; // get the ID from button
-        const form = document.getElementById('delete-form');
+        const userId = btn.dataset.id;
+        const form = document.getElementById('delete-form'); // or another form if you want separate
 
-        // dynamically set form action
-        const baseAction = "applicant/reject"; // base URL
-        form.action = `${baseAction}/${userId}`;
-
-        // open modal
+        form.action = `applicant/reject/${userId}`;
         openModal('modal-delete-confirm');
     });
 });

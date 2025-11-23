@@ -6,7 +6,7 @@
             <div class="modal-body"><p style="color:var(--clr-danger)"><strong>Warning:</strong> Are you sure you want to decline access to this user?</p></div>
             <div class="modal-footer">
                 <button type="button" class="action-btn modal-cancel-btn" onclick="closeModal('modal-delete-confirm')">Cancel</button>
-                <button class="action-btn delete-btn" onclick="handleFormSubmit('modal-delete-confirm', 'Applicant deleted.', 'error')">Delete</button>
+                <button class="action-btn delete-btn" onclick="handleFormSubmit('modal-delete-confirm', 'Applicant deleted.', 'error')">Reject</button>
             </div>
         </div>
         </form>

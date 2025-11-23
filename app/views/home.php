@@ -155,7 +155,7 @@
                                             data-price="<?= $product['price']; ?>">
                                             <i class="fas fa-pen"></i>
                                         </button>
-                                        <button title="Delete Product" data-id="<?= $product['id']; ?>" class="action-icon delete-btn open-delete-modal"><i class="fas fa-trash"></i></button>
+                                        <button title="Delete Product" data-id="<?= $product['id']; ?>" class="action-icon delete-btn open-product-delete-modal"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -365,8 +365,8 @@
                                     <td><?= $applicant['email']; ?></td>
                                     <td><?= $applicant['updated_at']; ?></td>
                                     <td>
-                                        <button class="action-icon success-btn open-verify-modal" title="Verify/Approve" data-id="<?= $applicant['id']; ?>" data-name="<?= htmlspecialchars($applicant['username']); ?>"><i class="fas fa-check"></i></button>
-                                        <button class="action-icon delete-btn open-delete-modal" title="Reject/Delete" data-id="<?= $applicant['id']; ?>"><i class="fas fa-trash"></i></button>
+                                        <button class="action-icon success-btn open-applicant-verify-modal" title="Verify/Approve" data-id="<?= $applicant['id']; ?>" data-name="<?= htmlspecialchars($applicant['username']); ?>"><i class="fas fa-check"></i></button>
+                                        <button class="action-icon delete-btn open-applicant-reject-modal" title="Reject/Delete" data-id="<?= $applicant['id']; ?>"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
