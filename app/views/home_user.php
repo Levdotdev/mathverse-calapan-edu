@@ -28,7 +28,7 @@
         <div class="pos-controls">
             <div class="cashier-info">
                 <i class="fas fa-user-circle"></i>
-                <span>cindy</span>
+                <span><?= get_username(get_user_id()); ?></span>
                 <span class="status-dot offline" id="status-indicator" title="Clocked Out"></span>
             </div>
             <button id="theme-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
