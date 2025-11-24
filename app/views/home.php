@@ -120,9 +120,22 @@
                         <i class="fas fa-plus-circle"></i> Add Product
                     </button>
                     <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" placeholder="Search Products...">
-                        <button class="action-btn search-btn">Search</button>
+                        <form action="<?=site_url('');?>" method="get">
+                        <?php $q = isset($_GET['q']) ? $_GET['q'] : ''; ?>
+                        <select id="category" name="q" class="form-select-field" required>
+                                    <option value="" selected>All Products</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Keyboard">Keyboard</option>
+                                    <option value="Mouse">Mouse</option>
+                                    <option value="Controller">Controller</option>
+                                    <option value="Speaker">Speaker</option>
+                                    <option value="Headset">Headset</option>
+                                    <option value="Microphone">Microphone</option>
+                                    <option value="Webcam">Webcam</option>
+                                    <option value="Accessories">Accessories</option>
+                        </form>
+                        </select>
+                        <button type="submit" class="action-btn"><i class="fas fa-filter"></i> Filter</button>
                     </div>
                 </div>
 
@@ -162,6 +175,7 @@
                         </tbody>
                     </table>
                 </div>
+                <?php echo $page_products;?>
             </div>
 
             <div id="inventory" class="content-section">

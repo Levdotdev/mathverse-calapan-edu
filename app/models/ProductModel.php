@@ -31,6 +31,35 @@ class ProductModel extends Model {
                 ->or_like('category', '%'.$q.'%');
 	    })
 	    ->where_null('deleted_at')
+        ->order_by('price', 'ASC');
+
+
+            // Clone before pagination
+            $countQuery = clone $query;
+
+            $data['total_rows'] = $countQuery->select_count('*', 'count')
+                                            ->get()['count'];
+
+            $data['records'] = $query->pagination($records_per_page, $page)
+                                    ->get_all();
+
+            return $data;
+        }
+    }
+
+    public function inventory($q, $records_per_page = null, $page = null) {
+        if (is_null($page)) {
+            return $this->db->table('products')->get_all();
+        } else {
+            $query = $this->db->table('products');
+                
+            // Build LIKE conditions
+
+	    $query->grouped(function($x) use ($q) {
+		    $x->like('name', '%'.$q.'%')
+                ->or_like('category', '%'.$q.'%');
+	    })
+	    ->where_null('deleted_at')
         ->order_by('category', 'DESC');
 
 

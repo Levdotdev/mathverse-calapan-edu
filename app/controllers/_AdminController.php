@@ -54,10 +54,10 @@ class _AdminController extends Controller {
             'page_delimiter' => '&page='
         ]);
         $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
-        $data['page'] = $this->pagination->paginate();
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
+        $data['page_products'] = $this->pagination->paginate();
 
-        $all = $this->ProductModel->products($q, $records_per_page, $page);
+        $all = $this->ProductModel->inventory($q, $records_per_page, $page);
         $data['inventory'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
@@ -69,7 +69,7 @@ class _AdminController extends Controller {
         ]);
         $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
-        $data['page'] = $this->pagination->paginate();
+        $data['page_inventory'] = $this->pagination->paginate();
 
         $all = $this->StaffModel->users($q, $records_per_page, $page);
         $data['users'] = $all['records'];
