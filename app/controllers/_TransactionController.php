@@ -74,9 +74,9 @@ class _TransactionController extends Controller {
 
     // --- All transactions for the month (unsorted by cashier) ---
     $data['transactions'] = $this->db->table('transactions')
-                                     ->where("deleted_at", NULL)
-                                     ->order_by('date','DESC')
-                                     ->get_all(); // returns array
+                                 ->where_null('deleted_at')
+                                 ->order_by('date','DESC')
+                                 ->get_all(); // returns array
 
     // --- Generate PDF ---
     $dompdf = new Dompdf();

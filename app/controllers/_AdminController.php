@@ -53,7 +53,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('tailwind'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_products'] = $this->pagination->paginate();
 
@@ -67,7 +67,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('tailwind'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_inventory'] = $this->pagination->paginate();
 
@@ -81,7 +81,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('tailwind'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_users'] = $this->pagination->paginate();
 
@@ -95,7 +95,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('tailwind'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_transactions'] = $this->pagination->paginate();
 
@@ -109,7 +109,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('tailwind'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_applicants'] = $this->pagination->paginate();
 
