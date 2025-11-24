@@ -533,19 +533,21 @@ async function generatePDFReport() {
     y = doc.lastAutoTable.finalY + 10;
 
     // -------------------------
-    // TRANSACTIONS GROUPED BY CASHIER
+    // TRANSACTIONS BY CASHIER
     // -------------------------
     doc.setFontSize(14);
     doc.text("Transactions of the Month (Grouped by Cashier)", 14, y);
     y += 6;
 
-    for (const [cashier, transactions] of Object.entries(transactionsByCashier)) {
+    for (const [cashier, txs] of Object.entries(transactionsByCashier)) {
+        if (!txs || txs.length === 0) continue;
+
         y += 6;
         doc.setFontSize(12);
         doc.text(`Cashier: ${cashier}`, 14, y);
         y += 6;
 
-        const txBody = transactions.map(t => [
+        const txBody = txs.map(t => [
             t.id.toString(),
             t.created_at,
             Number(t.total).toLocaleString(undefined, {minimumFractionDigits:2})

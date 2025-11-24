@@ -405,13 +405,11 @@
         const salesSummary = <?= json_encode($data['sales']); ?>;
         const totalTransactions = <?= json_encode($data['transacts']); ?>;
         const productsSold = <?= json_encode($data['sold']); ?>;
-
         const topCashier = <?= json_encode($data['top_cashier']); ?>;
-
         const topProducts = <?= json_encode($data['top_products']); ?>;
-
         const transactionsByCashier = <?= json_encode($data['transactions_by_cashier']); ?>;
     </script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
