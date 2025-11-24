@@ -247,7 +247,6 @@
                                     <td><?= $user['email']; ?></td>
                                     <td><?= $user['updated_at']; ?></td>
                                     <td>
-                                        <button class="action-icon view-btn" title="Print User ID" onclick="openModal('modal-user-barcode')"><i class="fas fa-id-card"></i></button>
                                         <button class="action-icon delete-btn open-deactivate-staff-modal" title="Deactivate/Delete" data-id="<?= $user['id']; ?>"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>

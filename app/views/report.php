@@ -10,6 +10,7 @@ table { border-collapse: collapse; width: 100%; margin-bottom: 15px; }
 table, th, td { border: 1px solid #333; }
 th, td { padding: 5px; text-align: center; }
 th { background-color: #f2f2f2; }
+strong { font-weight: bold; }
 </style>
 </head>
 <body>
@@ -18,12 +19,12 @@ th { background-color: #f2f2f2; }
 <p>Generated on: <?= date('F d, Y H:i'); ?></p>
 
 <h2>Sales Summary</h2>
-<p>Total Sales: ₱ <?= number_format($data['sales']['total'], 2); ?></p>
-<p>Total Transactions: <?= $data['transacts']['total']; ?></p>
-<p>Products Sold: <?= $data['sold']['sold']; ?></p>
+<p>Total Sales: ₱ <?= number_format($data['sales'], 2); ?></p>
+<p>Total Transactions: <?= $data['transacts']; ?></p>
+<p>Products Sold: <?= $data['sold']; ?></p>
 
 <h2>Top Cashier</h2>
-<p>Cashier: <?= $data['top_cashier']['cashier']; ?></p>
+<p>Cashier: <?= htmlspecialchars($data['top_cashier']['cashier']); ?></p>
 <p>Total Transactions: <?= $data['top_cashier']['total_transactions']; ?></p>
 <p>Total Sales Handled: ₱ <?= number_format($data['top_cashier']['total_sales'], 2); ?></p>
 
@@ -61,13 +62,21 @@ th { background-color: #f2f2f2; }
 </tr>
 </thead>
 <tbody>
-<?php foreach($txs as $t): ?>
+<?php 
+$cashier_total = 0;
+foreach($txs as $t):
+    $cashier_total += (float)$t['total'];
+?>
 <tr>
 <td><?= $t['id']; ?></td>
-<td><?= $t['date']; ?></td>
+<td><?= date('Y-m-d H:i', strtotime($t['date'])); ?></td>
 <td><?= number_format($t['total'],2); ?></td>
 </tr>
 <?php endforeach; ?>
+<tr>
+<td colspan="2"><strong>Total for <?= htmlspecialchars($cashier); ?></strong></td>
+<td><strong>₱ <?= number_format($cashier_total,2); ?></strong></td>
+</tr>
 </tbody>
 </table>
 <?php endforeach; ?>
