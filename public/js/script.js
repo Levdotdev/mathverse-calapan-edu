@@ -472,8 +472,10 @@ function generatePDFReport() {
 
 document.addEventListener("DOMContentLoaded", function() {
     const rawData = window.cashierSalesData || [];
+    if (rawData.length === 0) return; // No data, exit
+
     const labels = rawData.map(item => item.cashier);
-    const data = rawData.map(item => parseFloat(item.total_sales));
+    const data = rawData.map(item => Number(item.total_sales) || 0); // convert to numbers
 
     const ctx = document.getElementById('salesPieChart').getContext('2d');
     new Chart(ctx, {
@@ -502,6 +504,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
 
 
 document.body.classList.add("ready");
