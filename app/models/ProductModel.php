@@ -62,6 +62,30 @@ class ProductModel extends Model {
 	    ->where_null('deleted_at')
         ->order_by('category', 'DESC');
 
+        if($q == ""){
+            $query->where_null('deleted_at')
+            ->order_by('category', 'ASC')
+            ->order_by('last_restock', 'ASC');
+        }
+        else if($q == "in"){
+            $query->where('stock', '>=', 5)
+            ->where_null('deleted_at')
+            ->order_by('category', 'ASC')
+            ->order_by('last_restock', 'ASC');
+        }
+        else if($q == "no"){
+            $query->where('stock', '<=', 0)
+            ->where_null('deleted_at')
+            ->order_by('category', 'ASC')
+            ->order_by('last_restock', 'ASC');
+        }
+        else{
+            $query->between('stock', '1', '4')
+            ->where_null('deleted_at')
+            ->order_by('category', 'ASC')
+            ->order_by('last_restock', 'ASC');
+        }
+
 
             // Clone before pagination
             $countQuery = clone $query;

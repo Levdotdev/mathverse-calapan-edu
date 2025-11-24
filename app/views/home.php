@@ -181,11 +181,16 @@
                     <button class="action-btn primary-btn" onclick="openModal('modal-record-stock')"><i class="fas fa-truck-loading"></i> Record New Stock</button>
                     <button class="action-btn" onclick="openModal('modal-import-csv')"><i class="fas fa-upload"></i> CSV Entry</button>
                     <button class="action-btn" onclick="openModal('modal-export-confirm')"><i class="fas fa-download"></i> Download Data</button>
-                    <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" placeholder="Search Stock...">
-                         <button class="action-btn search-btn">Search</button>
-                    </div>
+                    <form action="<?=site_url('');?>" method="get">
+                        <?php $q = isset($_GET['q']) ? $_GET['q'] : ''; ?>
+                        <select id="category" name="q">
+                                    <option value="" selected>All Products</option>
+                                    <option value="in">In Stock</option>
+                                    <option value="low">Low Stock</option>
+                                    <option value="no">No Stock</option>
+                        </select>
+                        <button type="submit" class="action-btn"><i class="fas fa-filter"></i> Filter</button>
+                    </form>
                 </div>
                 <div class="table-container">
                     <table class="data-table">
@@ -219,6 +224,7 @@
                         </tbody>
                     </table>
                 </div>
+                <?php echo $page_inventory;?>
             </div>
 
             <div id="users" class="content-section">

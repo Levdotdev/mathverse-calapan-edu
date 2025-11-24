@@ -41,7 +41,7 @@ class _AdminController extends Controller {
             $q = trim($this->io->get('q'));
         }
 
-        $records_per_page = 10;
+        $records_per_page = 5;
 
         $all = $this->ProductModel->products($q, $records_per_page, $page);
         $data['all'] = $all['records'];
@@ -53,7 +53,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_products'] = $this->pagination->paginate();
 
@@ -67,8 +67,8 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
+        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_inventory'] = $this->pagination->paginate();
 
         $all = $this->StaffModel->users($q, $records_per_page, $page);
@@ -81,7 +81,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
         $data['page'] = $this->pagination->paginate();
 
@@ -95,7 +95,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
         $data['page'] = $this->pagination->paginate();
 
@@ -109,7 +109,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'home/?q='.$q);
         $data['page'] = $this->pagination->paginate();
 
