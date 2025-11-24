@@ -144,7 +144,7 @@ class _AdminController extends Controller {
             ->where("YEAR(date)", $year)
             ->where("deleted_at", NULL)
             ->order_by('cashier', 'ASC')
-            ->order_by('created_at', 'DESC')
+            ->order_by('date', 'DESC')
             ->get_all();
 
         $transactions_by_cashier = [];
