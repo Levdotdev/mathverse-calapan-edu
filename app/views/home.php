@@ -119,10 +119,9 @@
                     <button class="action-btn primary-btn" onclick="openModal('modal-add-product')">
                         <i class="fas fa-plus-circle"></i> Add Product
                     </button>
-                    <div class="search-box">
                         <form action="<?=site_url('');?>" method="get">
                         <?php $q = isset($_GET['q']) ? $_GET['q'] : ''; ?>
-                        <select id="category" name="q" class="form-select-field" required>
+                        <select id="category" name="q" class="form-select-field">
                                     <option value="" selected>All Products</option>
                                     <option value="Electronics">Electronics</option>
                                     <option value="Keyboard">Keyboard</option>
@@ -136,7 +135,6 @@
                         </form>
                         </select>
                         <button type="submit" class="action-btn"><i class="fas fa-filter"></i> Filter</button>
-                    </div>
                 </div>
 
                 <div class="table-container">
