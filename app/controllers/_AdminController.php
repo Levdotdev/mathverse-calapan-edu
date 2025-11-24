@@ -150,6 +150,16 @@ class _AdminController extends Controller {
         $res = $this->db->raw($sql);
         $data['top_products'] = $res->fetchAll();
 
+        $sql = "
+            SELECT cashier, SUM(total) AS total_sales
+            FROM transactions
+            WHERE deleted_at IS NULL
+            GROUP BY cashier
+            ORDER BY total_sales DESC
+        ";
+        $res = $this->db->raw($sql);
+        $data['cashier_sales'] = $res->fetchAll(PDO::FETCH_ASSOC);
+
         $this->call->view('home', $data);
     }
 
