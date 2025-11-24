@@ -475,47 +475,62 @@ document.addEventListener("DOMContentLoaded", function() {
     if (rawData.length === 0) return; // No data
 
     const labels = rawData.map(item => item.cashier);
-    const data = rawData.map(item => Number(item.total_sales) || 0);
+    const totalSales = rawData.map(item => Number(item.total_sales) || 0);
+    const totalTransactions = rawData.map(item => Number(item.total_transactions) || 0);
 
     const ctx = document.getElementById('salesPieChart').getContext('2d');
 
-    // Generate white-to-black gradient colors
-    const n = labels.length;
-    const backgroundColors = Array.from({ length: n }, (_, i) => {
-        const shade = Math.floor((i / (n - 1 || 1)) * 255); // 0=white, 255=black
-        return `rgb(${shade}, ${shade}, ${shade})`;
-    });
-
     new Chart(ctx, {
-        type: 'pie',
+        type: 'bar',
         data: {
             labels: labels,
-            datasets: [{
-                data: data,
-                backgroundColor: backgroundColors,
-                borderColor: '#000',
-                borderWidth: 1
-            }]
+            datasets: [
+                {
+                    label: 'Total Sales (₱)',
+                    data: totalSales,
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    borderColor: '#000',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Total Transactions',
+                    data: totalTransactions,
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    borderColor: '#ccc',
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
+            indexAxis: 'y', // Horizontal bars
             responsive: true,
-            maintainAspectRatio: false, // let it fill container
-            layout: {
-                padding: 0 // remove extra padding
+            maintainAspectRatio: false,
+            layout: { padding: 0 },
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#000',
+                        beginAtZero: true
+                    },
+                    grid: { color: '#ccc' }
+                },
+                y: {
+                    ticks: { color: '#000' },
+                    grid: { color: 'transparent' }
+                }
             },
             plugins: {
                 legend: {
                     position: 'bottom',
-                    labels: {
-                        boxWidth: 20,
-                        padding: 15,
-                        color: '#000'
-                    }
+                    labels: { color: '#000', boxWidth: 20, padding: 10 }
                 },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return 'Php ' + context.raw.toLocaleString();
+                            if (context.dataset.label === 'Total Sales (₱)') {
+                                return '₱ ' + context.raw.toLocaleString();
+                            }
+                            return context.dataset.label + ': ' + context.raw.toLocaleString();
                         }
                     }
                 }

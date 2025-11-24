@@ -106,7 +106,7 @@
                         <span class="trend alert">Action Needed</span>
                     </div>
                 </div>
-                <div class="chart-container max-w-full mx-auto mt-8 p-2 bg-white rounded-lg shadow-md" style="height: 500px;">
+                <div class="chart-container max-w-full mx-auto mt-8 p-2 bg-white rounded-lg shadow-md" style="height: 600px;">
                     <canvas id="salesPieChart" style="width:100%; height:100%;"></canvas>
                 </div>
             </div>
