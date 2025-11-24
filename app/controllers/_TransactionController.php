@@ -1,6 +1,7 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
+require ROOT_DIR . 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
 class _TransactionController extends Controller {
