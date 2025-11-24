@@ -68,7 +68,7 @@ class _AdminController extends Controller {
             'page_delimiter' => '&page='
         ]);
         $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'?r='.$q);
         $data['page_inventory'] = $this->pagination->paginate();
 
         $all = $this->StaffModel->users($q, $records_per_page, $page);
@@ -82,7 +82,7 @@ class _AdminController extends Controller {
             'page_delimiter' => '&page='
         ]);
         $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'?s='.$q);
         $data['page_users'] = $this->pagination->paginate();
 
         $all = $this->TransactionModel->transactions($q, $records_per_page, $page);
@@ -96,7 +96,7 @@ class _AdminController extends Controller {
             'page_delimiter' => '&page='
         ]);
         $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'?t='.$q);
         $data['page_transactions'] = $this->pagination->paginate();
 
         $all = $this->StaffModel->applicants($q, $records_per_page, $page);
@@ -110,7 +110,7 @@ class _AdminController extends Controller {
             'page_delimiter' => '&page='
         ]);
         $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
-        $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
+        $this->pagination->initialize($total_rows, $records_per_page, $page,'?u='.$q);
         $data['page_applicants'] = $this->pagination->paginate();
 
         $data['sales'] = $this->db->table('transactions')->select_sum('total', 'total')->get();
