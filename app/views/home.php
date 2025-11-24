@@ -106,9 +106,8 @@
                         <span class="trend alert">Action Needed</span>
                     </div>
                 </div>
-                <div class="chart-container max-w-md mx-auto mt-8 p-4 bg-white rounded-lg shadow-md">
-                    <h3 class="text-lg font-semibold mb-4">Sales by Cashier (Php)</h3>
-                    <canvas id="salesPieChart"></canvas>
+                <div class="chart-container max-w-full mx-auto mt-8 p-2 bg-white rounded-lg shadow-md" style="height: 500px;">
+                    <canvas id="salesPieChart" style="width:100%; height:100%;"></canvas>
                 </div>
             </div>
 

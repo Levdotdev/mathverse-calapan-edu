@@ -472,27 +472,46 @@ function generatePDFReport() {
 
 document.addEventListener("DOMContentLoaded", function() {
     const rawData = window.cashierSalesData || [];
-    if (rawData.length === 0) return; // No data, exit
+    if (rawData.length === 0) return; // No data
 
     const labels = rawData.map(item => item.cashier);
-    const data = rawData.map(item => Number(item.total_sales) || 0); // convert to numbers
+    const data = rawData.map(item => Number(item.total_sales) || 0);
 
     const ctx = document.getElementById('salesPieChart').getContext('2d');
+
+    // Generate white-to-black gradient colors
+    const n = labels.length;
+    const backgroundColors = Array.from({ length: n }, (_, i) => {
+        const shade = Math.floor((i / (n - 1 || 1)) * 255); // 0=white, 255=black
+        return `rgb(${shade}, ${shade}, ${shade})`;
+    });
+
     new Chart(ctx, {
         type: 'pie',
         data: {
             labels: labels,
             datasets: [{
                 data: data,
-                backgroundColor: labels.map((_, i) => `hsl(${i * 60 % 360}, 70%, 60%)`),
-                borderColor: '#fff',
+                backgroundColor: backgroundColors,
+                borderColor: '#000',
                 borderWidth: 1
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false, // let it fill container
+            layout: {
+                padding: 0 // remove extra padding
+            },
             plugins: {
-                legend: { position: 'bottom' },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 20,
+                        padding: 15,
+                        color: '#000'
+                    }
+                },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
