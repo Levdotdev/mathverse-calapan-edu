@@ -385,7 +385,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Rows
         table.querySelectorAll('tbody tr').forEach(row => {
-            const rowData = Array.from(row.querySelectorAll('td')).map(td => `"${td.innerText.trim()}"`);
+            const rowData = Array.from(row.querySelectorAll('td')).map((td, index) => {
+                let text = td.innerText.trim();
+
+                // Prepend single quote only for the ID column (assume it's the first column)
+                if (index === 0) text = `'${text}`;
+
+                return `"${text}"`;
+            });
             csvContent += rowData.join(',') + '\n';
         });
 

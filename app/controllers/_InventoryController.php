@@ -154,47 +154,51 @@ class _InventoryController extends Controller {
     }
 
     public function import_csv()
-{
-    if($this->io->method() == 'post' && isset($_FILES['csv_file'])) {
-        $fileTmp = $_FILES['csv_file']['tmp_name'];
+    {
+        if($this->io->method() == 'post' && isset($_FILES['csv_file'])) {
+            $fileTmp = $_FILES['csv_file']['tmp_name'];
 
-        if (($handle = fopen($fileTmp, 'r')) !== false) {
-            $row = 0;
-            $now = date('Y-m-d H:i:s'); // current timestamp
+            if (($handle = fopen($fileTmp, 'r')) !== false) {
+                $row = 0;
+                $now = date('Y-m-d H:i:s'); // current timestamp
 
-            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
-                // Skip header row
-                if($row++ == 0) continue;
+                while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                    // Skip header row
+                    if($row++ == 0) continue;
 
-                // CSV columns: ID, Name, Stock
-                $id = trim($data[0]);
-                $name = trim($data[1]);
-                $stock = trim($data[2]);
+                    // CSV columns: ID, Name, Stock
+                    $id = trim($data[0]);
+                    $name = trim($data[1]);
+                    $stock = trim($data[2]);
 
-                // Check if product exists
-                $product = $this->ProductModel->find($id);
-                if ($product) {
-                    $updateData = ['name' => $name];
-
-                    // Only update last_restock if stock changed
-                    if ((int)$product['stock'] !== (int)$stock) {
-                        $updateData['stock'] = $stock;
-                        $updateData['last_restock'] = $now;
+                    if (substr($id, 0, 1) === "'") {
+                        $id = substr($id, 1);
                     }
 
-                    $this->ProductModel->update($id, $updateData);
-                }
-            }
-            fclose($handle);
+                    // Check if product exists
+                    $product = $this->ProductModel->find($id);
+                    if ($product) {
+                        $updateData = ['name' => $name];
 
-            $this->session->set_flashdata('alert', 'success');
-            $this->session->set_flashdata('message', 'Inventory updated successfully from CSV!');
-        } else {
-            $this->session->set_flashdata('alert', 'error');
-            $this->session->set_flashdata('message', 'Failed to open CSV file.');
+                        // Only update last_restock if stock changed
+                        if ((int)$product['stock'] !== (int)$stock) {
+                            $updateData['stock'] = $stock;
+                            $updateData['last_restock'] = $now;
+                        }
+
+                        $this->ProductModel->update($id, $updateData);
+                    }
+                }
+                fclose($handle);
+
+                $this->session->set_flashdata('alert', 'success');
+                $this->session->set_flashdata('message', 'Inventory updated successfully from CSV!');
+            } else {
+                $this->session->set_flashdata('alert', 'error');
+                $this->session->set_flashdata('message', 'Failed to open CSV file.');
+            }
         }
+        redirect();
     }
-    redirect();
-}
 
 }
