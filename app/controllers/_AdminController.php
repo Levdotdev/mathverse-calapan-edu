@@ -53,7 +53,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_products'] = $this->pagination->paginate();
 
@@ -67,7 +67,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_inventory'] = $this->pagination->paginate();
 
@@ -81,7 +81,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_users'] = $this->pagination->paginate();
 
@@ -95,7 +95,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_transactions'] = $this->pagination->paginate();
 
@@ -109,7 +109,7 @@ class _AdminController extends Controller {
             'prev_link'      => '←',
             'page_delimiter' => '&page='
         ]);
-        $this->pagination->set_theme('custom'); // or 'tailwind', or 'custom'
+        $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_applicants'] = $this->pagination->paginate();
 
@@ -149,25 +149,6 @@ class _AdminController extends Controller {
 
         $res = $this->db->raw($sql);
         $data['top_products'] = $res->fetchAll();
-
-        $month = date('m');
-        $year = date('Y');
-
-        $trans = $this->db->table('transactions')
-            ->where("MONTH(date)", $month)
-            ->where("YEAR(date)", $year)
-            ->where("deleted_at", NULL)
-            ->order_by('cashier', 'ASC')
-            ->order_by('date', 'DESC')
-            ->get_all();
-
-        // Group transactions by cashier
-        $transactions_by_cashier = [];
-        foreach($trans as $t){
-            $transactions_by_cashier[$t['cashier']][] = $t;
-        }
-
-        $data['transactions_by_cashier'] = $transactions_by_cashier;
 
         $this->call->view('home', $data);
     }
