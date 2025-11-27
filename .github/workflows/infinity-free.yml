@@ -1,4 +1,4 @@
-name: 🚀 Deploy to l-and-d-tech-store.gamer.gd
+name: 🚀 Deploy to techstore-react.gamer.gd
 
 on:
   workflow_dispatch: # Uncomment below to deploy on push instead
@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: 🎉 Deploy to l-and-d-tech-store.gamer.gd
+    name: 🎉 Deploy to techstore-react.gamer.gd
     runs-on: ubuntu-latest
 
     steps:
