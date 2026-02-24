@@ -381,9 +381,9 @@
         </section>
     </main>   
     <?php
-      include APP_DIR.'views/modals/_account.php';
-      include APP_DIR.'views/modals/_logout.php';
-      include APP_DIR.'views/modals/_report.php';
+      include APP_DIR.'views/modals/account.php';
+      include APP_DIR.'views/modals/logout.php';
+      include APP_DIR.'views/modals/report.php';
       include APP_DIR.'views/modals/applicant_Delete.php';
       include APP_DIR.'views/modals/applicant_Verify.php';
       include APP_DIR.'views/modals/inventory_Export.php';
