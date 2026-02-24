@@ -41,7 +41,7 @@ class _AdminController extends Controller {
             $q = trim($this->io->get('q'));
         }
 
-        $records_per_page = 5;
+        $records_per_page = 100;
 
         $all = $this->ProductModel->products($q, $records_per_page, $page);
         $data['all'] = $all['records'];
