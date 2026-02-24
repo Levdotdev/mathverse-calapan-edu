@@ -51,8 +51,6 @@ $router->match('/report', '_TransactionController::report', ['GET', 'POST']);
 $router->group('/product', function() use ($router){
     $router->match('/add', '_ProductController::add', ['GET', 'POST']);
     $router->match('/update', '_ProductController::update', ['GET', 'POST']);
-    $router->match('/delete/{id}', '_ProductController::delete', ['GET', 'POST']);
-    $router->match('/restore/{id}', '_ProductController::restore', ['GET', 'POST']);
     $router->match('/soft-delete/{id}', '_ProductController::soft_delete', ['GET', 'POST']);
 });
 
