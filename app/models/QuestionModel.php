@@ -2,11 +2,11 @@
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /**
- * Model: StaffModel
+ * Model: QuestionModel
  * 
  * Automatically generated via CLI.
  */
-class StaffModel extends Model {
+class QuestionModel extends Model {
     protected $table = 'questions';
     protected $primary_key = 'id';
     protected $fillable = ['grade', 'type', 'question', 'choice1', 'choice2', 'choice3', 'choice4'];
