@@ -52,7 +52,7 @@
                             <label class="text-purple-400 text-[10px] font-bold uppercase tracking-[0.15em] ml-1">Password</label>
                             <div class="relative">
                                 <i class="fas fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
-                                <input type="password" name="password" class="input-mobile-ultra pr-12" placeholder="Enter Password" required/>
+                                <input type="password" name="password" id="lPass" class="input-mobile-ultra pr-12" placeholder="Enter Password" required/>
                                 <button type="button" onclick="tglPass('lPass', 'lIcon')" class="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-10 flex items-center justify-center text-slate-500 active:text-cyan-400">
                                     <i id="lIcon" class="fas fa-eye-slash text-lg"></i>
                                 </button>
