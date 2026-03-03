@@ -45,14 +45,14 @@
                             <div class="relative">
                                 <i class="fas fa-id-card-clip absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
                                 <?php $LAVA =& lava_instance(); ?>
-                                <input type="text" name="email" class="input-mobile-ultra" placeholder="Enter Email or ID" required autofocus/>
+                                <input type="text" name="email" class="input-mobile-ultra" placeholder="Enter Email or ID" required autofocus autocomplete="off"/>
                             </div>
                         </div>
                         <div class="space-y-1.5 relative">
                             <label class="text-purple-400 text-[10px] font-bold uppercase tracking-[0.15em] ml-1">Password</label>
                             <div class="relative">
                                 <i class="fas fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
-                                <input type="password" name="password" id="lPass" class="input-mobile-ultra pr-12" placeholder="Enter Password" required/>
+                                <input type="password" name="password" id="lPass" class="input-mobile-ultra pr-12" placeholder="Enter Password" required autocomplete="off"/>
                                 <button type="button" onclick="tglPass('lPass', 'lIcon')" class="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-10 flex items-center justify-center text-slate-500 active:text-cyan-400">
                                     <i id="lIcon" class="fas fa-eye-slash text-lg"></i>
                                 </button>

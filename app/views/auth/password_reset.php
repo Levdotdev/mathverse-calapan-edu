@@ -3,37 +3,68 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TechStore Reset Password</title>
-    <link rel="icon" type="image/x-icon" href="<?= base_url();?>public/resources/logolight.jpg">
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Styles -->
-    <link href="<?=base_url();?>public/css/main.css" rel="stylesheet">
-    <link href="<?=base_url();?>public/css/reset.css" rel="stylesheet">
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <title>MathVerse | Password Reset</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="<?=base_url();?>public/css/auth.css" rel="stylesheet">
 </head>
-<body style="background-image: url('<?= base_url();?>public/resources/bg.jpg');">
-    <div class="forgot-container">
-        <form id="forgot-form" method="POST" action="<?=site_url('auth/password-reset');?>" autocomplete="off">
-            <?php csrf_field(); ?>
-            <h1>Forgot Password</h1>
-            <p class="instructions">Enter your email address and we'll send you a link to reset your password.</p>
-            
-                <?php $LAVA =& lava_instance(); ?>
-                <input id="email" type="email" class="form-control <?=$LAVA->session->flashdata('alert');?>" name="email" placeholder="Email Address" required autocomplete="off"/>
-                <span class="invalid-feedback" role="alert">
-                    <strong>We can&#039;t find a user with that email address.</strong>
-                </span>
-                <span class="valid-feedback" role="alert">
-                    <strong>Reset password link was sent to your email.</strong>
-                </span>
+<body class="flex flex-col items-center justify-center p-4 min-h-screen">
+    <div class="stars-container"></div>
+    <div class="digital-rain"></div>
+    <div class="cyber-grid"></div>
+    <div id="particle-container"></div>
 
-            <p class="message hidden" id="message"></p>
-            
-            <button type="submit" class="btn">Send Password Reset Link</button>
-        </form>
+    <div class="w-full max-w-sm z-20">
+        <div class="portal-frame">
+            <div class="corner top-0 left-0 border-r-0 border-b-0"></div>
+            <div class="corner top-0 right-0 border-l-0 border-b-0"></div>
+            <div class="corner bottom-0 left-0 border-r-0 border-t-0"></div>
+            <div class="corner bottom-0 right-0 border-l-0 border-t-0"></div>
+
+            <div class="p-6 pb-8">
+                <div id="forgotMod" class="module module-active">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 class="text-2xl font-orbitron font-black text-white uppercase tracking-wider leading-tight">FORGOT PASSWORD</h2>
+                            <p class="text-cyan-400 font-mono text-[9px] tracking-widest mt-1 uppercase font-bold">Access Restoration</p>
+                        </div>
+                        <i class="fas fa-key-skeleton text-3xl text-cyan-500/20"></i>
+                    </div>
+
+                    <p class="text-slate-400 text-[10px] uppercase tracking-widest leading-relaxed mb-6 font-medium">
+                        Enter your email address and we'll send you a link to reset your password.
+                    </p>
+
+                    <form id="forgot-form" method="POST" class="space-y-5" action="<?=site_url('auth/password-reset');?>" autocomplete="off">
+                        <?php csrf_field(); ?>
+                        <div class="space-y-1.5 relative">
+                            <label class="text-cyan-400 text-[10px] font-bold uppercase tracking-[0.15em] ml-1">Email Address</label>
+                            <div class="relative">
+                                <i class="fas fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                                <?php $LAVA =& lava_instance(); ?>
+                                <input id="email" type="email" class="form-control <?=$LAVA->session->flashdata('alert');?> input-mobile-ultra" name="email" placeholder="Email Address" required autocomplete="off"/>
+                            </div>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>We can&#039;t find a user with that email address.</strong>
+                            </span>
+                            <span class="valid-feedback" role="alert">
+                                <strong>Reset password link was sent to your email.</strong>
+                            </span>
+
+                        <p class="message hidden" id="message"></p>
+                        </div>
+                        <button type="submit" class="btn-mobile-ultra cyan-900 mt-2">
+                            <span class="text-md">Send Password Reset Link</span>
+                            <i class="fas fa-paper-plane text-sm"></i>
+                        </button>
+                    </form>
+                    <button onclick="location.href='<?=site_url('auth/login');?>'" class="mt-8 w-full text-slate-500 text-[9px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-2">
+                        <i class="fas fa-chevron-left text-xs"></i> Return to Login
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
