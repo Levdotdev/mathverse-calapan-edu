@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="<?=base_url();?>public/css/main.css" rel="stylesheet">
     <link href="<?=base_url();?>public/css/auth.css" rel="stylesheet">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body class="flex flex-col items-center justify-center p-4 min-h-screen">
     <div class="stars-container"></div>
@@ -53,7 +54,9 @@
                                 <strong>Reset password link was sent to your email.</strong>
                             </span>
 
-                        <p class="message hidden" id="message"></p>
+                        <p class="message" id="message">
+                            <?= $LAVA->session->flashdata('message'); ?>
+                        </p>
                         </div>
                         <button type="submit" class="btn-mobile-ultra cyan-900 mt-2">
                             <span class="text-md">Send Password Reset Link</span>
