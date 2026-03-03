@@ -46,10 +46,16 @@
                                 <?php $LAVA =& lava_instance(); ?>
                                 <input id="email" type="email" class="form-control <?=$LAVA->session->flashdata('alert');?> input-mobile-ultra" name="email" placeholder="Email Address" required autocomplete="off"/>
                             </div>
-                            <?php if($LAVA->session->flashdata('error')): ?>
-                                <p class="text-red-500 text-xs">
-                                    <?= $LAVA->session->flashdata('error'); ?>
-                                </p>
+                            <?php if($LAVA->session->flashdata('alert') === 'is-invalid'): ?>
+                                <span class="text-red-500 text-xs font-bold mt-1 block">
+                                    We can't find a user with that email address.
+                                </span>
+                            <?php endif; ?>
+
+                            <?php if($LAVA->session->flashdata('alert') === 'is-valid'): ?>
+                                <span class="text-green-500 text-xs font-bold mt-1 block">
+                                    Reset password link was sent to your email.
+                                </span>
                             <?php endif; ?>
                         </div>
                         <button type="submit" class="btn-mobile-ultra cyan-900 mt-2">
