@@ -3,109 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to TechStore</title>
+    <title>MathVerse | Login</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="<?= base_url();?>public/css/login.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url();?>public/css/auth.css">
     <link rel="stylesheet" href="<?= base_url();?>public/css/toast.css">
 </head>
-<body style="background-image: url('<?= base_url();?>public/resources/bg.jpg');">
-
+<body class="flex flex-col items-center justify-center p-4 min-h-screen">
+    <div class="stars-container"></div>
+    <div class="digital-rain"></div>
+    <div class="cyber-grid"></div>
+    <div id="particle-container"></div>
     <div id="toast-container"></div>
 
     <audio id="notifSound" src="<?= base_url();?>public/resources/notif.mp3" preload="auto"></audio>
-    <div class="welcome-container" id="welcome-container">
-        <div class="welcome-content">
-            
-            <div class="logo-container anim-fade-in">
-                <i class="fas fa-laptop-code"></i>
-            </div>
-            
-            <h1 class="anim-slide-up" style="animation-delay: 0.2s;">Welcome to TechStore</h1>
-            <p class="anim-slide-up" style="animation-delay: 0.4s;">
-                Your one-stop shop for the latest and greatest in technology.
-                <br>
-                Join us and discover the future of tech retail.
-            </p>
-            <div class="welcome-buttons anim-slide-up" style="animation-delay: 0.6s;">
-                <button class="btn primary" id="show-login-btn">Login</button>
-            </div>
+    
+    <div class="w-full max-w-sm z-20">
+        <div class="portal-frame">
+            <div class="corner top-0 left-0 border-r-0 border-b-0"></div>
+            <div class="corner top-0 right-0 border-l-0 border-b-0"></div>
+            <div class="corner bottom-0 left-0 border-r-0 border-t-0"></div>
+            <div class="corner bottom-0 right-0 border-l-0 border-t-0"></div>
 
-        </div>
-    </div>
-    <div class="modal-wrapper hidden" id="modal-wrapper">
-        <div class="container" id="container">
-            <span class="close-btn" id="close-btn">&times;</span>
+            <div class="p-6 pb-8">
+                <div id="loginMod" class="module module-active">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 class="text-2xl font-orbitron font-black text-white uppercase tracking-wider leading-tight">LOGIN ACCOUNT</h2>
+                            <p class="text-cyan-400 font-mono text-[9px] tracking-widest mt-1 uppercase font-bold">User Authentication</p>
+                        </div>
+                        <i class="fas fa-user-shield text-3xl text-cyan-500/20"></i>
+                    </div>
 
-            <div class="form-container sign-up-container">
-                <?php flash_alert(); ?>
-                <form id="regForm" method="POST" action="<?=site_url('auth/register');?>">
-                    <?php csrf_field(); ?>
-                    <h1>Create Account</h1>
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input id="username" type="text" class="form-control " name="username" required placeholder="Username" />
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input id="email" type="email" class="form-control" name="email" placeholder="Email" required/>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input id="password" type="password" class="form-control" name="password" placeholder="Enter password" required/>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" placeholder="Confirm password" required/>
-                    </div>
-                    <button class="btn" style="margin-top: 20px;">Register</button>
-                </form>
-            </div>
+                    <?php flash_alert() ;?>
+                    <form id="logForm" method="POST" action="<?=site_url('auth/login');?>" class="space-y-4">
+                        <?php csrf_field(); ?>
+                        <div class="space-y-1.5 relative">
+                            <label class="text-cyan-400 text-[10px] font-bold uppercase tracking-[0.15em] ml-1">Identity Access</label>
+                            <div class="relative">
+                                <i class="fas fa-id-card-clip absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                                <?php $LAVA =& lava_instance(); ?>
+                                <input type="text" name="email" placeholder="Enter Email or ID" required autofocus/>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5 relative">
+                            <label class="text-purple-400 text-[10px] font-bold uppercase tracking-[0.15em] ml-1">Password</label>
+                            <div class="relative">
+                                <i class="fas fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                                <input type="password" name="password" placeholder="Enter Password" required/>
+                                <button type="button" onclick="tglPass('lPass', 'lIcon')" class="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-10 flex items-center justify-center text-slate-500 active:text-cyan-400">
+                                    <i id="lIcon" class="fas fa-eye-slash text-lg"></i>
+                                </button>
+                            </div>
+                        </div>
 
-            <div class="form-container sign-in-container">
-                <?php flash_alert() ;?>
-                <form id="logForm" method="POST" action="<?=site_url('auth/login');?>">
-                    <?php csrf_field(); ?>
-                    <h1>Login</h1>
-                    <div class="input-group">
-                        <i class="fas fa-user-shield"></i>
-                        <?php $LAVA =& lava_instance(); ?>
-                        <input type="text" name="email" placeholder="Email" required autofocus/>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Password" required/>
-                    </div>
-                    <a href="<?=site_url('auth/password-reset');?>">Forgot your password?</a>
-                    <button class="btn">Login</button>
-                </form>
-            </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <label class="flex items-center cursor-pointer group">
+                                <div class="relative">
+                                    <input type="checkbox" id="keepLoggedIn" class="hidden peer">
+                                    <div class="w-4 h-4 border border-cyan-500/50 rounded-sm bg-slate-900/80 peer-checked:bg-cyan-500 transition-all flex items-center justify-center">
+                                        <i class="fas fa-check text-[10px] text-black opacity-0 peer-checked:opacity-100"></i>
+                                    </div>
+                                </div>
+                                <span class="ml-2 text-[9px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-cyan-400 transition-colors">Keep Logged In</span>
+                            </label>
+                            <a href="<?=site_url('auth/password-reset');?>">Forgot your password?</a>
+                            <button type="button" onclick="location.href='<?=site_url('auth/password-reset');?>'" class="text-cyan-500/60 hover:text-cyan-400 text-[9px] font-bold uppercase tracking-widest transition-colors">
+                                Forgot Password?
+                            </button>
+                        </div>
 
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <h1>Hello, Techmate!</h1>
-                        <p>Enter your personal details and start your journey with TechStore</p><hr>
-                        <h5>OR</h5><br>
-                        <button class="btn ghost" id="signIn">Login</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <h1>Welcome Back!</h1>
-                        <p>To keep connected with us, please login with your personal info</p><hr>
-                        <h5>OR</h5><br>
-                        <a href="<?= site_url('auth/register'); ?>" class="btn ghost">Register</a>
+                        <button type="submit" class="btn-mobile-ultra cyan-900 mt-2">
+                            <span class="text-md">Access Portal</span>
+                            <i class="fas fa-sign-in-alt text-sm"></i>
+                        </button>
+                    </form>
+                    <div class="mt-8 flex flex-col items-center gap-4">
+                        <button onclick="location.href='<?=site_url('auth/register');?>'" class="text-cyan-500 text-[10px] font-black uppercase tracking-[0.15em] border-b border-cyan-500/20 pb-0.5">
+                            No Account? Create One
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d970.2816607672548!2d121.17750456951032!3d13.40448420375496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bce8c94a906141%3A0xb64b77e93c40b707!2sFAB&#39;S%20DIGIHUB%20COMPUTER%20TRADING!5e0!3m2!1sen!2sph!4v1763007960036!5m2!1sen!2sph" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
     <script src="<?= base_url();?>public/js/login.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

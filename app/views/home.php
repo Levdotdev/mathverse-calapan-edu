@@ -312,7 +312,6 @@
                     </div>
                     <div class="report-box">
                         <h3><i class="fas fa-user-tie"></i> Top Cashier (<?= date('M'); ?>)</h3>
-                        <p>Cashier: <?= $data['top_cashier']['cashier']; ?></p>
                         <p>Total Transactions: <?= $data['top_cashier']['total_transactions']; ?></p>
                         <p>Total Sales Handled: ₱ <?= number_format($data['top_cashier']['total_sales'], 2); ?></p>
                         <p class="trend up"><i class="fas fa-trophy"></i> Best Performer</p>

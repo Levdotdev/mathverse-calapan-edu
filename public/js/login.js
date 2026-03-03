@@ -1,23 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
+/** Toggles password visibility */
+function tglPass(id, icoId) {
+    const inp = document.getElementById(id);
+    const ico = document.getElementById(icoId);
+    if (inp.type === 'password') {
+        inp.type = 'text';
+        ico.className = 'fas fa-eye';
+    } else {
+        inp.type = 'password';
+        ico.className = 'fas fa-eye-slash';
+    }
+}
 
-    const showLoginBtn = document.getElementById('show-login-btn');
-    const modalWrapper = document.getElementById('modal-wrapper');
-    const closeBtn = document.getElementById('close-btn');
+// --- BACKGROUND PARTICLE SYSTEM ---
 
-    // Open the login modal
-    showLoginBtn.addEventListener('click', () => {
-        modalWrapper.classList.remove('hidden');
-    });
+const pCont = document.getElementById('particle-container');
+const symbols = ['+', '−', '×', '÷', '=', 'π', '∑', '√', 'Δ', '∞', '∫', 'f(x)', 'y²', 'x³'];
+const colors = ['#00f2ff', '#bc13fe', '#ffffff'];
 
-    // Close modal when clicking the X button
-    closeBtn.addEventListener('click', () => {
-        modalWrapper.classList.add('hidden');
-    });
+function spawn() {
+    if (pCont.children.length > 15) return;
+    const p = document.createElement('div');
+    p.className = 'particle font-orbitron';
+    p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.color = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    p.style.fontSize = (Math.random() * 10 + 16) + 'px';
+    pCont.appendChild(p);
+    setTimeout(() => p.remove(), 10000);
+}
 
-    // Close modal when clicking outside the modal content
-    modalWrapper.addEventListener('click', (e) => {
-        if (e.target === modalWrapper) {
-            modalWrapper.classList.add('hidden');
-        }
-    });
-});
+setInterval(spawn, 1000);
