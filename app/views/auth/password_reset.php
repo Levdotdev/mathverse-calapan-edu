@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MathVerse | Password Reset</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="<?=base_url();?>public/css/main.css" rel="stylesheet">
@@ -46,12 +46,11 @@
                                 <?php $LAVA =& lava_instance(); ?>
                                 <input id="email" type="email" class="form-control <?=$LAVA->session->flashdata('alert');?> input-mobile-ultra" name="email" placeholder="Email Address" required autocomplete="off"/>
                             </div>
-                            <span class="invalid-feedback" role="alert">
-                                <strong>We can&#039;t find a user with that email address.</strong>
-                            </span>
-                            <span class="valid-feedback" role="alert">
-                                <strong>Reset password link was sent to your email.</strong>
-                            </span>
+                            <?php if($LAVA->session->flashdata('error')): ?>
+                                <p class="text-red-500 text-xs">
+                                    <?= $LAVA->session->flashdata('error'); ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                         <button type="submit" class="btn-mobile-ultra cyan-900 mt-2">
                             <span class="text-md">Send Password Reset Link</span>
@@ -65,7 +64,5 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>
