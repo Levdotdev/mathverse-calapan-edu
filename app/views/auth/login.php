@@ -37,7 +37,6 @@
                         <i class="fas fa-user-shield text-3xl text-cyan-500/20"></i>
                     </div>
 
-                    <?php flash_alert() ;?>
                     <form id="logForm" method="POST" action="<?=site_url('auth/login');?>" class="space-y-4">
                         <?php csrf_field(); ?>
                         <div class="space-y-1.5 relative">
