@@ -9,7 +9,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 class StaffModel extends Model {
     protected $table = 'users';
     protected $primary_key = 'id';
-    protected $fillable = ['username', 'email', 'updated_at'];
+    protected $fillable = ['fName', 'email', 'updated_at'];
     protected $has_soft_delete = true;
     protected $soft_delete_column = 'deleted_at';
 
@@ -27,7 +27,7 @@ class StaffModel extends Model {
             // Build LIKE conditions
 
 	    $query->grouped(function($x) use ($q) {
-		    $x->like('username', '%'.$q.'%')
+		    $x->like('fName', '%'.$q.'%')
                 ->or_like('email', '%'.$q.'%');
 	    })
         ->where('role', 'user')
