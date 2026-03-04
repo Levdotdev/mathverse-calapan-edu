@@ -7,9 +7,9 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
  * Automatically generated via CLI.
  */
 class ProductModel extends Model {
-    protected $table = 'products';
+    protected $table = 'questions';
     protected $primary_key = 'id';
-    protected $fillable = ['name', 'category', 'price', 'stock'];
+    protected $fillable = ['grade', 'type', 'questions', 'choice1', 'choice2', 'choice3', 'choice4'];
     protected $has_soft_delete = true;
     protected $soft_delete_column = 'deleted_at';
 
@@ -18,20 +18,21 @@ class ProductModel extends Model {
         parent::__construct();
     }
 
-    public function products($q, $records_per_page = null, $page = null) {
+    public function questions($q, $records_per_page = null, $page = null) {
         if (is_null($page)) {
-            return $this->db->table('products')->get_all();
+            return $this->db->table('questions')->get_all();
         } else {
-            $query = $this->db->table('products');
+            $query = $this->db->table('questions');
                 
             // Build LIKE conditions
 
 	    $query->grouped(function($x) use ($q) {
-		    $x->like('name', '%'.$q.'%')
-                ->or_like('category', '%'.$q.'%');
+		    $x->like('grade', '%'.$q.'%')
+                ->or_like('type', '%'.$q.'%');
 	    })
 	    ->where_null('deleted_at')
-        ->order_by('price', 'ASC');
+        ->order_by('grade', 'ASC')
+        ->order_by('type', 'ASC');
 
 
             // Clone before pagination
