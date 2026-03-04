@@ -3,38 +3,109 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TechStore Registration</title>
-    <link rel="icon" type="image/x-icon" href="<?= base_url();?>public/resources/logolight.jpg">
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Styles -->
+    <title>MathVerse | Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="<?=base_url();?>public/css/main.css" rel="stylesheet">
-    <link href="<?=base_url();?>public/css/reset.css" rel="stylesheet">
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <link href="<?=base_url();?>public/css/auth.css" rel="stylesheet">
 </head>
-<body style="background-image: url('<?= base_url();?>public/resources/bg.jpg');">
-    <div class="forgot-container">
-        <span class="valid-feedback" role="alert">
-            <strong>Note: Password must be at least 8 characters and contains one of this special characters (!@£$%^&*-_+=?), number, uppercase and lowercase letters.</strong>
-        </span>   
-        <?php flash_alert() ;?>
-        <form id="regForm" method="POST" action="<?=site_url('auth/register');?>" autocomplete="off">
-            <?php csrf_field(); ?>
-            <h1>Register</h1>
-            <p class="instructions">Enter your personal details and start your journey with TechStore.</p>
-            <input id="username" type="text" class="form-control " name="username" required placeholder="Username" autocomplete="off"><br>
-            <input id="email" type="email" class="form-control" name="email" required placeholder="Email" autocomplete="off"><br>
-            <input id="password" type="password" class="form-control " name="password" required placeholder="New Password" autocomplete="off"><br>
-            <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password" autocomplete="off">
+<body class="flex flex-col items-center justify-center p-4 min-h-screen">
+    <div class="stars-container"></div>
+    <div class="digital-rain"></div>
+    <div class="cyber-grid"></div>
+    <div id="particle-container"></div>
 
-            <p class="message hidden" id="message"></p>
-            
-            <button type="submit" class="btn">Register</button>
-        </form>
+    <div class="w-full max-w-sm z-20">
+        <div class="portal-frame">
+            <div class="corner top-0 left-0 border-r-0 border-b-0"></div>
+            <div class="corner top-0 right-0 border-l-0 border-b-0"></div>
+            <div class="corner bottom-0 left-0 border-r-0 border-t-0"></div>
+            <div class="corner bottom-0 right-0 border-l-0 border-t-0"></div>
+
+            <div class="p-6 pb-8">
+                <div id="regMod" class="module module-active">
+                    <div class="flex justify-between items-center mb-5">
+                        <div>
+                            <h2 class="text-xl font-orbitron font-bold text-white uppercase tracking-wider leading-tight">CREATE ACCOUNT</h2>
+                            <p class="text-purple-500 font-mono text-[8px] mt-0.5 font-bold tracking-widest">USER REGISTRATION SYSTEM</p>
+                        </div>
+                        <i class="fas fa-user-plus text-2xl text-purple-500/20"></i>
+                    </div>
+
+                    <?php if($LAVA->session->flashdata('alert') === 'is-valid'): ?>
+                        <span class="text-green-500 text-xs font-bold mt-1 block">
+                            <strong>Note: Password must be at least 8 characters and contains one of these special characters (!@£$%^&*-_+=?), number, uppercase and lowercase letters.</strong>
+                        </span>
+                    <?php endif; ?>
+                    <?php flash_alert() ;?>
+                    <form id="regForm" method="POST" class="space-y-3.5" action="<?=site_url('auth/register');?>" autocomplete="off">
+                        <?php csrf_field(); ?>
+                        <div class="space-y-2">
+                            <p class="text-[9px] font-black text-slate-500 uppercase text-center tracking-[0.2em]">Select Role</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="role" value="Student" class="hidden peer" checked onclick="updatePlaceholder('s')">
+                                    <div class="p-2 border border-slate-800 rounded-xl peer-checked:border-cyan-500 peer-checked:bg-cyan-500/10 text-center transition-all">
+                                        <i class="fas fa-user-graduate text-lg mb-0.5 text-slate-600 peer-checked:text-cyan-400"></i>
+                                        <div class="text-[9px] font-black uppercase text-slate-500 peer-checked:text-white">Student</div>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="role" value="Teacher" class="hidden peer" onclick="updatePlaceholder('t')">
+                                    <div class="p-2 border border-slate-800 rounded-xl peer-checked:border-purple-500 peer-checked:bg-purple-500/10 text-center transition-all">
+                                        <i class="fas fa-chalkboard-teacher text-lg mb-0.5 text-slate-600 peer-checked:text-purple-400"></i>
+                                        <div class="text-[9px] font-black uppercase text-slate-500 peer-checked:text-white">Teacher</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <i class="fas fa-id-badge absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                            <input type="text" id="uid" name="uid" maxlength="15" required class="input-mobile-ultra !pl-10 text-xs" placeholder="Student LRN" autocomplete="off">
+                        </div>
+                        <div class="relative">
+                            <i class="fas fa-user-tag absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                            <input id="fName" type="text" class="input-mobile-ultra !pl-10 text-xs" name="fName" required placeholder="First Name" autocomplete="off"><br>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input id="mName" name="mName" type="text" required class="input-mobile-ultra !pl-4 text-xs" placeholder="Middle Name" autocomplete="off">
+                            <input id="lName" name="lName" type="text" required class="input-mobile-ultra !pl-4 text-xs" placeholder="Last Name" autocomplete="off">
+                        </div>
+                        <div class="relative">
+                            <i class="fas fa-user-tag absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                            <input id="email" type="email" class="input-mobile-ultra !pl-10 text-xs" name="email" required placeholder="Email Address" autocomplete="off"><br>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="relative">
+                                <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                                <input type="password" id="password" name="password" required class="input-mobile-ultra !pl-10 pr-10 text-xs" placeholder="Set Password" autocomplete="off">
+                                <button type="button" onclick="tglPass('rPass', 'rPassIco')" class="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-10 flex items-center justify-center text-slate-500 active:text-cyan-400">
+                                    <i id="rPassIco" class="fas fa-eye-slash text-lg"></i>
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <i class="fas fa-shield-alt absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                                <input type="password" id="password_confirmation" name="password_confirmation" required class="input-mobile-ultra !pl-10 pr-10 text-xs" placeholder="Confirm Password" autocomplete="off">
+                                <button type="button" onclick="tglPass('rcPass', 'rcPassIco')" class="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-10 flex items-center justify-center text-slate-500 active:text-cyan-400">
+                                    <i id="rcPassIco" class="fas fa-eye-slash text-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <p class="message hidden" id="message"></p>
+
+                        <button type="submit" class="btn-mobile-ultra cyan-900 mt-2">
+                            <span class="text-md">Complete Registration</span>
+                        </button>
+                    </form>
+                    <button onclick="location.href='<?=site_url('auth/login');?>'" class="mt-6 w-full text-slate-500 text-[9px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-2">
+                        <i class="fas fa-chevron-left text-xs"></i> Back to Login
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
     <script>
@@ -79,5 +150,6 @@
                 }
         })
     </script>
+    <script src="<?= base_url();?>public/js/login.js"></script>
 </body>
 </html>

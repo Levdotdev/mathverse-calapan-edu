@@ -1,4 +1,3 @@
-/** Toggles password visibility */
 function tglPass(id, icoId) {
     const inp = document.getElementById(id);
     const ico = document.getElementById(icoId);
@@ -11,7 +10,6 @@ function tglPass(id, icoId) {
     }
 }
 
-// --- BACKGROUND PARTICLE SYSTEM ---
 
 const pCont = document.getElementById('particle-container');
 const symbols = ['+', '−', '×', '÷', '=', 'π', '∑', '√', 'Δ', '∞', '∫', 'f(x)', 'y²', 'x³'];
@@ -31,3 +29,13 @@ function spawn() {
 }
 
 setInterval(spawn, 1000);
+
+
+function updatePlaceholder(role) {
+    const input = document.getElementById('regLRN');
+    if (role === 's') {
+        input.placeholder = "Student LRN (12 Digits)";
+    } else {
+        input.placeholder = "Teacher License ID";
+    }
+}
