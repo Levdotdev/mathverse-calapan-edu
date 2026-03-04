@@ -32,8 +32,13 @@
                         </div>
                         <i class="fas fa-user-plus text-2xl text-purple-500/20"></i>
                     </div>
+
+                    <?php if($LAVA->session->flashdata('alert') === 'is-valid'): ?>
+                        <span class="text-green-500 text-xs font-bold mt-1 block">
+                            <strong>Note: Password must be at least 8 characters and contains one of these special characters (!@£$%^&*-_+=?), number, uppercase and lowercase letters.</strong>
+                        </span>
+                    <?php endif; ?>
                     
-                    <?php flash_alert() ;?>
                     <form id="regForm" method="POST" class="space-y-3.5" action="<?=site_url('auth/register');?>" autocomplete="off">
                         <?php csrf_field(); ?>
                         <div class="space-y-2">
