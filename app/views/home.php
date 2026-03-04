@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechStore Admin - POS System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&display=swap" rel="stylesheet">
+    <title>Teacher Dashboard | MathVerse</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url();?>public/css/home.css">
+    <link rel="stylesheet" href="<?= base_url();?>public/css/admin.css">
 </head>
 <body class="light-mode">
     <div id="toast-container"></div>
@@ -240,7 +239,7 @@
                             <?php foreach(html_escape($users) as $user): ?>
                                 <tr data-id="<?= $user['id']; ?>">
                                     <td><?= $user['id']; ?></td>
-                                    <td><?= $user['username']; ?></td>
+                                    <td><?= $user['fName']; ?></td>
                                     <td><?= $user['email']; ?></td>
                                     <td><?= $user['updated_at']; ?></td>
                                     <td>
@@ -262,7 +261,7 @@
                         <select id="category" name="q">
                             <option value="" selected>All Cashiers</option>
                             <?php foreach(html_escape($users) as $user): ?>
-                                <option value="<?= $user['username']; ?>"><?= $user['username']; ?></option>
+                                <option value="<?= $user['fName']; ?>"><?= $user['fName']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <button type="submit" class="action-btn"><i class="fas fa-filter"></i> Filter</button>
@@ -362,11 +361,11 @@
                             <?php foreach(html_escape($applicants) as $applicant): ?>
                                 <tr data-id="<?= $user['id']; ?>">
                                     <td><?= $applicant['id']; ?></td>
-                                    <td><?= $applicant['username']; ?></td>
+                                    <td><?= $applicant['fName']; ?></td>
                                     <td><?= $applicant['email']; ?></td>
                                     <td><?= $applicant['updated_at']; ?></td>
                                     <td>
-                                        <button class="action-icon success-btn open-applicant-verify-modal" title="Verify/Approve" data-id="<?= $applicant['id']; ?>" data-name="<?= htmlspecialchars($applicant['username']); ?>"><i class="fas fa-check"></i></button>
+                                        <button class="action-icon success-btn open-applicant-verify-modal" title="Verify/Approve" data-id="<?= $applicant['id']; ?>" data-name="<?= htmlspecialchars($applicant['fName']); ?>"><i class="fas fa-check"></i></button>
                                         <button class="action-icon delete-btn open-applicant-reject-modal" title="Reject/Delete" data-id="<?= $applicant['id']; ?>"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
