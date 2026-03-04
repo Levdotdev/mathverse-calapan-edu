@@ -93,8 +93,6 @@
                             </div>
                         </div>
 
-                        <p class="message hidden" id="message"></p>
-
                         <button type="submit" class="btn-mobile-ultra cyan-900 mt-2">
                             <span class="text-md">Complete Registration</span>
                         </button>
