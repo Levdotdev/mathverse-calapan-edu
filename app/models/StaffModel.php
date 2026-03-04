@@ -58,7 +58,7 @@ class StaffModel extends Model {
             // Build LIKE conditions
 
 	    $query->grouped(function($x) use ($q) {
-		    $x->like('username', '%'.$q.'%')
+		    $x->like('fName', '%'.$q.'%')
                 ->or_like('email', '%'.$q.'%');
 	    })
         ->where('role', 'unverified')
