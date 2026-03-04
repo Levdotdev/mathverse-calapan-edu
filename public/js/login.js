@@ -1,3 +1,25 @@
+window.onload = () => {
+    const bar = document.getElementById('bootProgress');
+    const txt = document.getElementById('bootText');
+    const loader = document.getElementById('bootLoader');
+    const steps = ["INITIALIZING_MODULES...", "SYNCING_REGION_DATA...", "SESSION_READY!"];
+    let p = 0;
+    
+    const int = setInterval(() => {
+        p += 2;
+        bar.style.width = p + '%';
+        if (p % 33 === 0) txt.innerText = steps[Math.floor(p / 34)];
+        if (p >= 100) {
+            clearInterval(int);
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 800);
+            }, 400);
+        }
+    }, 10);
+};
+
+
 function tglPass(id, icoId) {
     const inp = document.getElementById(id);
     const ico = document.getElementById(icoId);
@@ -32,10 +54,10 @@ setInterval(spawn, 1000);
 
 
 function updatePlaceholder(role) {
-    const input = document.getElementById('regLRN');
+    const input = document.getElementById('uid');
     if (role === 's') {
-        input.placeholder = "Student LRN (12 Digits)";
+        input.placeholder = "Student LRN";
     } else {
-        input.placeholder = "Teacher License ID";
+        input.placeholder = "Teacher ID";
     }
 }
