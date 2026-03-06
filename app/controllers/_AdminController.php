@@ -57,7 +57,7 @@ class _AdminController extends Controller {
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_questions'] = $this->pagination->paginate();
 
-        $all = $this->StaffModel->students($q, $records_per_page, $page);
+        $all = $this->ProductModel->inventory($q, $records_per_page, $page);
         $data['inventory'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
