@@ -72,7 +72,7 @@ class _AdminController extends Controller {
         $data['page_inventory'] = $this->pagination->paginate();
 
         $all = $this->StaffModel->users($q, $records_per_page, $page);
-        $data['users'] = $all['records'];
+        $data['students'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
             'first_link'     => 'First',
