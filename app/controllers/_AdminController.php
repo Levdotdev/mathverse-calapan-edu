@@ -41,9 +41,9 @@ class _AdminController extends Controller {
             $q = trim($this->io->get('q'));
         }
 
-        $records_per_page = 5;
+        $records_per_page = 100;
 
-        $all = $this->ProductModel->products($q, $records_per_page, $page);
+        $all = $this->ProductModel->questions($q, $records_per_page, $page);
         $data['all'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
@@ -55,7 +55,7 @@ class _AdminController extends Controller {
         ]);
         $this->pagination->set_theme('tailwind'); // or 'tailwind', or 'custom'
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
-        $data['page_products'] = $this->pagination->paginate();
+        $data['page_questions'] = $this->pagination->paginate();
 
         $all = $this->ProductModel->inventory($q, $records_per_page, $page);
         $data['inventory'] = $all['records'];
@@ -113,8 +113,9 @@ class _AdminController extends Controller {
         $this->pagination->initialize($total_rows, $records_per_page, $page,'?q='.$q);
         $data['page_applicants'] = $this->pagination->paginate();
 
-        $data['sales'] = $this->db->table('transactions')->select_sum('total', 'total')->get();
-        $data['sold'] = $this->db->table('products')->select_sum('sold', 'sold')->where_null('deleted_at')->get();
+        $data['students'] = $this->db->table('users')->select_sum('students', 'students')->where('role', 'student')->where_null('deleted_at')->get();
+        $data['teachers'] = $this->db->table('users')->select_sum('teachers', 'teachers')->where('role', 'user')->where_null('deleted_at')->get();
+        $data['questions'] = $this->db->table('questions')->select_sum('quiestions', 'questions')->where_null('deleted_at')->get();
         $res = $this->db->raw('SELECT COUNT(stock) AS total FROM products WHERE stock < 5 AND deleted_at IS NULL');
         $data['low_stock'] = $res->fetch();
         $res = $this->db->raw('SELECT COUNT(id) AS total FROM transactions WHERE deleted_at IS NULL');
