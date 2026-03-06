@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | MathVerse</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url();?>public/css/home.css">
 </head>
 <body class="light-mode">
@@ -20,19 +19,19 @@
             <div class="logo-left">
                 <img src="<?= base_url();?>public/resources/logolight.jpg" alt="TechStore Logo" class="logo-img light-logo">
                 <img src="<?= base_url();?>public/resources/logodark.jpg" alt="TechStore Logo" class="logo-img dark-logo">
-                <span>MathVerse</span>
+                <span>TechStore</span>
             </div>
         </div>
 
         <nav class="main-menu">
             <ul>
                 <li class="active" data-section="dashboard"><i class="fas fa-chart-line"></i> <span>Dashboard</span></li>
-                <li data-section="products"><i class="fas fa-box-open"></i> <span>Questions</span></li>
-                <li data-section="inventory"><i class="fas fa-boxes"></i> <span>Students</span></li>
-                <li data-section="users"><i class="fas fa-users"></i> <span>Teachers</span></li>
-                <li data-section="transactions"><i class="fas fa-receipt"></i> <span>Classes</span></li>
+                <li data-section="products"><i class="fas fa-box-open"></i> <span>Products</span></li>
+                <li data-section="inventory"><i class="fas fa-boxes"></i> <span>Inventory</span></li>
+                <li data-section="users"><i class="fas fa-users"></i> <span>Users</span></li>
+                <li data-section="transactions"><i class="fas fa-receipt"></i> <span>Transactions</span></li>
                 <li data-section="reports"><i class="fas fa-file-alt"></i> <span>Reports</span></li>
-                <li data-section="applicants"><i class="fas fa-id-card"></i> <span>Verifications</span></li>
+                <li data-section="applicants"><i class="fas fa-id-card"></i> <span>Applicants</span></li>
             </ul>
         </nav>
     </aside>
@@ -79,8 +78,8 @@
                     <div class="stat-card">
                         <div class="stat-header">
                             <div>
-                                <h3>Students</h3>
-                                <p class="stat-value">₱ <?= $data['students']['students']; ?></p>
+                                <h3>Total Sales</h3>
+                                <p class="stat-value">₱ <?= $data['sales']['total']; ?></p>
                             </div>
                             <i class="fas fa-chart-line stat-icon"></i>
                         </div>
@@ -88,8 +87,8 @@
                     <div class="stat-card">
                         <div class="stat-header">
                             <div>
-                                <h3>Teachers</h3>
-                                <p class="stat-value"><?= $data['teachers']['teachers']; ?></p>
+                                <h3>Products Sold</h3>
+                                <p class="stat-value"><?= $data['sold']['sold']; ?></p>
                             </div>
                             <i class="fas fa-shopping-bag stat-icon"></i>
                         </div>
@@ -97,34 +96,37 @@
                     <div class="stat-card inventory-alert">
                         <div class="stat-header">
                             <div>
-                                <h3>Questions</h3>
-                                <p class="stat-value"><?= $data['questions']['questions']; ?></p>
+                                <h3>Low Stock Items</h3>
+                                <p class="stat-value"><?= $data['low_stock']['total']; ?></p>
                             </div>
                             <i class="fas fa-exclamation-circle stat-icon"></i>
                         </div>
                         <span class="trend alert">Action Needed</span>
                     </div>
                 </div>
-                <!--<div class="chart-container max-w-full mx-auto mt-8 p-2 bg-white rounded-lg shadow-md" style="height: 600px;">
+                <div class="chart-container max-w-full mx-auto mt-8 p-2 bg-white rounded-lg shadow-md" style="height: 600px;">
                     <canvas id="salesPieChart" style="width:100%; height:100%;"></canvas>
-                </div>-->
+                </div>
             </div>
 
             <div id="products" class="content-section">
                 <div class="toolbar">
                     <button class="action-btn primary-btn" onclick="openModal('modal-add-product')">
-                        <i class="fas fa-plus-circle"></i> Add Question
+                        <i class="fas fa-plus-circle"></i> Add Product
                     </button>
                         <form action="<?=site_url('');?>" method="get">
                         <?php $q = isset($_GET['q']) ? $_GET['q'] : ''; ?>
                         <select id="category" name="q">
-                                    <option value="" selected>All Questions</option>
-                                    <option value="Grade 1">Grade 1</option>
-                                    <option value="Grade 2">Grade 2</option>
-                                    <option value="Grade 3">Grade 3</option>
-                                    <option value="Grade 4">Grade 4</option>
-                                    <option value="Grade 5">Grade 5</option>
-                                    <option value="Grade 6">Grade 6</option>
+                                    <option value="" selected>All Products</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Keyboard">Keyboard</option>
+                                    <option value="Mouse">Mouse</option>
+                                    <option value="Controller">Controller</option>
+                                    <option value="Speaker">Speaker</option>
+                                    <option value="Headset">Headset</option>
+                                    <option value="Microphone">Microphone</option>
+                                    <option value="Webcam">Webcam</option>
+                                    <option value="Accessories">Accessories</option>
                         </select>
                         <button type="submit" class="action-btn"><i class="fas fa-filter"></i> Filter</button>
                         </form>
@@ -135,36 +137,38 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Grade</th>
-                                <th>Type</th>
-                                <th>Question</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Unit Price (₱)</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach(html_escape($all) as $question): ?>
-                                <tr data-id="<?= $question['id']; ?>">
-                                    <td><?= $question['id']; ?></td>
-                                    <td><?= $question['grade']; ?></td>
-                                    <td><?= $question['type']; ?></td>
-                                    <td><?= $question['question']; ?></td>
+                            <?php foreach(html_escape($all) as $product): ?>
+                                <tr data-id="<?= $product['id']; ?>">
+                                    <td><?= $product['id']; ?></td>
+                                    <td><?= $product['name']; ?></td>
+                                    <td><?= $product['category']; ?></td>
+                                    <td>₱<?= $product['price']; ?></td>
                                     <td>
                                         <button 
                                             type="button"
                                             class="action-icon edit-btn open-product-edit-modal"
-                                            title="Edit Question"
+                                            title="Edit Product"
                                             data-id="<?= $product['id']; ?>"
                                             data-name="<?= $product['name']; ?>"
                                             data-category="<?= $product['category']; ?>"
                                             data-price="<?= $product['price']; ?>">
                                             <i class="fas fa-pen"></i>
                                         </button>
-                                        <button title="Delete Product" data-id="<?= $question['id']; ?>" class="action-icon delete-btn open-product-delete-modal"><i class="fas fa-trash"></i></button>
+                                        <button title="Delete Product" data-id="<?= $product['id']; ?>" class="action-icon delete-btn open-product-delete-modal"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
+                <?php echo $page_products;?>
             </div>
 
             <div id="inventory" class="content-section">
