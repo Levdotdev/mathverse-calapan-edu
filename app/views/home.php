@@ -138,7 +138,6 @@
                                 <th>Grade</th>
                                 <th>Type</th>
                                 <th>Question</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -187,33 +186,34 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Verified At</th>
-                                <th>Badge</th>
-                                <th>Actions</th>
+                                <th>Product Name</th>
+                                <th>Current Stock</th>
+                                <th>Last Restock</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach(html_escape($students) as $student): ?>
-                                <tr data-id="<?= $student['id']; ?>">
-                                    <td><?= $student['fName'] . " " . $student['lName']; ?></td>
-                                    <td><?= $student['email']; ?></td>
-                                    <td><?= $student['created_at']; ?></td>
-                                    <?php if ($student['badge'] == "Regular"): ?>
-                                        <td><span class="status-badge critical">Regular</span></td>
+                            <?php foreach(html_escape($inventory) as $inventory): ?>
+                                <tr data-id="<?= $inventory['id']; ?>">
+                                    <td><?= $inventory['id']; ?></td>
+                                    <td><?= $inventory['name']; ?></td>
+                                    <td><?= $inventory['stock']; ?></td>
+                                    <td><?= $inventory['last_restock']; ?></td>
+                                    <?php if ($inventory['stock'] == 0): ?>
+                                        <td><span class="status-badge critical">Out of Stock</span></td>
 
-                                    <?php elseif ($student['badge'] == "Advanced"): ?>
-                                        <td><span class="status-badge warning">Advanced</span></td>
+                                    <?php elseif ($inventory['stock'] >= 1 && $inventory['stock'] <= 4): ?>
+                                        <td><span class="status-badge warning">Low Stock</span></td>
 
                                     <?php else: ?>
-                                        <td><span class="status-badge success">Genius</span></td>
+                                        <td><span class="status-badge success">In Stock</span></td>
                                     <?php endif; ?>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
+                <?php echo $page_inventory;?>
             </div>
 
             <div id="users" class="content-section">
