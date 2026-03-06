@@ -152,10 +152,10 @@
                                             type="button"
                                             class="action-icon edit-btn open-product-edit-modal"
                                             title="Edit Question"
-                                            data-id="<?= $product['id']; ?>"
-                                            data-name="<?= $product['name']; ?>"
-                                            data-category="<?= $product['category']; ?>"
-                                            data-price="<?= $product['price']; ?>">
+                                            data-id="<?= $question['id']; ?>"
+                                            data-name="<?= $question['name']; ?>"
+                                            data-category="<?= $question['category']; ?>"
+                                            data-price="<?= $question['price']; ?>">
                                             <i class="fas fa-pen"></i>
                                         </button>
                                         <button title="Delete Product" data-id="<?= $question['id']; ?>" class="action-icon delete-btn open-product-delete-modal"><i class="fas fa-trash"></i></button>
