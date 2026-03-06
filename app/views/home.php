@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <<<<<<< HEAD
-<<<<<<< HEAD
     <title>Admin | MathVerse</title>
 =======
-=======
->>>>>>> parent of c2ead57 (design)
     <title>Teacher Dashboard | MathVerse</title>
     
 >>>>>>> parent of c2ead57 (design)
